@@ -1,0 +1,20 @@
+{
+  "product": "Smart Planner",
+  "brand": "Feathly",
+  "version": "1.0.0",
+  "baseUrl": "https://feathly.com/smart-planner/",
+  "embeddedParam": "?embedded=1",
+  "pages": {
+    "home": "https://feathly.com/smart-planner/",
+    "pro": "https://feathly.com/smart-planner/pro.html?embedded=1",
+    "faq": "https://feathly.com/smart-planner/faq.html?embedded=1",
+    "support": "https://feathly.com/smart-planner/support.html?embedded=1",
+    "privacy": "https://feathly.com/smart-planner/privacy.html?embedded=1",
+    "terms": "https://feathly.com/smart-planner/terms.html?embedded=1",
+    "refund": "https://feathly.com/smart-planner/refund.html?embedded=1",
+    "cloudSync": "https://feathly.com/smart-planner/cloud-sync.html?embedded=1",
+    "openSource": "https://feathly.com/smart-planner/open-source.html?embedded=1",
+    "appVersion": "https://feathly.com/smart-planner/app-version.html?embedded=1"
+  },
+  "supportEmail": "support@feathly.com"
+}
