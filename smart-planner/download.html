@@ -8,16 +8,17 @@
   <link rel="stylesheet" href="../assets/style.css">
   <script defer src="../assets/app.js"></script>
   <style>
-    .platform-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:28px}
-    .platform-card{text-align:center;background:#fff;border:1px solid #e6e9ed;border-radius:30px;padding:34px 22px;box-shadow:0 18px 44px rgba(74,85,104,.08)}
+    .platform-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:28px;align-items:stretch}
+    .platform-card{text-align:center;background:#fff;border:1px solid #e6e9ed;border-radius:30px;padding:34px 22px;box-shadow:0 18px 44px rgba(74,85,104,.08);display:flex;flex-direction:column;align-items:center;min-height:430px}
     .platform-logo{height:120px;display:flex;align-items:center;justify-content:center;margin-bottom:18px}
     .platform-logo img{width:112px;height:112px;object-fit:contain;display:block}
     .platform-card h3{font-size:30px;margin:8px 0;color:#4a5568;letter-spacing:-.03em}
-    .platform-status{display:inline-flex;border-radius:999px;padding:8px 13px;font-size:13px;font-weight:800;margin:6px 0 12px}
+    .platform-card p{margin:0 0 18px;line-height:1.65;min-height:78px;color:#64748b}
+    .platform-status{display:inline-flex;border-radius:999px;padding:8px 13px;font-size:13px;font-weight:800;margin:6px 0 18px}
     .status-primary{background:#e8fff5;color:#327c78}.status-dev{background:#f3f6f9;color:#4a5568}.status-planned{background:#eaf6fd;color:#367aa5}
-    .store-button{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 17px;border-radius:12px;background:#e6e9ed;color:#6b7280;font-weight:800;margin-top:10px}
+    .store-button{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 17px;border-radius:12px;background:#e6e9ed;color:#6b7280;font-weight:800;margin-top:auto}
     .icon-source{font-size:12px;color:#64748b;line-height:1.6;margin-top:28px;text-align:center}.icon-source a{color:#367aa5;font-weight:800}
-    @media(max-width:850px){.platform-grid{grid-template-columns:1fr}.platform-logo{height:96px}.platform-logo img{width:88px;height:88px}}
+    @media(max-width:850px){.platform-grid{grid-template-columns:1fr}.platform-card{min-height:auto}.platform-card p{min-height:auto}.platform-logo{height:96px}.platform-logo img{width:88px;height:88px}}
   </style>
 </head>
 <body>
