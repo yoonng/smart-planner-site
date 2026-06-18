@@ -1,0 +1,1 @@
+document.addEventListener('DOMContentLoaded',function(){var p=document.querySelector('.hero .phone');if(!p)return;var img=document.createElement('img');img.className='hero-illustration';img.src='assets/smart-planner-loop.svg';img.alt='Smart Planner spaced loop visual';p.replaceWith(img);});
