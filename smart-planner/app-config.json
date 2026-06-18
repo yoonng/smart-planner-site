@@ -6,6 +6,8 @@
   "embeddedParam": "?embedded=1",
   "pages": {
     "home": "/smart-planner/",
+    "download": "/smart-planner/download.html?embedded=1",
+    "buildHistory": "/smart-planner/build-history.html?embedded=1",
     "community": "/community/?embedded=1",
     "pro": "/smart-planner/pro.html?embedded=1",
     "faq": "/smart-planner/faq.html?embedded=1",
