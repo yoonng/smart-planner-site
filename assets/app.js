@@ -47,6 +47,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const groups = [
       [
+        ['Learning Science', `${prefix}learning-science.html`],
         ['Download', `${prefix}download.html`],
         ['Build History', `${prefix}build-history.html`],
       ],
