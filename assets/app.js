@@ -1,14 +1,21 @@
 document.addEventListener('DOMContentLoaded', function () {
+  const path = window.location.pathname;
+  const isCommunityPage = path.includes('/community/');
+  const isSmartPlannerPage = path.includes('/smart-planner/');
+  const isRootPage = !isCommunityPage && !isSmartPlannerPage;
+  const themePath = isRootPage ? 'assets/feathly-theme.css' : isCommunityPage ? '../assets/feathly-theme.css' : '../assets/feathly-theme.css';
+  if (!document.querySelector('link[href$="feathly-theme.css"]')) {
+    const theme = document.createElement('link');
+    theme.rel = 'stylesheet';
+    theme.href = themePath;
+    document.head.appendChild(theme);
+  }
+
   const params = new URLSearchParams(window.location.search);
   if (params.get('embedded') === '1') {
     document.documentElement.classList.add('embedded');
     document.body.classList.add('embedded');
   }
-
-  const path = window.location.pathname;
-  const isCommunityPage = path.includes('/community/');
-  const isSmartPlannerPage = path.includes('/smart-planner/');
-  const isRootPage = !isCommunityPage && !isSmartPlannerPage;
 
   const navLinks = document.querySelector('.nav-links');
   if (navLinks) {
@@ -35,7 +42,6 @@ document.addEventListener('DOMContentLoaded', function () {
             ['build-history.html', 'Build History'],
             ['../community/', 'Community'],
           ];
-
     navLinks.innerHTML = links.map(([href, label]) => `<a href="${href}">${label}</a>`).join('');
   }
 
@@ -44,7 +50,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const prefix = isRootPage ? 'smart-planner/' : isCommunityPage ? '../smart-planner/' : '';
     const brand = foot.querySelector('div:first-child');
     if (brand) brand.classList.add('foot-brand');
-
     const groups = [
       [
         ['Learning Science', `${prefix}learning-science.html`],
@@ -61,13 +66,9 @@ document.addEventListener('DOMContentLoaded', function () {
         ['Refund', `${prefix}refund.html`],
       ],
     ];
-
     const grouped = document.createElement('div');
     grouped.className = 'footer-link-groups';
-    grouped.innerHTML = groups.map((group) => {
-      return `<div class="footer-link-group">${group.map(([label, href]) => `<a href="${href}">${label}</a>`).join('')}</div>`;
-    }).join('');
-
+    grouped.innerHTML = groups.map((group) => `<div class="footer-link-group">${group.map(([label, href]) => `<a href="${href}">${label}</a>`).join('')}</div>`).join('');
     const oldLinks = foot.querySelector('div:last-child');
     if (oldLinks) oldLinks.replaceWith(grouped);
     else foot.appendChild(grouped);
