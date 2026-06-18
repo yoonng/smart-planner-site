@@ -6,6 +6,8 @@ Static website for Feathly and its first product, Smart Planner.
 
 - `/` Feathly brand home
 - `/smart-planner/` Smart Planner product page
+- `/smart-planner/download.html` Download page
+- `/smart-planner/build-history.html` Build history and release notes
 - `/smart-planner/privacy.html` Privacy Policy
 - `/smart-planner/terms.html` Terms of Service
 - `/smart-planner/refund.html` Refund Policy
