@@ -19,10 +19,24 @@
     <p>Status: internal testing and release preparation.</p>
     <ul>
       <li>Local-first loop planner foundation</li>
+      <li>Step-based spaced loop model: the next reminder is generated after the current step is completed</li>
+      <li>Home screen sections: NOW, TODAY, LATER, and WAITING</li>
+      <li>Home statistics and Insights now align around generated reminder occurrences</li>
       <li>Routine Loop and Review Loop support</li>
-      <li>Today summary and reminder-focused home screen</li>
       <li>Basic PRO feature and Google Play purchase integration preparation</li>
       <li>Data safety, support, privacy, and terms pages prepared</li>
+    </ul>
+  </div>
+  <h2>Recent internal update</h2>
+  <div class="card">
+    <h3>Occurrence-based Home and Insights model</h3>
+    <p>Smart Planner now treats generated reminder rows as the public unit for Home counts and Insight statistics. Potential future pattern steps are not counted until they are actually generated.</p>
+    <ul>
+      <li><strong>Done</strong>: completed generated reminders in today&apos;s operational day</li>
+      <li><strong>NOW</strong>: generated reminders that are due now or overdue</li>
+      <li><strong>TODAY</strong>: generated reminders later within today&apos;s operational day</li>
+      <li><strong>LATER</strong>: generated reminders after today</li>
+      <li><strong>WAITING</strong>: active loops with no unfinished generated reminder</li>
     </ul>
   </div>
   <h2>Planned platform path</h2>
