@@ -56,10 +56,10 @@ footer { background: #0b1020; color: #94a3b8; padding: 34px 0; }
 .faq-hero { padding-bottom: 52px; }
 .faq-hero .eyebrow { margin-bottom: 6px; font-weight: 800; letter-spacing: 0.04em; text-transform: uppercase; }
 .faq-index { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 30px; }
-.faq-index a { display: block; padding: 18px; border-radius: 20px; background: rgba(255,255,255,0.10); border: 1px solid rgba(255,255,255,0.16); transition: transform .15s ease, background .15s ease, border-color .15s ease; }
-.faq-index a:hover { transform: translateY(-2px); background: rgba(255,255,255,0.16); border-color: rgba(255,255,255,0.28); }
-.faq-index strong { display: block; color: white; margin-bottom: 6px; }
-.faq-index span { display: block; color: #cbd5e1; font-size: 14px; line-height: 1.45; }
+.faq-index a { display: block; padding: 18px; border-radius: 20px; background: rgba(255,255,255,0.94); border: 1px solid rgba(109,93,252,0.22); box-shadow: 0 16px 42px rgba(15,23,42,0.10); transition: transform .15s ease, background .15s ease, border-color .15s ease, box-shadow .15s ease; }
+.faq-index a:hover { transform: translateY(-2px); background: #ffffff; border-color: rgba(109,93,252,0.46); box-shadow: 0 22px 56px rgba(15,23,42,0.16); }
+.faq-index strong { display: block; color: #1e293b; margin-bottom: 6px; font-weight: 900; }
+.faq-index span { display: block; color: #475569; font-size: 14px; line-height: 1.45; }
 .faq-page { padding-top: 42px; }
 .faq-layout { display: grid; grid-template-columns: 250px minmax(0, 1fr); gap: 30px; align-items: start; }
 .faq-sidebar { position: sticky; top: 92px; }
@@ -101,6 +101,9 @@ footer { background: #0b1020; color: #94a3b8; padding: 34px 0; }
 @media (max-width: 560px) {
   .footer-link-groups { flex-direction: column; }
   .faq-index { grid-template-columns: 1fr; }
+  .faq-index a { padding: 20px 18px; background: #ffffff; border-color: rgba(109,93,252,0.28); }
+  .faq-index strong { color: #111827; font-size: 17px; }
+  .faq-index span { color: #334155; font-size: 15px; }
   .faq-sidebar-box { grid-template-columns: 1fr; }
   .faq-item summary { padding-right: 52px; }
 }
