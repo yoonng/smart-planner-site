@@ -51,13 +51,56 @@ footer { background: #0b1020; color: #94a3b8; padding: 34px 0; }
 .embedded .site-header, .embedded footer { display: none; }
 .embedded .page-hero { padding: 32px 0; }
 .embedded .page-body { padding: 28px 0; }
+
+/* FAQ page */
+.faq-hero { padding-bottom: 52px; }
+.faq-hero .eyebrow { margin-bottom: 6px; font-weight: 800; letter-spacing: 0.04em; text-transform: uppercase; }
+.faq-index { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 30px; }
+.faq-index a { display: block; padding: 18px; border-radius: 20px; background: rgba(255,255,255,0.10); border: 1px solid rgba(255,255,255,0.16); transition: transform .15s ease, background .15s ease, border-color .15s ease; }
+.faq-index a:hover { transform: translateY(-2px); background: rgba(255,255,255,0.16); border-color: rgba(255,255,255,0.28); }
+.faq-index strong { display: block; color: white; margin-bottom: 6px; }
+.faq-index span { display: block; color: #cbd5e1; font-size: 14px; line-height: 1.45; }
+.faq-page { padding-top: 42px; }
+.faq-layout { display: grid; grid-template-columns: 250px minmax(0, 1fr); gap: 30px; align-items: start; }
+.faq-sidebar { position: sticky; top: 92px; }
+.faq-sidebar-box { background: white; border: 1px solid #e2e8f0; border-radius: 22px; padding: 18px; box-shadow: 0 14px 40px rgba(15,23,42,0.06); }
+.faq-sidebar-title { color: #111827; font-weight: 900; margin-bottom: 12px; }
+.faq-sidebar-box a { display: block; color: #475569; padding: 10px 0; border-top: 1px solid #f1f5f9; font-weight: 700; font-size: 14px; }
+.faq-sidebar-box a:hover { color: #6d5dfc; }
+.faq-content { min-width: 0; }
+.faq-section { padding: 0; margin-bottom: 42px; scroll-margin-top: 94px; }
+.faq-section-head { background: linear-gradient(135deg,#ffffff,#f5f3ff); border: 1px solid #ddd6fe; border-radius: 24px; padding: 24px; margin-bottom: 18px; box-shadow: 0 18px 50px rgba(79,70,229,0.08); }
+.faq-section-head span { display: inline-block; color: #6d5dfc; font-size: 12px; font-weight: 900; text-transform: uppercase; letter-spacing: .08em; margin-bottom: 8px; }
+.faq-section-head h2 { margin: 0 0 8px; font-size: clamp(26px, 3vw, 36px); letter-spacing: -0.04em; color: #111827; }
+.faq-section-head p { margin: 0; color: #64748b; line-height: 1.7; }
+.faq-item { background: white; border: 1px solid #e2e8f0; border-radius: 18px; margin-bottom: 12px; overflow: hidden; box-shadow: 0 10px 28px rgba(15,23,42,0.045); }
+.faq-item summary { cursor: pointer; list-style: none; padding: 18px 56px 18px 20px; color: #111827; font-weight: 850; position: relative; }
+.faq-item summary::-webkit-details-marker { display: none; }
+.faq-item summary::after { content: "+"; position: absolute; right: 18px; top: 50%; transform: translateY(-50%); width: 28px; height: 28px; border-radius: 999px; display: grid; place-items: center; background: #eef2ff; color: #6d5dfc; font-weight: 900; }
+.faq-item[open] summary { border-bottom: 1px solid #e2e8f0; background: #fafaff; }
+.faq-item[open] summary::after { content: "−"; }
+.faq-answer { padding: 18px 20px 20px; }
+.faq-answer p, .faq-answer li { color: #64748b; line-height: 1.75; }
+.faq-answer p:first-child, .faq-answer ul:first-child { margin-top: 0; }
+.faq-answer p:last-child, .faq-answer ul:last-child { margin-bottom: 0; }
+.faq-answer ul { padding-left: 22px; }
+.faq-answer a { color: #4f46e5; font-weight: 800; text-decoration: underline; text-underline-offset: 3px; }
+
 @media (max-width: 850px) {
   .nav-links { display: none; }
   .hero-grid, .cards, .policy-grid, .pro-card { grid-template-columns: 1fr; }
   .phone { width: 292px; height: 584px; }
   .foot { flex-direction: column; }
   .footer-link-groups { width: 100%; justify-content: space-between; gap: 24px; margin-left: 0; text-align: left; }
+  .faq-index { grid-template-columns: 1fr 1fr; }
+  .faq-layout { grid-template-columns: 1fr; }
+  .faq-sidebar { position: static; }
+  .faq-sidebar-box { display: grid; grid-template-columns: 1fr 1fr; gap: 0 18px; }
+  .faq-sidebar-title { grid-column: 1 / -1; }
 }
 @media (max-width: 560px) {
   .footer-link-groups { flex-direction: column; }
+  .faq-index { grid-template-columns: 1fr; }
+  .faq-sidebar-box { grid-template-columns: 1fr; }
+  .faq-item summary { padding-right: 52px; }
 }
