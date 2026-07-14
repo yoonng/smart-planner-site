@@ -1,4 +1,20 @@
 document.addEventListener('DOMContentLoaded', function () {
+  const faviconHref = '/assets/favicon.svg';
+  if (!document.querySelector('link[rel="icon"]')) {
+    const favicon = document.createElement('link');
+    favicon.rel = 'icon';
+    favicon.type = 'image/svg+xml';
+    favicon.href = faviconHref;
+    document.head.appendChild(favicon);
+  }
+  if (!document.querySelector('link[rel="shortcut icon"]')) {
+    const shortcutIcon = document.createElement('link');
+    shortcutIcon.rel = 'shortcut icon';
+    shortcutIcon.type = 'image/svg+xml';
+    shortcutIcon.href = faviconHref;
+    document.head.appendChild(shortcutIcon);
+  }
+
   const path = window.location.pathname;
   const isCommunityPage = path.includes('/community/');
   const isSmartPlannerPage = path.includes('/smart-planner/');
