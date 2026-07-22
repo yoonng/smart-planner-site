@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const issueCode = form.querySelector('input[name="issue_code"]');
   const priorityCode = form.querySelector('input[name="priority_code"]');
   const purchasePanel = form.querySelector('[data-purchase-panel]');
+  const purchaseFields = Array.from(purchasePanel.querySelectorAll('input, select, textarea'));
   const samePurchaseEmail = form.querySelector('#same-purchase-email');
   const purchaseEmail = form.querySelector('#purchase-email');
   const attachments = Array.from(form.querySelectorAll('input[type="file"]'));
@@ -36,13 +37,20 @@ document.addEventListener('DOMContentLoaded', function () {
   function currentGroup() { return groups[category.value] || groups.other; }
   function currentIssue(group) { return group.issues.find((item) => item[0] === issue.value) || group.issues[0]; }
   function clean(value) { return String(value || '').replace(/[\r\n\t]+/g, ' ').replace(/[\[\]<>]/g, '').replace(/\s+/g, ' ').trim().slice(0, 100); }
-  function makeTicket() { const now = new Date(); const date = `${now.getFullYear()}${String(now.getMonth() + 1).padStart(2, '0')}${String(now.getDate()).padStart(2, '0')}`; return `FE-${date}-${Math.random().toString(36).slice(2, 6).toUpperCase()}`; }
+  function makeTicket() {
+    const now = new Date();
+    const date = `${now.getFullYear()}${String(now.getMonth() + 1).padStart(2, '0')}${String(now.getDate()).padStart(2, '0')}`;
+    const randomValue = window.crypto && window.crypto.getRandomValues ? window.crypto.getRandomValues(new Uint32Array(1))[0].toString(36) : Math.random().toString(36).slice(2);
+    return `FE-${date}-${randomValue.slice(0, 6).toUpperCase().padEnd(6, '0')}`;
+  }
 
   function renderIssues(preferred) {
     const group = currentGroup();
     issue.innerHTML = group.issues.map(([value, code, label]) => `<option value="${value}" data-code="${code}">${label}</option>`).join('');
     if (preferred && group.issues.some((item) => item[0] === preferred)) issue.value = preferred;
     purchasePanel.hidden = !group.purchase;
+    purchaseFields.forEach((field) => { field.disabled = !group.purchase; });
+    if (!group.purchase) purchaseEmail.value = '';
     syncPurchaseEmail();
   }
 
