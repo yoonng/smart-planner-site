@@ -41,6 +41,7 @@ document.addEventListener('DOMContentLoaded', function () {
           ['smart-planner/', 'Smart Planner'],
           ['smart-planner/download.html', 'Download'],
           ['smart-planner/build-history.html', 'Build History'],
+          ['smart-planner/support.html', 'Support'],
           ['community/', 'Community'],
         ]
       : isCommunityPage
@@ -49,6 +50,7 @@ document.addEventListener('DOMContentLoaded', function () {
             ['../smart-planner/', 'Smart Planner'],
             ['../smart-planner/download.html', 'Download'],
             ['../smart-planner/build-history.html', 'Build History'],
+            ['../smart-planner/support.html', 'Support'],
             ['index.html', 'Community'],
           ]
         : [
@@ -56,6 +58,7 @@ document.addEventListener('DOMContentLoaded', function () {
             ['index.html', 'Smart Planner'],
             ['download.html', 'Download'],
             ['build-history.html', 'Build History'],
+            ['support.html', 'Support'],
             ['../community/', 'Community'],
           ];
     navLinks.innerHTML = links.map(([href, label]) => `<a href="${href}">${label}</a>`).join('');
