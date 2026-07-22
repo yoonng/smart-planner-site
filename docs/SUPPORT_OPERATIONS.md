@@ -4,6 +4,7 @@
 
 - Private support form: `https://feathly.com/smart-planner/support.html`
 - Support mailbox: `support@feathly.com`
+- Mail provider: Zoho Mail
 - Public community: Feathly Discord
 
 Discord is not an official channel for billing, refunds, purchase records, privacy requests, private files, or security reports.
@@ -48,9 +49,9 @@ The user title is sanitized and limited before it is added to the subject. Categ
 
 Priority is a routing aid. It is not a guaranteed response-time commitment.
 
-## Suggested Gmail labels and filters
+## Zoho Mail folders, tags, and incoming filters
 
-Create labels:
+Create folders or tags:
 
 ```text
 Support/P1
@@ -66,31 +67,54 @@ Support/Feedback
 Support/Other
 ```
 
-Suggested Gmail filter queries:
+In Zoho Mail:
 
 ```text
-subject:"[FEATHLY-SUPPORT]" subject:"[P1]"
-subject:"[FEATHLY-SUPPORT][BILLING]"
-subject:"[FEATHLY-SUPPORT][REFUND]"
-subject:"[FEATHLY-SUPPORT][PLANNER]"
-subject:"[FEATHLY-SUPPORT][NOTIFICATION]"
-subject:"[FEATHLY-SUPPORT][DATA]"
-subject:"[FEATHLY-SUPPORT][TECHNICAL]"
-subject:"[FEATHLY-SUPPORT][PRIVACY]"
-subject:"[FEATHLY-SUPPORT][SECURITY]"
-subject:"[FEATHLY-SUPPORT][FEEDBACK]"
-subject:"[FEATHLY-SUPPORT][OTHER]"
+Settings
+→ Filters
+→ Incoming Filters
+→ New Filter
 ```
 
-Apply the category label and keep the message in the Inbox. P1 messages should also receive `Support/P1`, be marked important, and optionally forward to an approved internal alert channel.
+Create filters using `Subject contains` conditions:
 
-## First activation
+```text
+[FEATHLY-SUPPORT][BILLING]
+[FEATHLY-SUPPORT][REFUND]
+[FEATHLY-SUPPORT][PLANNER]
+[FEATHLY-SUPPORT][NOTIFICATION]
+[FEATHLY-SUPPORT][DATA]
+[FEATHLY-SUPPORT][TECHNICAL]
+[FEATHLY-SUPPORT][PRIVACY]
+[FEATHLY-SUPPORT][SECURITY]
+[FEATHLY-SUPPORT][FEEDBACK]
+[FEATHLY-SUPPORT][OTHER]
+```
 
-The static form currently submits through FormSubmit to `support@feathly.com`.
+Use a separate high-priority filter where the subject contains both:
 
-1. Publish the branch to the live site.
-2. Submit one harmless test request from the live support page.
-3. Open the activation message delivered to `support@feathly.com`.
+```text
+[FEATHLY-SUPPORT]
+[P1]
+```
+
+Recommended actions:
+
+- move to or tag with the matching Support folder/tag;
+- keep P1 visible and flagged as important;
+- optionally create a Zoho task or approved internal alert for P1;
+- stop later filters only when the category action is complete and intentional;
+- keep the ticket reference in all replies.
+
+## Current delivery path — FormSubmit to Zoho Mail
+
+The static support form currently submits through FormSubmit to `support@feathly.com`. FormSubmit forwards the submission to the Zoho-hosted mailbox; no Zoho SMTP credentials are used by the public static page.
+
+Activation and verification:
+
+1. Open the live support page.
+2. Submit one harmless test request.
+3. Open the FormSubmit activation message in the Zoho `support@feathly.com` mailbox.
 4. Confirm the form endpoint.
 5. Submit a second request and verify:
    - structured subject;
@@ -100,9 +124,46 @@ The static form currently submits through FormSubmit to `support@feathly.com`.
    - confirmation email;
    - attachment delivery;
    - redirect to `support-thanks.html`.
-6. Check Spam if no activation message is visible.
+6. Check Zoho Spam and Quarantine if no activation message is visible.
 
 After activation, replace the public email endpoint with the provider's random endpoint token when available, so the support email address is not exposed in the form action.
+
+## Future owned support backend — Zoho SMTP
+
+The long-term production path should replace the third-party form relay with a Feathly-owned support intake API.
+
+```text
+feathly.com support form
+→ Feathly support intake API
+→ validation, rate limiting, malware/type checks, ticket persistence
+→ Zoho SMTP notification to support@feathly.com
+→ Zoho SMTP confirmation to the requester
+```
+
+Security rules:
+
+- Never put SMTP host, username, password, or app-specific password in HTML or browser JavaScript.
+- Store credentials only in the server environment or Secret Manager.
+- Use an application-specific password, especially when MFA is enabled.
+- Authenticate as `support@feathly.com` or an approved alias and keep the From address aligned with the authenticated mailbox.
+- Put the requester's address in Reply-To, not From.
+- Record a server-generated ticket before sending mail.
+- Make retries idempotent so one form submission does not create duplicate tickets or emails.
+- Redact sensitive purchase data from application logs.
+
+Zoho server configuration must be read from the Zoho account because the correct host can vary by account type and data center. Typical settings are:
+
+```text
+Free organization / personal account:
+  smtp.zoho.com:465 SSL
+  smtp.zoho.com:587 TLS
+
+Paid organization with custom-domain address:
+  smtppro.zoho.com:465 SSL
+  smtppro.zoho.com:587 TLS
+```
+
+Do not assume the generic server value without checking Zoho Mail → Settings → Mail Accounts → Server Configuration Details for `support@feathly.com`.
 
 ## Attachment policy
 
