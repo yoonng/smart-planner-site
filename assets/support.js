@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', function () {
     billing: { code: 'BILLING', priority: 'P2', purchase: true, issues: [['purchase_not_active', 'PURCHASE_NOT_ACTIVE', 'PRO purchase is not active'], ['charged_no_access', 'CHARGED_NO_ACCESS', 'Charged but PRO access is missing'], ['purchase_restore', 'PURCHASE_RESTORE', 'Restore Purchase problem'], ['purchase_account', 'PURCHASE_ACCOUNT', 'Google Play purchase account problem'], ['other_billing', 'OTHER_BILLING', 'Other billing or PRO question']] },
     refund: { code: 'REFUND', priority: 'P2', purchase: true, issues: [['refund_request', 'REFUND_REQUEST', 'Refund request guidance'], ['refund_status', 'REFUND_STATUS', 'Refund status question'], ['refund_pro_active', 'REFUND_PRO_ACTIVE', 'PRO remains active after refund'], ['unrecognized_purchase', 'UNRECOGNIZED_PURCHASE', 'Unrecognized purchase']] },
     planner: { code: 'PLANNER', priority: 'P2', purchase: false, issues: [['loop_schedule', 'LOOP_SCHEDULE', 'Loop or schedule problem'], ['home_stats', 'HOME_STATS', 'Home grouping or statistics problem'], ['recall_complete_snooze', 'ACTIONS', 'Recall, Complete, or Snooze problem'], ['focus_timer', 'FOCUS_TIMER', 'Focus Timer problem']] },
-    notification: { code: 'NOTIFICATION', priority: 'P2', purchase: false, issues: [['not_delivered', 'NOT_DELIVERED', 'Notification was not delivered'], ['wrong_time', 'WRONG_TIME', 'Notification arrived at the wrong time'], ['duplicate', 'DUPLICATE', 'Duplicate notification'], ['permission', 'PERMISSION', 'Notification permission problem']] },
+    notification: { code: 'NOTIFICATION', priority: 'P2', purchase: false, issues: [['alarm_not_delivered', 'ALARM_NOT_DELIVERED', 'Reminder or alarm did not fire'], ['background_delivery', 'BACKGROUND_DELIVERY', 'Reminder failed while the app was closed or in background'], ['force_stop_recovery', 'FORCE_STOP_RECOVERY', 'Reminder was not restored after reopening the app'], ['wrong_time', 'WRONG_TIME', 'Notification arrived at the wrong time'], ['duplicate', 'DUPLICATE', 'Duplicate notification'], ['permission', 'PERMISSION', 'Notification or alarm permission problem']] },
     data: { code: 'DATA', priority: 'P2', purchase: false, issues: [['backup_export', 'BACKUP_EXPORT', 'Backup or export problem'], ['import_restore', 'IMPORT_RESTORE', 'Import or restore problem'], ['data_loss', 'DATA_LOSS', 'Possible data loss'], ['migration', 'MIGRATION', 'Upgrade or migration problem']] },
     technical: { code: 'TECHNICAL', priority: 'P2', purchase: false, issues: [['crash', 'CRASH', 'App crash or freeze'], ['performance', 'PERFORMANCE', 'Performance or battery problem'], ['layout', 'LAYOUT', 'Screen, layout, theme, or language problem'], ['other_technical', 'OTHER_TECHNICAL', 'Other technical problem']] },
     privacy: { code: 'PRIVACY', priority: 'P2', purchase: false, issues: [['data_request', 'DATA_REQUEST', 'Privacy or personal data request'], ['deletion_request', 'DELETION_REQUEST', 'Support data deletion request'], ['policy_question', 'POLICY_QUESTION', 'Privacy policy question']] },
@@ -33,6 +33,14 @@ document.addEventListener('DOMContentLoaded', function () {
     feedback: { code: 'FEEDBACK', priority: 'P3', purchase: false, issues: [['feature_request', 'FEATURE_REQUEST', 'Feature request'], ['usability', 'USABILITY', 'Usability feedback'], ['translation', 'TRANSLATION', 'Translation suggestion'], ['general_feedback', 'GENERAL_FEEDBACK', 'General feedback']] },
     other: { code: 'OTHER', priority: 'P3', purchase: false, issues: [['business', 'BUSINESS', 'Business or partnership inquiry'], ['other_question', 'OTHER_QUESTION', 'Other question']] }
   };
+
+  const p1IssueCodes = new Set([
+    'DATA_LOSS',
+    'UNRECOGNIZED_PURCHASE',
+    'ALARM_NOT_DELIVERED',
+    'BACKGROUND_DELIVERY',
+    'FORCE_STOP_RECOVERY'
+  ]);
 
   function currentGroup() { return groups[category.value] || groups.other; }
   function currentIssue(group) { return group.issues.find((item) => item[0] === issue.value) || group.issues[0]; }
@@ -92,7 +100,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const group = currentGroup();
     const selected = currentIssue(group);
     const reference = makeTicket();
-    const priority = selected[1] === 'DATA_LOSS' || selected[1] === 'UNRECOGNIZED_PURCHASE' ? 'P1' : group.priority;
+    const priority = p1IssueCodes.has(selected[1]) ? 'P1' : group.priority;
     ticket.value = reference;
     categoryCode.value = group.code;
     issueCode.value = selected[1];
