@@ -3,10 +3,10 @@
 ## Official channels
 
 - Private support form: `https://feathly.com/smart-planner/support.html`
-- Support mailbox: `support@feathly.com`
+- Support mailbox: `support@feathly.com` hosted by Zoho Mail
 - Public community: Feathly Discord
 
-Discord is not an official channel for billing, refunds, purchase records, privacy requests, private files, or security reports.
+Discord is not an official channel for billing, refunds, purchase records, missed-alarm evidence, privacy requests, private files, or security reports.
 
 ## Structured email subject
 
@@ -21,8 +21,10 @@ Examples:
 ```text
 [FEATHLY-SUPPORT][BILLING][PURCHASE_NOT_ACTIVE][P2][FE-20260722-A1B2] PRO is not active
 [FEATHLY-SUPPORT][REFUND][REFUND_STATUS][P2][FE-20260722-C3D4] Refund status question
-[FEATHLY-SUPPORT][DATA][DATA_LOSS][P1][FE-20260722-E5F6] Possible data loss
-[FEATHLY-SUPPORT][SECURITY][SECURITY_REPORT][P1][FE-20260722-G7H8] Security report
+[FEATHLY-SUPPORT][NOTIFICATION][ALARM_NOT_DELIVERED][P1][FE-20260723-E5F6] Reminder did not fire
+[FEATHLY-SUPPORT][NOTIFICATION][FORCE_STOP_RECOVERY][P1][FE-20260723-G7H8] Alarm was not restored after relaunch
+[FEATHLY-SUPPORT][DATA][DATA_LOSS][P1][FE-20260722-I9J0] Possible data loss
+[FEATHLY-SUPPORT][SECURITY][SECURITY_REPORT][P1][FE-20260722-K1L2] Security report
 ```
 
 The user title is sanitized and limited before it is added to the subject. Category, issue, priority, and ticket values come from fixed JavaScript mappings rather than free text.
@@ -42,15 +44,15 @@ The user title is sanitized and limited before it is added to the subject. Categ
 
 ## Priority codes
 
-- `P1`: security, possible data loss, or unrecognized purchase
-- `P2`: billing, refund, planner, notification, data, technical, or privacy support
+- `P1`: security, possible data loss, unrecognized purchase, missed reminder/alarm, background delivery failure, or failed future-alarm recovery after relaunch
+- `P2`: billing, refund, planner, notification timing/duplicate/permission, technical, or privacy support
 - `P3`: feedback, feature requests, business inquiries, and other questions
 
 Priority is a routing aid. It is not a guaranteed response-time commitment.
 
-## Suggested Gmail labels and filters
+## Zoho Mail folders and filters
 
-Create labels:
+Create folders or labels:
 
 ```text
 Support/P1
@@ -66,43 +68,59 @@ Support/Feedback
 Support/Other
 ```
 
-Suggested Gmail filter queries:
+Create subject-based filters:
 
 ```text
-subject:"[FEATHLY-SUPPORT]" subject:"[P1]"
-subject:"[FEATHLY-SUPPORT][BILLING]"
-subject:"[FEATHLY-SUPPORT][REFUND]"
-subject:"[FEATHLY-SUPPORT][PLANNER]"
-subject:"[FEATHLY-SUPPORT][NOTIFICATION]"
-subject:"[FEATHLY-SUPPORT][DATA]"
-subject:"[FEATHLY-SUPPORT][TECHNICAL]"
-subject:"[FEATHLY-SUPPORT][PRIVACY]"
-subject:"[FEATHLY-SUPPORT][SECURITY]"
-subject:"[FEATHLY-SUPPORT][FEEDBACK]"
-subject:"[FEATHLY-SUPPORT][OTHER]"
+[FEATHLY-SUPPORT] + [P1]                         -> Support/P1
+[FEATHLY-SUPPORT][BILLING]                      -> Support/Billing
+[FEATHLY-SUPPORT][REFUND]                       -> Support/Refund
+[FEATHLY-SUPPORT][PLANNER]                      -> Support/Planner
+[FEATHLY-SUPPORT][NOTIFICATION]                 -> Support/Notifications
+[FEATHLY-SUPPORT][DATA]                         -> Support/Data
+[FEATHLY-SUPPORT][TECHNICAL]                    -> Support/Technical
+[FEATHLY-SUPPORT][PRIVACY]                      -> Support/Privacy
+[FEATHLY-SUPPORT][SECURITY]                     -> Support/Security
+[FEATHLY-SUPPORT][FEEDBACK]                     -> Support/Feedback
+[FEATHLY-SUPPORT][OTHER]                        -> Support/Other
 ```
 
-Apply the category label and keep the message in the Inbox. P1 messages should also receive `Support/P1`, be marked important, and optionally forward to an approved internal alert channel.
+P1 messages should remain visible in the main Inbox, be marked important, and optionally generate an approved internal alert. Do not auto-forward personal or purchase data into Discord or Jira.
 
-## First activation
+## Android reminder reports
 
-The static form currently submits through FormSubmit to `support@feathly.com`.
+For missed or unrecovered reminders, request:
 
-1. Publish the branch to the live site.
-2. Submit one harmless test request from the live support page.
-3. Open the activation message delivered to `support@feathly.com`.
-4. Confirm the form endpoint.
-5. Submit a second request and verify:
-   - structured subject;
-   - Reply-To address;
-   - ticket reference;
-   - category and issue fields;
-   - confirmation email;
-   - attachment delivery;
-   - redirect to `support-thanks.html`.
-6. Check Spam if no activation message is visible.
+- scheduled local time and timezone;
+- device model and Android version;
+- app version/build;
+- whether the app was foregrounded, backgrounded, removed from recents, force-stopped, rebooted, or updated;
+- notification permission state;
+- Alarms & reminders / exact alarm access state when available;
+- battery restriction state;
+- screenshot or screen recording when safe.
 
-After activation, replace the public email endpoint with the provider's random endpoint token when available, so the support email address is not exposed in the form action.
+Do not classify Android Force stop itself as a Feathly defect. Android may cancel or block alarms while the package remains force-stopped. Classify failure to restore a future pending alarm after the user explicitly reopens Smart Planner as a Product defect candidate.
+
+## Current form delivery and future Zoho SMTP
+
+The current static form submits through FormSubmit to the Zoho-hosted mailbox `support@feathly.com`.
+
+First activation:
+
+1. Publish the live support page.
+2. Submit one harmless test request.
+3. Open the FormSubmit activation message in Zoho Mail.
+4. Confirm the endpoint.
+5. Submit a second request and verify the structured subject, Reply-To, ticket reference, category fields, sender confirmation, attachments, and redirect.
+6. Check Zoho Spam if no activation message is visible.
+
+Future Feathly-owned support API:
+
+- submit the form to a protected server endpoint;
+- send the internal support message and the user acknowledgement through Zoho SMTP;
+- store SMTP credentials only in local `.env` and production Secret Manager;
+- never place SMTP credentials in this public static repository;
+- apply server-side rate limits, file checks, retention rules, and idempotent ticket creation.
 
 ## Attachment policy
 
@@ -128,6 +146,8 @@ Do not copy every support message into Jira. Create or link Jira work only for:
 
 - reproducible Product defects;
 - repeated incidents affecting multiple users;
+- missed alarms outside Android's documented Force stop restriction;
+- failed pending-alarm recovery after the user reopens the app;
 - billing contract or entitlement inconsistencies;
 - security or privacy incidents;
 - data-loss risks;
