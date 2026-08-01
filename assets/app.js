@@ -116,4 +116,28 @@ document.addEventListener('DOMContentLoaded', function () {
     if (oldLinks) oldLinks.replaceWith(grouped);
     else foot.appendChild(grouped);
   }
+
+  const normalizeFocusTimerTerminology = (value) => value
+    .replace(/Focus\s*\/\s*PODO/gi, 'Focus Timer')
+    .replace(/Pomodoro/gi, 'Focus Timer')
+    .replace(/PODO/gi, 'Focus Timer');
+
+  const textWalker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
+  const textNodes = [];
+  while (textWalker.nextNode()) textNodes.push(textWalker.currentNode);
+  textNodes.forEach((node) => {
+    const parentTag = node.parentElement?.tagName;
+    if (parentTag === 'SCRIPT' || parentTag === 'STYLE') return;
+    const normalized = normalizeFocusTimerTerminology(node.nodeValue || '');
+    if (normalized !== node.nodeValue) node.nodeValue = normalized;
+  });
+
+  document.querySelectorAll('[title], [aria-label], [alt]').forEach((element) => {
+    ['title', 'aria-label', 'alt'].forEach((attribute) => {
+      if (!element.hasAttribute(attribute)) return;
+      const current = element.getAttribute(attribute) || '';
+      element.setAttribute(attribute, normalizeFocusTimerTerminology(current));
+    });
+  });
+  document.title = normalizeFocusTimerTerminology(document.title);
 });
