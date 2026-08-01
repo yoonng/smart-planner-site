@@ -1,4 +1,64 @@
 document.addEventListener('DOMContentLoaded', function () {
+  const normalizePath = (rawPath) => {
+    let value = rawPath || '/';
+    value = value.replace(/\/{2,}/g, '/');
+    if (value === '/index.html') return '/';
+    if (value.endsWith('/index.html')) return value.slice(0, -10) || '/';
+    return value;
+  };
+
+  const englishToKorean = {
+    '/': '/ko/',
+    '/smart-planner/': '/ko/smart-planner/',
+    '/smart-planner/user-guide.html': '/ko/smart-planner/user-guide.html',
+    '/smart-planner/download.html': '/ko/smart-planner/download.html',
+    '/smart-planner/faq.html': '/ko/smart-planner/faq.html',
+    '/smart-planner/support.html': '/ko/smart-planner/support.html',
+    '/smart-planner/build-history.html': '/ko/smart-planner/build-history.html',
+  };
+  const koreanToEnglish = Object.fromEntries(
+    Object.entries(englishToKorean).map(([englishPath, koreanPath]) => [koreanPath, englishPath]),
+  );
+
+  const path = normalizePath(window.location.pathname);
+  const isKoreanPage = path === '/ko/' || path.startsWith('/ko/');
+  const currentLocale = isKoreanPage ? 'ko' : 'en';
+  const params = new URLSearchParams(window.location.search);
+  const explicitLocale = params.get('lang');
+  const savedLocale = window.localStorage.getItem('feathly-language');
+  const browserLocale = (navigator.languages && navigator.languages[0]) || navigator.language || 'en';
+  const browserPreferredLocale = browserLocale.toLowerCase().startsWith('ko') ? 'ko' : 'en';
+
+  const buildLocalizedUrl = (targetPath) => {
+    const nextParams = new URLSearchParams(window.location.search);
+    nextParams.delete('lang');
+    const query = nextParams.toString();
+    return `${targetPath}${query ? `?${query}` : ''}${window.location.hash || ''}`;
+  };
+
+  const localizedPathFor = (locale) => {
+    if (locale === 'ko') {
+      if (isKoreanPage) return path;
+      return englishToKorean[path] || '/ko/';
+    }
+    if (!isKoreanPage) return path;
+    return koreanToEnglish[path] || '/';
+  };
+
+  if (explicitLocale === 'ko' || explicitLocale === 'en') {
+    window.localStorage.setItem('feathly-language', explicitLocale);
+    const targetPath = localizedPathFor(explicitLocale);
+    if (targetPath !== path) {
+      window.location.replace(buildLocalizedUrl(targetPath));
+      return;
+    }
+  } else if (!savedLocale && currentLocale === 'en' && browserPreferredLocale === 'ko' && englishToKorean[path]) {
+    window.location.replace(buildLocalizedUrl(englishToKorean[path]));
+    return;
+  }
+
+  document.documentElement.lang = currentLocale;
+
   const faviconHref = '/assets/favicon.svg';
   if (!document.querySelector('link[rel="icon"]')) {
     const favicon = document.createElement('link');
@@ -15,100 +75,144 @@ document.addEventListener('DOMContentLoaded', function () {
     document.head.appendChild(shortcutIcon);
   }
 
-  const path = window.location.pathname;
-  const isCommunityPage = path.includes('/community/');
-  const isSmartPlannerPage = path.includes('/smart-planner/');
-  const isRootPage = !isCommunityPage && !isSmartPlannerPage;
-  const assetPrefix = isRootPage ? 'assets/' : '../assets/';
-  const themePath = `${assetPrefix}feathly-theme.css`;
   if (!document.querySelector('link[href$="feathly-theme.css"]')) {
     const theme = document.createElement('link');
     theme.rel = 'stylesheet';
-    theme.href = themePath;
+    theme.href = '/assets/feathly-theme.css';
     document.head.appendChild(theme);
   }
   if (!document.querySelector('link[href$="navigation.css"]')) {
     const navigation = document.createElement('link');
     navigation.rel = 'stylesheet';
-    navigation.href = `${assetPrefix}navigation.css`;
+    navigation.href = '/assets/navigation.css';
     document.head.appendChild(navigation);
   }
 
-  const params = new URLSearchParams(window.location.search);
   if (params.get('embedded') === '1') {
     document.documentElement.classList.add('embedded');
     document.body.classList.add('embedded');
   }
 
+  const labels = currentLocale === 'ko'
+    ? {
+        home: '홈',
+        planner: 'Smart Planner',
+        guide: '사용자 설명서',
+        download: '다운로드',
+        build: '빌드 기록',
+        support: '지원',
+        community: '커뮤니티',
+        menu: '메뉴',
+        openMenu: '사이트 메뉴 열기',
+        primary: '주요 메뉴',
+        mobile: '모바일 메뉴',
+        language: '언어',
+      }
+    : {
+        home: 'Home',
+        planner: 'Smart Planner',
+        guide: 'User Guide',
+        download: 'Download',
+        build: 'Build History',
+        support: 'Support',
+        community: 'Community',
+        menu: 'Menu',
+        openMenu: 'Open site menu',
+        primary: 'Primary navigation',
+        mobile: 'Mobile navigation',
+        language: 'Language',
+      };
+
+  const links = currentLocale === 'ko'
+    ? [
+        ['/ko/', labels.home],
+        ['/ko/smart-planner/', labels.planner],
+        ['/ko/smart-planner/user-guide.html', labels.guide],
+        ['/ko/smart-planner/download.html', labels.download],
+        ['/ko/smart-planner/build-history.html', labels.build],
+        ['/ko/smart-planner/support.html', labels.support],
+        ['/community/', labels.community],
+      ]
+    : [
+        ['/', labels.home],
+        ['/smart-planner/', labels.planner],
+        ['/smart-planner/user-guide.html', labels.guide],
+        ['/smart-planner/download.html', labels.download],
+        ['/smart-planner/build-history.html', labels.build],
+        ['/smart-planner/support.html', labels.support],
+        ['/community/', labels.community],
+      ];
+
   const navLinks = document.querySelector('.nav-links');
+  const linksMarkup = links.map(([href, label]) => `<a href="${href}">${label}</a>`).join('');
   if (navLinks) {
-    const links = isRootPage
-      ? [
-          ['index.html', 'Home'],
-          ['smart-planner/', 'Smart Planner'],
-          ['smart-planner/user-guide.html', 'User Guide'],
-          ['smart-planner/download.html', 'Download'],
-          ['smart-planner/build-history.html', 'Build History'],
-          ['smart-planner/support.html', 'Support'],
-          ['community/', 'Community'],
-        ]
-      : isCommunityPage
-        ? [
-            ['../index.html', 'Home'],
-            ['../smart-planner/', 'Smart Planner'],
-            ['../smart-planner/user-guide.html', 'User Guide'],
-            ['../smart-planner/download.html', 'Download'],
-            ['../smart-planner/build-history.html', 'Build History'],
-            ['../smart-planner/support.html', 'Support'],
-            ['index.html', 'Community'],
-          ]
-        : [
-            ['../index.html', 'Home'],
-            ['index.html', 'Smart Planner'],
-            ['user-guide.html', 'User Guide'],
-            ['download.html', 'Download'],
-            ['build-history.html', 'Build History'],
-            ['support.html', 'Support'],
-            ['../community/', 'Community'],
-          ];
-
-    const linksMarkup = links.map(([href, label]) => `<a href="${href}">${label}</a>`).join('');
+    navLinks.setAttribute('aria-label', labels.primary);
     navLinks.innerHTML = linksMarkup;
+  }
 
-    const headerNav = document.querySelector('.site-header .nav');
-    if (headerNav && !headerNav.querySelector('.mobile-nav')) {
-      const mobileNav = document.createElement('details');
-      mobileNav.className = 'mobile-nav';
-      mobileNav.innerHTML = `<summary aria-label="Open site menu">Menu</summary><nav class="mobile-nav-panel" aria-label="Mobile navigation">${linksMarkup}</nav>`;
-      headerNav.appendChild(mobileNav);
-      mobileNav.querySelectorAll('a').forEach((link) => {
-        link.addEventListener('click', () => mobileNav.removeAttribute('open'));
-      });
-    }
+  const headerNav = document.querySelector('.site-header .nav');
+  if (headerNav && !headerNav.querySelector('.language-switcher')) {
+    const languageSwitcher = document.createElement('label');
+    languageSwitcher.className = 'language-switcher';
+    languageSwitcher.innerHTML = `<span class="sr-only">${labels.language}</span><select aria-label="${labels.language}"><option value="en">English</option><option value="ko">한국어</option></select>`;
+    const languageSelect = languageSwitcher.querySelector('select');
+    languageSelect.value = currentLocale;
+    languageSelect.addEventListener('change', () => {
+      const nextLocale = languageSelect.value;
+      window.localStorage.setItem('feathly-language', nextLocale);
+      window.location.assign(buildLocalizedUrl(localizedPathFor(nextLocale)));
+    });
+    headerNav.appendChild(languageSwitcher);
+  }
+
+  if (headerNav && !headerNav.querySelector('.mobile-nav')) {
+    const mobileNav = document.createElement('details');
+    mobileNav.className = 'mobile-nav';
+    mobileNav.innerHTML = `<summary aria-label="${labels.openMenu}">${labels.menu}</summary><nav class="mobile-nav-panel" aria-label="${labels.mobile}">${linksMarkup}</nav>`;
+    headerNav.appendChild(mobileNav);
+    mobileNav.querySelectorAll('a').forEach((link) => {
+      link.addEventListener('click', () => mobileNav.removeAttribute('open'));
+    });
   }
 
   const foot = document.querySelector('footer .foot');
   if (foot) {
-    const prefix = isRootPage ? 'smart-planner/' : isCommunityPage ? '../smart-planner/' : '';
     const brand = foot.querySelector('div:first-child');
     if (brand) brand.classList.add('foot-brand');
-    const groups = [
-      [
-        ['User Guide', `${prefix}user-guide.html`],
-        ['Learning Science', `${prefix}learning-science.html`],
-        ['Download', `${prefix}download.html`],
-        ['Build History', `${prefix}build-history.html`],
-      ],
-      [
-        ['Support', `${prefix}support.html`],
-        ['FAQ', `${prefix}faq.html`],
-      ],
-      [
-        ['Privacy', `${prefix}privacy.html`],
-        ['Terms', `${prefix}terms.html`],
-        ['Refund', `${prefix}refund.html`],
-      ],
-    ];
+    const groups = currentLocale === 'ko'
+      ? [
+          [
+            ['사용자 설명서', '/ko/smart-planner/user-guide.html'],
+            ['다운로드', '/ko/smart-planner/download.html'],
+            ['빌드 기록', '/ko/smart-planner/build-history.html'],
+          ],
+          [
+            ['지원', '/ko/smart-planner/support.html'],
+            ['FAQ', '/ko/smart-planner/faq.html'],
+          ],
+          [
+            ['개인정보 처리방침 (English)', '/smart-planner/privacy.html'],
+            ['이용약관 (English)', '/smart-planner/terms.html'],
+            ['환불 정책 (English)', '/smart-planner/refund.html'],
+          ],
+        ]
+      : [
+          [
+            ['User Guide', '/smart-planner/user-guide.html'],
+            ['Learning Science', '/smart-planner/learning-science.html'],
+            ['Download', '/smart-planner/download.html'],
+            ['Build History', '/smart-planner/build-history.html'],
+          ],
+          [
+            ['Support', '/smart-planner/support.html'],
+            ['FAQ', '/smart-planner/faq.html'],
+          ],
+          [
+            ['Privacy', '/smart-planner/privacy.html'],
+            ['Terms', '/smart-planner/terms.html'],
+            ['Refund', '/smart-planner/refund.html'],
+          ],
+        ];
     const grouped = document.createElement('div');
     grouped.className = 'footer-link-groups';
     grouped.innerHTML = groups.map((group) => `<div class="footer-link-group">${group.map(([label, href]) => `<a href="${href}">${label}</a>`).join('')}</div>`).join('');
