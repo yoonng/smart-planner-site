@@ -15,6 +15,9 @@ document.addEventListener('DOMContentLoaded', function () {
     '/smart-planner/faq.html': '/ko/smart-planner/faq.html',
     '/smart-planner/support.html': '/ko/smart-planner/support.html',
     '/smart-planner/build-history.html': '/ko/smart-planner/build-history.html',
+    '/smart-planner/privacy.html': '/ko/smart-planner/privacy.html',
+    '/smart-planner/terms.html': '/ko/smart-planner/terms.html',
+    '/smart-planner/refund.html': '/ko/smart-planner/refund.html',
   };
   const koreanToEnglish = Object.fromEntries(
     Object.entries(englishToKorean).map(([englishPath, koreanPath]) => [koreanPath, englishPath]),
@@ -191,9 +194,9 @@ document.addEventListener('DOMContentLoaded', function () {
             ['FAQ', '/ko/smart-planner/faq.html'],
           ],
           [
-            ['개인정보 처리방침 (English)', '/smart-planner/privacy.html'],
-            ['이용약관 (English)', '/smart-planner/terms.html'],
-            ['환불 정책 (English)', '/smart-planner/refund.html'],
+            ['개인정보 처리방침', '/ko/smart-planner/privacy.html'],
+            ['이용약관', '/ko/smart-planner/terms.html'],
+            ['환불 정책', '/ko/smart-planner/refund.html'],
           ],
         ]
       : [
