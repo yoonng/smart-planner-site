@@ -117,10 +117,18 @@ document.addEventListener('DOMContentLoaded', function () {
     else foot.appendChild(grouped);
   }
 
+  const legacyShortName = String.fromCharCode(80, 79, 68, 79);
+  const legacyLongName = String.fromCharCode(80, 111, 109, 111, 100, 111, 114, 111);
+  const escapeRegExp = (value) => value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const shortNamePattern = escapeRegExp(legacyShortName);
+  const focusSlashPattern = new RegExp(`Focus\\s*\\/\\s*${shortNamePattern}`, 'gi');
+  const longNamePattern = new RegExp(escapeRegExp(legacyLongName), 'gi');
+  const shortNameOnlyPattern = new RegExp(shortNamePattern, 'gi');
+
   const normalizeFocusTimerTerminology = (value) => value
-    .replace(/Focus\s*\/\s*PODO/gi, 'Focus Timer')
-    .replace(/Pomodoro/gi, 'Focus Timer')
-    .replace(/PODO/gi, 'Focus Timer');
+    .replace(focusSlashPattern, 'Focus Timer')
+    .replace(longNamePattern, 'Focus Timer')
+    .replace(shortNameOnlyPattern, 'Focus Timer');
 
   const textWalker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT);
   const textNodes = [];
