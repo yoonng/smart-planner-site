@@ -6,6 +6,7 @@ Static website for Feathly and its first product, Smart Planner.
 
 - `/` Feathly brand home
 - `/smart-planner/` Smart Planner product page
+- `/smart-planner/user-guide.html` Responsive beginner-first user guide
 - `/smart-planner/download.html` Download page
 - `/smart-planner/build-history.html` Build history and release notes
 - `/smart-planner/privacy.html` Privacy Policy
@@ -15,9 +16,15 @@ Static website for Feathly and its first product, Smart Planner.
 - `/smart-planner/support.html` Structured private support form
 - `/smart-planner/support-thanks.html` Support submission confirmation
 - `/smart-planner/faq.html` FAQ
-- `/smart-planner/app-config.json` App-facing URL configuration
+- `/smart-planner/app-config.json` App-facing URL configuration, including the embedded User Guide URL
 - `/community/` Public Feathly Discord community guidance
 - `/docs/SUPPORT_OPERATIONS.md` Support mailbox routing, Gmail filters, activation, and escalation rules
+
+## User guide
+
+The User Guide remains a single responsive page while navigation, loading, and readability are comfortable. Split it into separate pages only when a section becomes too large or creates a clear mobile or desktop usability problem.
+
+The page is prepared for verified app screenshots using stable Screen IDs. Long app forms should use connected top/middle/bottom screenshots instead of one heavily reduced stitched image.
 
 ## Support form
 
@@ -31,11 +38,12 @@ After publishing the form, submit one test request and confirm the activation me
 
 ## App integration
 
-The Android app can open policy and support pages with `?embedded=1` to hide the website header/footer inside a WebView.
+The Android app can open policy, support, and user-guide pages with `?embedded=1` to hide the website header/footer inside a WebView.
 
-Example:
+Examples:
 
 ```text
+https://feathly.com/smart-planner/user-guide.html?embedded=1
 https://feathly.com/smart-planner/privacy.html?embedded=1
 ```
 
