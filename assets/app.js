@@ -19,12 +19,19 @@ document.addEventListener('DOMContentLoaded', function () {
   const isCommunityPage = path.includes('/community/');
   const isSmartPlannerPage = path.includes('/smart-planner/');
   const isRootPage = !isCommunityPage && !isSmartPlannerPage;
-  const themePath = isRootPage ? 'assets/feathly-theme.css' : isCommunityPage ? '../assets/feathly-theme.css' : '../assets/feathly-theme.css';
+  const assetPrefix = isRootPage ? 'assets/' : '../assets/';
+  const themePath = `${assetPrefix}feathly-theme.css`;
   if (!document.querySelector('link[href$="feathly-theme.css"]')) {
     const theme = document.createElement('link');
     theme.rel = 'stylesheet';
     theme.href = themePath;
     document.head.appendChild(theme);
+  }
+  if (!document.querySelector('link[href$="navigation.css"]')) {
+    const navigation = document.createElement('link');
+    navigation.rel = 'stylesheet';
+    navigation.href = `${assetPrefix}navigation.css`;
+    document.head.appendChild(navigation);
   }
 
   const params = new URLSearchParams(window.location.search);
@@ -39,6 +46,7 @@ document.addEventListener('DOMContentLoaded', function () {
       ? [
           ['index.html', 'Home'],
           ['smart-planner/', 'Smart Planner'],
+          ['smart-planner/user-guide.html', 'User Guide'],
           ['smart-planner/download.html', 'Download'],
           ['smart-planner/build-history.html', 'Build History'],
           ['smart-planner/support.html', 'Support'],
@@ -48,6 +56,7 @@ document.addEventListener('DOMContentLoaded', function () {
         ? [
             ['../index.html', 'Home'],
             ['../smart-planner/', 'Smart Planner'],
+            ['../smart-planner/user-guide.html', 'User Guide'],
             ['../smart-planner/download.html', 'Download'],
             ['../smart-planner/build-history.html', 'Build History'],
             ['../smart-planner/support.html', 'Support'],
@@ -56,12 +65,26 @@ document.addEventListener('DOMContentLoaded', function () {
         : [
             ['../index.html', 'Home'],
             ['index.html', 'Smart Planner'],
+            ['user-guide.html', 'User Guide'],
             ['download.html', 'Download'],
             ['build-history.html', 'Build History'],
             ['support.html', 'Support'],
             ['../community/', 'Community'],
           ];
-    navLinks.innerHTML = links.map(([href, label]) => `<a href="${href}">${label}</a>`).join('');
+
+    const linksMarkup = links.map(([href, label]) => `<a href="${href}">${label}</a>`).join('');
+    navLinks.innerHTML = linksMarkup;
+
+    const headerNav = document.querySelector('.site-header .nav');
+    if (headerNav && !headerNav.querySelector('.mobile-nav')) {
+      const mobileNav = document.createElement('details');
+      mobileNav.className = 'mobile-nav';
+      mobileNav.innerHTML = `<summary aria-label="Open site menu">Menu</summary><nav class="mobile-nav-panel" aria-label="Mobile navigation">${linksMarkup}</nav>`;
+      headerNav.appendChild(mobileNav);
+      mobileNav.querySelectorAll('a').forEach((link) => {
+        link.addEventListener('click', () => mobileNav.removeAttribute('open'));
+      });
+    }
   }
 
   const foot = document.querySelector('footer .foot');
@@ -71,6 +94,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (brand) brand.classList.add('foot-brand');
     const groups = [
       [
+        ['User Guide', `${prefix}user-guide.html`],
         ['Learning Science', `${prefix}learning-science.html`],
         ['Download', `${prefix}download.html`],
         ['Build History', `${prefix}build-history.html`],
