@@ -22,16 +22,28 @@
   justify-content: center;
   min-height: 44px;
   padding: 0 18px;
+  border: 1px solid rgba(52, 65, 84, 0.16);
   border-radius: 999px;
   font-weight: 850;
   background: #ffffff;
   color: #111827;
+  box-shadow: 0 10px 28px rgba(52, 65, 84, 0.10);
 }
 
 .guide-hero-actions a.secondary {
-  color: #ffffff;
-  background: rgba(255, 255, 255, 0.12);
-  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: #253247;
+  background: rgba(255, 255, 255, 0.76);
+  border: 1px solid rgba(88, 184, 232, 0.48);
+  box-shadow: 0 8px 24px rgba(74, 85, 104, 0.08);
+}
+
+.guide-hero-actions a:hover,
+.guide-hero-actions a:focus-visible {
+  color: #111827;
+  background: #ffffff;
+  border-color: rgba(50, 124, 120, 0.55);
+  outline: 3px solid rgba(88, 199, 181, 0.22);
+  outline-offset: 2px;
 }
 
 .guide-page {
@@ -339,11 +351,13 @@
   align-items: center;
   min-height: 30px;
   padding: 0 11px;
+  border: 1px solid rgba(50, 124, 120, 0.24);
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.12);
-  color: #e0e7ff;
+  background: rgba(255, 255, 255, 0.68);
+  color: #334155;
   font-size: 13px;
-  font-weight: 750;
+  font-weight: 800;
+  box-shadow: 0 6px 18px rgba(74, 85, 104, 0.06);
 }
 
 @media (max-width: 900px) {
