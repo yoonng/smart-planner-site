@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>빌드 기록 - Smart Planner</title>
+  <meta name="description" content="Feathly Smart Planner의 빌드 기록과 출시 준비 상태입니다.">
+  <link rel="canonical" href="https://feathly.com/ko/smart-planner/build-history.html">
+  <link rel="alternate" hreflang="en" href="https://feathly.com/smart-planner/build-history.html">
+  <link rel="alternate" hreflang="ko" href="https://feathly.com/ko/smart-planner/build-history.html">
+  <link rel="stylesheet" href="/assets/style.css">
+  <script defer src="/assets/app.js"></script>
+</head>
+<body>
+<header class="site-header"><div class="wrap nav"><a class="brand" href="/ko/">Feathly</a><nav class="nav-links" aria-label="주요 메뉴"></nav></div></header>
+<section class="page-hero"><div class="wrap"><h1>빌드 기록</h1><p>Smart Planner의 출시 준비 상태와 공개 가능한 변경 내용을 정리합니다.</p></div></section>
+<section class="page-body"><div class="wrap content">
+  <p class="notice">Smart Planner는 현재 Android 출시를 준비하고 있습니다. 실제 배포 빌드가 제공되면 공개 릴리즈 노트를 계속 업데이트합니다.</p>
+  <h2>현재 상태</h2>
+  <div class="card"><h3>Android v1 준비</h3><p>상태: 내부 테스트 및 Google Play 출시 준비.</p><ul><li>로컬 우선 Loop Planner 기반</li><li>현재 단계를 완료한 뒤 다음 알림을 생성하는 단계 기반 Spaced Loop</li><li>홈 화면의 NOW, TODAY, LATER, WAITING 그룹</li><li>생성된 reminder occurrence 기준의 홈 통계와 Insights</li><li>Routine Loop 및 Review 흐름</li><li>기본 PRO 기능과 Google Play 구매 연동 준비</li><li>데이터 안전, 지원, 개인정보 처리방침과 이용약관 페이지 준비</li></ul></div>
+  <h2>최근 내부 업데이트</h2>
+  <div class="card"><h3>Occurrence 기반 홈과 Insights 모델</h3><p>홈의 개수와 Insights 통계는 실제로 생성된 알림 행을 기준으로 계산합니다. 아직 생성되지 않은 패턴의 미래 단계는 미리 포함하지 않습니다.</p><ul><li><strong>완료</strong>: 오늘의 운영일 안에서 완료된 실제 알림</li><li><strong>NOW</strong>: 현재 시간이 되었거나 지난 알림</li><li><strong>TODAY</strong>: 오늘의 운영일 안에서 나중에 예정된 알림</li><li><strong>LATER</strong>: 오늘 이후에 예정된 알림</li><li><strong>WAITING</strong>: 완료되지 않은 실제 알림이 없는 활성 Loop</li></ul></div>
+  <h2>플랫폼 계획</h2><ul><li>Android: 첫 출시 대상</li><li>iOS: Android 안정화 후 진행 예정</li><li>태블릿, PC, Mac: 순차 출시 검토</li></ul>
+  <h2>안내</h2><p>테스트 중에는 빌드 내용이 변경될 수 있습니다. 공개되는 정보는 사용자가 이해하기 쉽도록 간단하고 명확하게 유지합니다.</p>
+</div></section>
+<footer><div class="wrap foot"><div>Smart Planner - Feathly</div><div></div></div></footer>
+</body></html>
