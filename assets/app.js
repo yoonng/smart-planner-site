@@ -183,7 +183,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const groups = currentLocale === 'ko'
       ? [
           [
-            ['사용자 설명서', '/ko/smart-planner/user-guide.html'],
             ['다운로드', '/ko/smart-planner/download.html'],
             ['빌드 기록', '/ko/smart-planner/build-history.html'],
           ],
@@ -199,7 +198,6 @@ document.addEventListener('DOMContentLoaded', function () {
         ]
       : [
           [
-            ['User Guide', '/smart-planner/user-guide.html'],
             ['Learning Science', '/smart-planner/learning-science.html'],
             ['Download', '/smart-planner/download.html'],
             ['Build History', '/smart-planner/build-history.html'],
