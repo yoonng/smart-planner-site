@@ -360,12 +360,12 @@
   box-shadow: 0 6px 18px rgba(74, 85, 104, 0.06);
 }
 
-/* Home screenshot: the red outlines are part of the supplied annotated capture. */
+/* Home screenshot: use the verified repository PNG directly. */
 .guide-shot[data-screen-id="BEGINNER-02"] .guide-shot-placeholder {
   min-height: clamp(620px, 88vw, 980px);
   padding: 0;
   background-color: #f8fafc;
-  background-image: url("/assets/user-guide/home-now-today-later-annotated.svg");
+  background-image: url("https://raw.githubusercontent.com/yoonng/feathly-smart-planner/main/manual/0.9/en/screenshots/BEGINNER-02_en_light_phone_v2.png");
   background-repeat: no-repeat;
   background-position: center top;
   background-size: contain;
