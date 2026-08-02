@@ -130,7 +130,6 @@ document.addEventListener('DOMContentLoaded', function () {
     ? [
         ['/ko/', labels.home],
         ['/ko/smart-planner/', labels.planner],
-        ['/ko/smart-planner/user-guide.html', labels.guide],
         ['/ko/smart-planner/download.html', labels.download],
         ['/ko/smart-planner/build-history.html', labels.build],
         ['/ko/smart-planner/support.html', labels.support],
@@ -139,7 +138,6 @@ document.addEventListener('DOMContentLoaded', function () {
     : [
         ['/', labels.home],
         ['/smart-planner/', labels.planner],
-        ['/smart-planner/user-guide.html', labels.guide],
         ['/smart-planner/download.html', labels.download],
         ['/smart-planner/build-history.html', labels.build],
         ['/smart-planner/support.html', labels.support],
