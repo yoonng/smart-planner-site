@@ -360,13 +360,12 @@
   box-shadow: 0 6px 18px rgba(74, 85, 104, 0.06);
 }
 
-/* Home screenshot pilot: use the verified FSP capture and highlight the grouping area. */
+/* Home screenshot: the red outlines are part of the supplied annotated capture. */
 .guide-shot[data-screen-id="BEGINNER-02"] .guide-shot-placeholder {
-  position: relative;
   min-height: clamp(620px, 88vw, 980px);
   padding: 0;
   background-color: #f8fafc;
-  background-image: url("https://raw.githubusercontent.com/yoonng/feathly-smart-planner/main/manual/0.9/en/screenshots/BEGINNER-02_en_light_phone_v2.png");
+  background-image: url("/assets/user-guide/home-now-today-later-annotated.svg");
   background-repeat: no-repeat;
   background-position: center top;
   background-size: contain;
@@ -374,26 +373,6 @@
 
 .guide-shot[data-screen-id="BEGINNER-02"] .guide-shot-placeholder > div {
   display: none;
-}
-
-.guide-shot[data-screen-id="BEGINNER-02"] .guide-shot-placeholder::after {
-  content: "NOW / TODAY / LATER";
-  position: absolute;
-  left: 13%;
-  right: 13%;
-  top: 34%;
-  height: 48%;
-  box-sizing: border-box;
-  border: 4px solid #ef4444;
-  border-radius: 16px;
-  color: #ffffff;
-  background: rgba(239, 68, 68, 0.10);
-  padding: 8px 12px;
-  font-size: 15px;
-  font-weight: 900;
-  text-align: left;
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.75);
-  pointer-events: none;
 }
 
 @media (max-width: 900px) {
@@ -436,15 +415,6 @@
 
   .guide-shot[data-screen-id="BEGINNER-02"] .guide-shot-placeholder {
     min-height: 700px;
-  }
-
-  .guide-shot[data-screen-id="BEGINNER-02"] .guide-shot-placeholder::after {
-    left: 8%;
-    right: 8%;
-    top: 34%;
-    height: 48%;
-    border-width: 3px;
-    font-size: 13px;
   }
 
   .guide-hero-actions {
