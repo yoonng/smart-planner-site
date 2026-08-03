@@ -48,3 +48,5 @@ jobs:
           fi
           git commit -m "Publish verified Spaced Loop screenshots"
           git push origin main
+
+# Triggered after repository token permissions were updated.
