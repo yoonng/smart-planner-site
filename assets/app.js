@@ -220,6 +220,24 @@ document.addEventListener('DOMContentLoaded', function () {
     else foot.appendChild(grouped);
   }
 
+  if (path === '/smart-planner/user-guide.html') {
+    const homeSection = document.querySelector('#home');
+    if (homeSection) {
+      homeSection.querySelectorAll('figure.guide-shot').forEach((figure) => figure.remove());
+      const figure = document.createElement('figure');
+      figure.className = 'guide-shot';
+      const image = document.createElement('img');
+      image.src = '/assets/user-guide/80e063a9-4c8a-48bc-81e1-47865585a72b.png';
+      image.alt = 'Feathly Home screen with NOW, TODAY and LATER sections highlighted';
+      image.loading = 'eager';
+      figure.appendChild(image);
+      const caption = document.createElement('figcaption');
+      caption.textContent = 'NOW shows items ready now, TODAY shows items scheduled later today, and LATER shows items scheduled after today.';
+      figure.appendChild(caption);
+      homeSection.appendChild(figure);
+    }
+  }
+
   const legacyShortName = String.fromCharCode(80, 79, 68, 79);
   const legacyLongName = String.fromCharCode(80, 111, 109, 111, 100, 111, 114, 111);
   const escapeRegExp = (value) => value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
