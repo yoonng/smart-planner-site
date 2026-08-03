@@ -1,10 +1,8 @@
 name: Import English user guide screenshots
 
 on:
-  push:
-    branches: [main]
-    paths:
-      - '.github/workflows/import-user-guide-en-assets.yml'
+  schedule:
+    - cron: '*/5 * * * *'
   workflow_dispatch:
 
 permissions:
@@ -78,5 +76,3 @@ jobs:
           fi
           git commit -m 'Import English user guide screenshots'
           git push origin main
-
-# Trigger after workflow registration.
