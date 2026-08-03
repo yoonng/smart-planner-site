@@ -15,6 +15,11 @@ jobs:
   verify:
     runs-on: ubuntu-latest
     steps:
+      - name: Check out website main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
       - name: Verify live guide and screenshots
         shell: bash
         run: |
@@ -50,10 +55,20 @@ jobs:
 
           echo "Live HTML and all four Cursor screenshots verified successfully."
 
-      - name: Render live Spaced Loop section
+      - name: Render Spaced Loop section from deployed source
         shell: bash
         run: |
           set -euo pipefail
+          python3 -m http.server 8000 --bind 127.0.0.1 >/tmp/http-server.log 2>&1 &
+          server_pid=$!
+          trap 'kill "$server_pid" 2>/dev/null || true' EXIT
+          for attempt in $(seq 1 20); do
+            if curl -fsS http://127.0.0.1:8000/smart-planner/user-guide.html >/dev/null; then
+              break
+            fi
+            sleep 1
+          done
+
           google-chrome --version
           google-chrome \
             --headless \
@@ -61,15 +76,16 @@ jobs:
             --no-sandbox \
             --hide-scrollbars \
             --window-size=1440,1800 \
+            --run-all-compositor-stages-before-draw \
             --virtual-time-budget=5000 \
-            --screenshot=/tmp/spaced-guide-live.png \
-            "https://feathly.com/smart-planner/user-guide.html?visual=${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}#spaced-loop"
-          test -s /tmp/spaced-guide-live.png
-          file /tmp/spaced-guide-live.png
+            --screenshot=/tmp/spaced-guide-render.png \
+            "http://127.0.0.1:8000/smart-planner/user-guide.html#spaced-loop"
+          test -s /tmp/spaced-guide-render.png
+          file /tmp/spaced-guide-render.png
 
-      - name: Upload live visual check
+      - name: Upload visual check
         uses: actions/upload-artifact@v4
         with:
-          name: spaced-guide-live-check
-          path: /tmp/spaced-guide-live.png
+          name: spaced-guide-render-check
+          path: /tmp/spaced-guide-render.png
           retention-days: 1
