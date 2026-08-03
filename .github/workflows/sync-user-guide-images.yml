@@ -1,0 +1,57 @@
+name: Sync user guide images
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/sync-user-guide-images.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out website repository
+        uses: actions/checkout@v4
+
+      - name: Check out private source repository
+        uses: actions/checkout@v4
+        with:
+          repository: yoonng/feathly-smart-planner
+          ref: main
+          token: ${{ secrets.SMART_PLANNER_SITE_PAT }}
+          path: source
+
+      - name: Copy original screenshots
+        run: |
+          mkdir -p assets/user-guide
+          cp source/manual/0.9/ko/screenshots/B_after_create.png assets/user-guide/B_after_create.png
+          cp source/manual/0.9/ko/screenshots/B_after_create2.png assets/user-guide/B_after_create2.png
+          cp source/manual/0.9/ko/screenshots/B_after_create3.gif assets/user-guide/B_after_create3.gif
+
+      - name: Switch manual to public local image paths
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('smart-planner/user-guide.html')
+          text = p.read_text(encoding='utf-8')
+          text = text.replace('https://raw.githubusercontent.com/yoonng/feathly-smart-planner/main/manual/0.9/ko/screenshots/B_after_create.png', '/assets/user-guide/B_after_create.png')
+          text = text.replace('https://raw.githubusercontent.com/yoonng/feathly-smart-planner/main/manual/0.9/ko/screenshots/B_after_create2.png', '/assets/user-guide/B_after_create2.png')
+          text = text.replace('https://raw.githubusercontent.com/yoonng/feathly-smart-planner/main/manual/0.9/ko/screenshots/B_after_create3.gif', '/assets/user-guide/B_after_create3.gif')
+          p.write_text(text, encoding='utf-8')
+          PY
+
+      - name: Commit and push synced assets
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/user-guide smart-planner/user-guide.html
+          if git diff --cached --quiet; then
+            echo "No changes to publish."
+            exit 0
+          fi
+          git commit -m "Sync user guide screenshots"
+          git push origin main
