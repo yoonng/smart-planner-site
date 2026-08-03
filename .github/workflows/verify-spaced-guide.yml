@@ -1,0 +1,66 @@
+name: Verify deployed Spaced Loop guide
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - .verify-spaced-guide
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Verify live guide and screenshots
+        shell: bash
+        run: |
+          set -euo pipefail
+          page_url="https://feathly.com/smart-planner/user-guide.html?verify=${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+          page_file="/tmp/user-guide.html"
+
+          for attempt in $(seq 1 30); do
+            echo "Live verification attempt ${attempt}/30"
+            if curl -fsSL -H 'Cache-Control: no-cache' "$page_url" -o "$page_file" \
+              && grep -q 'spaced-quick-summary' "$page_file" \
+              && grep -q 'Tap + Spaced Loop' "$page_file" \
+              && grep -q '/assets/user-guide/spaced/04-save.png' "$page_file"; then
+              echo "Updated Spaced Loop guide is live."
+              break
+            fi
+            if [ "$attempt" -eq 30 ]; then
+              echo "Updated Spaced Loop guide was not visible within the verification window."
+              exit 1
+            fi
+            sleep 10
+          done
+
+          mkdir -p /tmp/spaced-guide
+          for image in 01-start.png 02-content.png 03-pattern.png 04-save.png; do
+            asset_url="https://feathly.com/assets/user-guide/spaced/${image}?verify=${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+            curl -fsSL -H 'Cache-Control: no-cache' "$asset_url" -o "/tmp/spaced-guide/${image}"
+          done
+
+          python - <<'PY'
+          from pathlib import Path
+          from PIL import Image
+
+          expected = [
+              '01-start.png',
+              '02-content.png',
+              '03-pattern.png',
+              '04-save.png',
+          ]
+          for name in expected:
+              path = Path('/tmp/spaced-guide') / name
+              with Image.open(path) as image:
+                  image.verify()
+              with Image.open(path) as image:
+                  width, height = image.size
+              if width < 300 or height < 500:
+                  raise SystemExit(f'{name}: unexpected dimensions {width}x{height}')
+              print(f'{name}: HTTP OK, valid PNG, {width}x{height}')
+          PY
