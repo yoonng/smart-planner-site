@@ -1,0 +1,57 @@
+name: PR Spaced Loop guide publisher
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - .guide-pr-trigger
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out website main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          token: ${{ secrets.SMART_PLANNER_SITE_PAT }}
+
+      - name: Check out verified Cursor screenshots
+        uses: actions/checkout@v4
+        with:
+          repository: yoonng/feathly-smart-planner
+          ref: main
+          token: ${{ secrets.SMART_PLANNER_SITE_PAT }}
+          path: source
+
+      - name: Copy screenshots
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p assets/user-guide/spaced
+          cp source/manual/0.9/en/screenshots/BEGINNER-03_en_light_phone_v2.png assets/user-guide/spaced/01-start.png
+          cp source/manual/0.9/en/screenshots/BEGINNER-04_top_en_light_phone_v2.png assets/user-guide/spaced/02-content.png
+          cp source/manual/0.9/en/screenshots/BEGINNER-04_mid_en_light_phone_v2.png assets/user-guide/spaced/03-pattern.png
+          cp source/manual/0.9/en/screenshots/BEGINNER-04_bottom_en_light_phone_v2.png assets/user-guide/spaced/04-save.png
+
+      - name: Build guide
+        run: python scripts/build_spaced_guide.py
+
+      - name: Commit and push to main
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "yoonng"
+          git config user.email "11952410+yoonng@users.noreply.github.com"
+          git add assets/user-guide/spaced assets/user-guide.css smart-planner/user-guide.html
+          if git diff --cached --quiet; then
+            echo "Guide already current"
+            exit 0
+          fi
+          git commit -m "Publish beginner Spaced Loop guide"
+          git push origin HEAD:main
