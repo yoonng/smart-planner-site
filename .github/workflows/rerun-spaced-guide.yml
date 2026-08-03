@@ -6,13 +6,14 @@ on:
       - main
     paths:
       - .github/workflows/rerun-spaced-guide.yml
+      - scripts/build_spaced_guide.py
   workflow_dispatch:
 
 permissions:
   contents: write
 
 jobs:
-  copy-screenshots:
+  build-guide:
     runs-on: ubuntu-latest
     steps:
       - name: Check out website
@@ -36,17 +37,18 @@ jobs:
           cp source/manual/0.9/en/screenshots/BEGINNER-04_mid_en_light_phone_v2.png assets/user-guide/spaced/03-pattern.png
           cp source/manual/0.9/en/screenshots/BEGINNER-04_bottom_en_light_phone_v2.png assets/user-guide/spaced/04-save.png
 
-      - name: Commit screenshots
+      - name: Build concise beginner guide
+        run: python scripts/build_spaced_guide.py
+
+      - name: Commit guide
         shell: bash
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add assets/user-guide/spaced
+          git add assets/user-guide/spaced assets/user-guide.css smart-planner/user-guide.html
           if git diff --cached --quiet; then
-            echo "Screenshots already current"
+            echo "Guide already current"
             exit 0
           fi
-          git commit -m "Publish verified Spaced Loop screenshots"
+          git commit -m "Publish beginner Spaced Loop guide"
           git push origin main
-
-# Triggered after repository token permissions were updated.
