@@ -25,7 +25,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          curl -fL 'https://sdmntprnznorth.oaiusercontent.com/files/00000000-dc70-820b-8dad-741794a6679a/raw?se=2026-08-03T12:14:19Z&sp=r&sv=2026-02-06&sr=b&scid=cd8785e6-7a7c-53b6-8e7b-06b03f1010a4&skoid=d5627e4c-566b-4761-a954-54993b0ed17b&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2026-08-03T11:09:35Z&ske=2026-08-04T11:09:35Z&sks=b&skv=2026-02-06&sig=qQKm0E6KeIOXefT3xHF/XilqQxBv1zGRrsZQRIQVCYI%3D' -o screenshots.zip
+          curl -fL 'https://sdmntprjapaneast.oaiusercontent.com/files/00000000-79c0-8209-b40c-19d1e35fc2f2/raw?se=2026-08-03T12:26:34Z&sp=r&sv=2026-02-06&sr=b&scid=5e302ea5-4fe6-5eef-9224-3e0f30b2e2b2&skoid=0556a536-9b18-4aa8-bae0-70ed682ee936&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2026-08-03T11:02:13Z&ske=2026-08-04T11:02:13Z&sks=b&skv=2026-02-06&sig=ei6QPGeT7SGsc3X0FfzZ28SPYaYQUL7KOLx/pAzAICA%3D' -o screenshots.zip
           mkdir -p assets/user-guide/spaced
           unzip -o screenshots.zip -d assets/user-guide/spaced
           test -f assets/user-guide/spaced/01-start.png
