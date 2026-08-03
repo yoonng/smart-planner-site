@@ -21,23 +21,17 @@ jobs:
         with:
           ref: main
 
-      - name: Check out verified Cursor screenshots
-        uses: actions/checkout@v4
-        with:
-          repository: yoonng/feathly-smart-planner
-          ref: main
-          token: ${{ secrets.SMART_PLANNER_SITE_PAT }}
-          path: source
-
-      - name: Copy screenshots
+      - name: Download verified Cursor screenshots
         shell: bash
         run: |
           set -euo pipefail
+          curl -fL 'https://sdmntprnznorth.oaiusercontent.com/files/00000000-dc70-820b-8dad-741794a6679a/raw?se=2026-08-03T12:14:19Z&sp=r&sv=2026-02-06&sr=b&scid=cd8785e6-7a7c-53b6-8e7b-06b03f1010a4&skoid=d5627e4c-566b-4761-a954-54993b0ed17b&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2026-08-03T11:09:35Z&ske=2026-08-04T11:09:35Z&sks=b&skv=2026-02-06&sig=qQKm0E6KeIOXefT3xHF/XilqQxBv1zGRrsZQRIQVCYI%3D' -o screenshots.zip
           mkdir -p assets/user-guide/spaced
-          cp source/manual/0.9/en/screenshots/BEGINNER-03_en_light_phone_v2.png assets/user-guide/spaced/01-start.png
-          cp source/manual/0.9/en/screenshots/BEGINNER-04_top_en_light_phone_v2.png assets/user-guide/spaced/02-content.png
-          cp source/manual/0.9/en/screenshots/BEGINNER-04_mid_en_light_phone_v2.png assets/user-guide/spaced/03-pattern.png
-          cp source/manual/0.9/en/screenshots/BEGINNER-04_bottom_en_light_phone_v2.png assets/user-guide/spaced/04-save.png
+          unzip -o screenshots.zip -d assets/user-guide/spaced
+          test -f assets/user-guide/spaced/01-start.png
+          test -f assets/user-guide/spaced/02-content.png
+          test -f assets/user-guide/spaced/03-pattern.png
+          test -f assets/user-guide/spaced/04-save.png
 
       - name: Build guide
         run: python scripts/build_spaced_guide.py
