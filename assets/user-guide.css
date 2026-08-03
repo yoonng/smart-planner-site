@@ -427,7 +427,6 @@
   }
 }
 
-
 /* Home guide screenshot presentation */
 #home .guide-shot {
   width: min(100%, 430px);
@@ -460,7 +459,7 @@
 
 @media (max-width: 520px) {
   #home .guide-shot {
-    width: 100%;
+    width: 60%;
     padding: 8px;
     border-radius: 18px;
     margin: 16px auto 22px;
@@ -475,7 +474,6 @@
     padding: 12px 14px 14px;
   }
 }
-
 
 /* Beginner Spaced Loop walkthrough */
 .spaced-quick-summary {
