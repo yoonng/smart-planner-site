@@ -6,6 +6,7 @@ on:
       - main
     paths:
       - .guide-pr-trigger
+      - .guide-pr-trigger-2
   workflow_dispatch:
 
 permissions:
@@ -19,7 +20,6 @@ jobs:
         uses: actions/checkout@v4
         with:
           ref: main
-          token: ${{ secrets.SMART_PLANNER_SITE_PAT }}
 
       - name: Check out verified Cursor screenshots
         uses: actions/checkout@v4
@@ -46,8 +46,8 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          git config user.name "yoonng"
-          git config user.email "11952410+yoonng@users.noreply.github.com"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add assets/user-guide/spaced assets/user-guide.css smart-planner/user-guide.html
           if git diff --cached --quiet; then
             echo "Guide already current"
