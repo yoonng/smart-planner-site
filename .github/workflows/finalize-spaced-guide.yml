@@ -5,7 +5,9 @@ on:
     branches:
       - main
     paths:
+      - .guide-trigger
       - .github/workflows/finalize-spaced-guide.yml
+      - scripts/build_spaced_guide.py
   workflow_dispatch:
 
 permissions:
