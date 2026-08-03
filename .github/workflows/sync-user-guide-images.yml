@@ -5,61 +5,19 @@ on:
     branches: [main]
     paths:
       - '.github/workflows/sync-user-guide-images.yml'
-      - 'assets/user-guide/**'
   workflow_dispatch:
 
 permissions:
   contents: write
 
 jobs:
-  publish-local-images:
+  publish-guide:
     runs-on: ubuntu-latest
     steps:
       - name: Check out website repository
         uses: actions/checkout@v4
 
-      - name: Verify required images
-        run: |
-          test -f assets/user-guide/B_after_create.png
-          test -f assets/user-guide/B_after_create2.png
-          test -f assets/user-guide/B_after_create3.gif
-
-      - name: Switch manual to public local image paths
-        run: |
-          python - <<'PY'
-          from pathlib import Path
-          p = Path('smart-planner/user-guide.html')
-          text = p.read_text(encoding='utf-8')
-          replacements = {
-              'https://raw.githubusercontent.com/yoonng/feathly-smart-planner/main/manual/0.9/ko/screenshots/B_after_create.png': '/assets/user-guide/B_after_create.png',
-              'https://raw.githubusercontent.com/yoonng/feathly-smart-planner/main/manual/0.9/ko/screenshots/B_after_create2.png': '/assets/user-guide/B_after_create2.png',
-              'https://raw.githubusercontent.com/yoonng/feathly-smart-planner/main/manual/0.9/ko/screenshots/B_after_create3.gif': '/assets/user-guide/B_after_create3.gif',
-          }
-          for old, new in replacements.items():
-              text = text.replace(old, new)
-          p.write_text(text, encoding='utf-8')
-          PY
-
-      - name: Commit manual changes
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add smart-planner/user-guide.html
-          if git diff --cached --quiet; then
-            echo "Manual already uses local image paths."
-            exit 0
-          fi
-          git commit -m "Use published guide screenshots"
-          git push origin main
-
-  optional-sync-from-private-source:
-    runs-on: ubuntu-latest
-    continue-on-error: true
-    steps:
-      - name: Check out website repository
-        uses: actions/checkout@v4
-
-      - name: Check out private source repository
+      - name: Check out private app repository
         uses: actions/checkout@v4
         with:
           repository: yoonng/feathly-smart-planner
@@ -67,22 +25,256 @@ jobs:
           token: ${{ secrets.SMART_PLANNER_SITE_PAT }}
           path: source
 
-      - name: Copy current source screenshots
+      - name: Copy verified Spaced Loop screenshots
         run: |
-          mkdir -p assets/user-guide
-          cp source/manual/0.9/ko/screenshots/B_after_create.png assets/user-guide/B_after_create.png
-          cp source/manual/0.9/ko/screenshots/B_after_create2.png assets/user-guide/B_after_create2.png
-          cp source/manual/0.9/ko/screenshots/B_after_create3.gif assets/user-guide/B_after_create3.gif
+          mkdir -p assets/user-guide/spaced
+          cp source/manual/0.9/en/screenshots/BEGINNER-03_en_light_phone_v2.png assets/user-guide/spaced/01-start.png
+          cp source/manual/0.9/en/screenshots/BEGINNER-04_top_en_light_phone_v2.png assets/user-guide/spaced/02-content.png
+          cp source/manual/0.9/en/screenshots/BEGINNER-04_mid_en_light_phone_v2.png assets/user-guide/spaced/03-pattern.png
+          cp source/manual/0.9/en/screenshots/BEGINNER-04_bottom_en_light_phone_v2.png assets/user-guide/spaced/04-save.png
 
-      - name: Commit changed screenshots
+      - name: Replace beginner Spaced Loop section
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import re
+
+          html_path = Path('smart-planner/user-guide.html')
+          html = html_path.read_text(encoding='utf-8')
+
+          section = '''        <section class="guide-section spaced-beginner" id="spaced-loop">
+          <div class="guide-section-head">
+            <span>Beginner 04</span>
+            <h2>Create your first Spaced Loop</h2>
+            <p>Use a Spaced Loop for a word, fact, idea, or note you want to remember. Follow these four steps.</p>
+          </div>
+
+          <div class="spaced-quick-summary" aria-label="Four steps to create a Spaced Loop">
+            <span><b>1</b> Start</span>
+            <span><b>2</b> Add content</span>
+            <span><b>3</b> Choose timing</span>
+            <span><b>4</b> Save</span>
+          </div>
+
+          <div class="spaced-step-list">
+            <article class="spaced-step-card">
+              <div class="spaced-step-copy">
+                <span class="spaced-step-number">1</span>
+                <div>
+                  <h3>Tap + Spaced Loop</h3>
+                  <p>From Home, tap the blue <strong>+ Spaced Loop</strong> button.</p>
+                </div>
+              </div>
+              <figure class="spaced-step-shot">
+                <img src="/assets/user-guide/spaced/01-start.png" alt="Home screen with the Spaced Loop button" loading="lazy">
+              </figure>
+            </article>
+
+            <article class="spaced-step-card">
+              <div class="spaced-step-copy">
+                <span class="spaced-step-number">2</span>
+                <div>
+                  <h3>Enter a title and note</h3>
+                  <p>Keep the title short. In the note, add the answer or explanation you want to recall later.</p>
+                </div>
+              </div>
+              <figure class="spaced-step-shot">
+                <img src="/assets/user-guide/spaced/02-content.png" alt="Spaced Loop form showing title and note fields" loading="lazy">
+              </figure>
+            </article>
+
+            <article class="spaced-step-card">
+              <div class="spaced-step-copy">
+                <span class="spaced-step-number">3</span>
+                <div>
+                  <h3>Keep the suggested pattern</h3>
+                  <p>For your first Loop, use the default review pattern. You can change it later after you understand the flow.</p>
+                </div>
+              </div>
+              <figure class="spaced-step-shot">
+                <img src="/assets/user-guide/spaced/03-pattern.png" alt="Spaced Loop form showing review pattern and scheduling options" loading="lazy">
+              </figure>
+            </article>
+
+            <article class="spaced-step-card">
+              <div class="spaced-step-copy">
+                <span class="spaced-step-number">4</span>
+                <div>
+                  <h3>Check the first reminder and save</h3>
+                  <p>Confirm when the first reminder will appear, then tap <strong>Save</strong>.</p>
+                </div>
+              </div>
+              <figure class="spaced-step-shot">
+                <img src="/assets/user-guide/spaced/04-save.png" alt="Bottom of the Spaced Loop form with reminder options and Save button" loading="lazy">
+              </figure>
+            </article>
+          </div>
+
+          <div class="guide-callout tip spaced-finished">
+            <h3>Done</h3>
+            <p>Your new Loop will appear on Home. When it becomes available, try to remember the answer before opening the note.</p>
+          </div>
+        </section>'''
+
+          pattern = re.compile(r'        <section class="guide-section" id="spaced-loop">.*?        </section>', re.S)
+          if not pattern.search(html):
+              pattern = re.compile(r'        <section class="guide-section spaced-beginner" id="spaced-loop">.*?        </section>', re.S)
+          if not pattern.search(html):
+              raise SystemExit('Spaced Loop section not found')
+          html = pattern.sub(section, html, count=1)
+          html_path.write_text(html, encoding='utf-8')
+
+          css_path = Path('assets/user-guide.css')
+          css = css_path.read_text(encoding='utf-8')
+          marker = '/* Beginner Spaced Loop walkthrough */'
+          styles = r'''
+
+/* Beginner Spaced Loop walkthrough */
+.spaced-quick-summary {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  margin: 0 0 22px;
+}
+
+.spaced-quick-summary span {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  min-height: 48px;
+  padding: 10px 12px;
+  border: 1px solid #dbe4ef;
+  border-radius: 14px;
+  background: #ffffff;
+  color: #334155;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.spaced-quick-summary b,
+.spaced-step-number {
+  display: inline-grid;
+  place-items: center;
+  flex: 0 0 auto;
+  width: 30px;
+  height: 30px;
+  border-radius: 999px;
+  background: #2563eb;
+  color: #ffffff;
+  font-weight: 900;
+}
+
+.spaced-step-list {
+  display: grid;
+  gap: 22px;
+}
+
+.spaced-step-card {
+  display: grid;
+  grid-template-columns: minmax(220px, 0.8fr) minmax(300px, 1.2fr);
+  gap: 24px;
+  align-items: start;
+  padding: 22px;
+  border: 1px solid #dbe4ef;
+  border-radius: 24px;
+  background: linear-gradient(145deg, #ffffff, #f8fbff);
+  box-shadow: 0 16px 42px rgba(15, 23, 42, 0.07);
+}
+
+.spaced-step-copy {
+  display: flex;
+  gap: 14px;
+  position: sticky;
+  top: 104px;
+}
+
+.spaced-step-copy h3 {
+  margin: 2px 0 8px;
+  color: #111827;
+  font-size: 21px;
+}
+
+.spaced-step-copy p {
+  margin: 0;
+  color: #64748b;
+  line-height: 1.7;
+}
+
+.spaced-step-shot {
+  width: min(100%, 390px);
+  margin: 0 auto;
+  padding: 10px;
+  border: 1px solid #dbe4ef;
+  border-radius: 20px;
+  background: #f8fafc;
+}
+
+.spaced-step-shot img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 13px;
+  border: 1px solid #e2e8f0;
+  background: #ffffff;
+}
+
+.spaced-finished {
+  margin-top: 24px;
+}
+
+@media (max-width: 820px) {
+  .spaced-quick-summary {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .spaced-step-card {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    padding: 18px;
+  }
+
+  .spaced-step-copy {
+    position: static;
+  }
+}
+
+@media (max-width: 480px) {
+  .spaced-quick-summary {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .spaced-step-card {
+    padding: 14px;
+    border-radius: 20px;
+  }
+
+  .spaced-step-shot {
+    width: 100%;
+    padding: 6px;
+    border-radius: 16px;
+  }
+
+  .spaced-step-copy h3 {
+    font-size: 19px;
+  }
+}
+'''
+          if marker in css:
+              css = css.split(marker, 1)[0].rstrip() + styles
+          else:
+              css += styles
+          css_path.write_text(css, encoding='utf-8')
+          PY
+
+      - name: Commit and publish changes
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add assets/user-guide
+          git add assets/user-guide/spaced assets/user-guide.css smart-planner/user-guide.html
           if git diff --cached --quiet; then
-            echo "Screenshots are already current."
+            echo "Guide is already current."
             exit 0
           fi
-          git commit -m "Sync guide screenshots from app repository"
-          git pull --rebase origin main
+          git commit -m "Add beginner Spaced Loop walkthrough"
           git push origin main
