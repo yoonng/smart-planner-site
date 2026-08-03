@@ -1,6 +1,8 @@
 name: Import English user guide screenshots
 
 on:
+  issues:
+    types: [opened]
   schedule:
     - cron: '*/5 * * * *'
   workflow_dispatch:
@@ -10,6 +12,7 @@ permissions:
 
 jobs:
   import-assets:
+    if: github.event_name != 'issues' || github.event.issue.title == '[automation] Import English guide assets'
     runs-on: ubuntu-latest
     steps:
       - name: Check out website repository
