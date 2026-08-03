@@ -49,3 +49,27 @@ jobs:
           done
 
           echo "Live HTML and all four Cursor screenshots verified successfully."
+
+      - name: Render live Spaced Loop section
+        shell: bash
+        run: |
+          set -euo pipefail
+          google-chrome --version
+          google-chrome \
+            --headless \
+            --disable-gpu \
+            --no-sandbox \
+            --hide-scrollbars \
+            --window-size=1440,1800 \
+            --virtual-time-budget=5000 \
+            --screenshot=/tmp/spaced-guide-live.png \
+            "https://feathly.com/smart-planner/user-guide.html?visual=${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}#spaced-loop"
+          test -s /tmp/spaced-guide-live.png
+          file /tmp/spaced-guide-live.png
+
+      - name: Upload live visual check
+        uses: actions/upload-artifact@v4
+        with:
+          name: spaced-guide-live-check
+          path: /tmp/spaced-guide-live.png
+          retention-days: 1
