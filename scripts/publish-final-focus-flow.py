@@ -12,7 +12,7 @@ section = '''        <section class="guide-section" id="focus" data-focus-guide-
           </div>
 
           <figure class="manual-shot focus-flow-shot">
-            <img src="/assets/user-guide/en/focus/focus-timer-flow.png?v=20260804-final4" alt="Four-step Focus Timer guide showing the main menu, template selection, start options, and a running focus session" loading="eager">
+            <img src="/assets/user-guide/en/focus/focus-timer-flow.jpg?v=20260804-final4" alt="Four-step Focus Timer guide showing the main menu, template selection, start options, and a running focus session" loading="eager">
             <figcaption>The red outlines show exactly what to tap at each step.</figcaption>
           </figure>
 
