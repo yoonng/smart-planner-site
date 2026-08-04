@@ -1,5 +1,6 @@
 /* Visual screenshot layouts for the English Smart Planner guide. */
 .manual-shot {
+  box-sizing: border-box;
   margin: 20px 0 0;
   padding: 10px;
   border: 1px solid #dbe4ef;
@@ -26,7 +27,7 @@
 }
 
 .manual-shot-single {
-  width: min(100%, 390px);
+  width: min(60%, 390px);
   margin: 22px auto 0;
 }
 
@@ -188,7 +189,7 @@
   color: #fff;
   font-weight: 900;
 }
-.manual-step-shot { width: min(100%, 390px); margin: 0 auto; }
+.manual-step-shot { width: min(60%, 390px); margin: 0 auto; }
 @media (max-width: 900px) {
   .manual-step-card { grid-template-columns: 1fr; gap: 16px; padding: 18px; }
   .manual-step-copy { position: static; }
@@ -246,9 +247,9 @@
 
 /* Focus Timer four-step composite */
 .focus-flow-shot {
-  width: 100%;
-  max-width: none !important;
-  margin: 20px 0 18px;
+  width: 60%;
+  max-width: 60% !important;
+  margin: 20px auto 18px;
   padding: 10px;
   overflow: hidden;
 }

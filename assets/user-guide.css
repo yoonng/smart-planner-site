@@ -547,8 +547,9 @@
 }
 
 .spaced-step-shot {
+  box-sizing: border-box;
   position: relative;
-  width: min(100%, 390px);
+  width: min(60%, 390px);
   margin: 0 auto;
   padding: 10px;
   border: 1px solid #dbe4ef;
@@ -611,7 +612,8 @@
   }
 
   .spaced-step-shot {
-    width: 100%;
+    width: 60%;
+    max-width: 220px;
     padding: 6px;
     border-radius: 16px;
   }
