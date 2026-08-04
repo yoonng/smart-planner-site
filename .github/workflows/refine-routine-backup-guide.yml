@@ -1,0 +1,33 @@
+name: Refine Routine and backup guide
+
+on:
+  issues:
+    types: [opened]
+
+permissions:
+  contents: write
+
+jobs:
+  refine-guide:
+    if: github.event.issue.title == '[automation] Refine Routine and backup guide'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out current main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Update the guide
+        run: python scripts/refine-routine-backup-guide.py
+
+      - name: Commit changes
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A
+          git commit -m 'Highlight Routine steps and remove duplicate backup image'
+          git pull --rebase origin main
+          git push origin main
