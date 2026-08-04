@@ -1,0 +1,34 @@
+name: Fix Focus guide flow
+
+on:
+  issues:
+    types: [opened]
+
+permissions:
+  contents: write
+
+jobs:
+  fix-guide:
+    if: github.event.issue.title == '[automation] Fix Focus guide flow'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out current main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Correct Focus Timer guide
+        run: python scripts/fix-focus-guide-flow.py
+
+      - name: Remove one-time files and commit
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -f scripts/fix-focus-guide-flow.py .github/workflows/fix-focus-guide-flow.yml
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A
+          git commit -m 'Correct Focus Timer template start flow'
+          git pull --rebase origin main
+          git push origin main
