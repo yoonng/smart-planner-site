@@ -1,0 +1,179 @@
+name: Report live Focus guide status
+
+on:
+  issues:
+    types: [opened]
+
+permissions:
+  contents: write
+  issues: write
+  pages: write
+
+jobs:
+  verify-live:
+    if: github.event.issue.title == '[automation] Report live Focus guide status'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Check out main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Install image validation support
+        run: python -m pip install --disable-pip-version-check pillow
+
+      - name: Inspect Pages configuration and request rebuild
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set +e
+          gh api "repos/${GITHUB_REPOSITORY}/pages" > /tmp/pages.json 2>/tmp/pages.err
+          pages_rc=$?
+          gh api --method POST "repos/${GITHUB_REPOSITORY}/pages/builds" > /tmp/build.json 2>/tmp/build.err
+          build_rc=$?
+          echo "$pages_rc" > /tmp/pages.rc
+          echo "$build_rc" > /tmp/build.rc
+          exit 0
+
+      - name: Poll live page and validate image responses
+        id: verify
+        shell: bash
+        run: |
+          set +e
+          PAGE='https://feathly.com/smart-planner/user-guide.html'
+          mkdir -p /tmp/focus-live
+          live_ok=0
+          attempts=0
+
+          for attempt in $(seq 1 36); do
+            attempts=$attempt
+            stamp="${GITHUB_RUN_ID}-${attempt}-$(date +%s)"
+            curl --silent --show-error --location \
+              -H 'Cache-Control: no-cache' \
+              -D /tmp/focus-live/page.headers \
+              -o /tmp/focus-live/page.html \
+              "${PAGE}?deploy=${stamp}"
+            page_rc=$?
+            if [[ $page_rc -eq 0 ]] && grep -q 'data-focus-guide-build="20260804-verified-png"' /tmp/focus-live/page.html; then
+              live_ok=1
+              break
+            fi
+            sleep 10
+          done
+
+          echo "$attempts" > /tmp/focus-live/attempts
+          echo "$live_ok" > /tmp/focus-live/live_ok
+
+          images=(
+            'menu|https://feathly.com/assets/user-guide/en/menu/01-main-menu.png'
+            'setup|https://feathly.com/assets/user-guide/en/focus/01-setup.png'
+            'running|https://feathly.com/assets/user-guide/en/focus/02-running.png'
+          )
+
+          for item in "${images[@]}"; do
+            name="${item%%|*}"
+            url="${item#*|}"
+            stamp="${GITHUB_RUN_ID}-${name}-$(date +%s)"
+            curl --silent --show-error --location \
+              -H 'Cache-Control: no-cache' \
+              -D "/tmp/focus-live/${name}.headers" \
+              -o "/tmp/focus-live/${name}.bin" \
+              "${url}?deploy=${stamp}"
+            rc=$?
+            echo "$rc" > "/tmp/focus-live/${name}.rc"
+            file "/tmp/focus-live/${name}.bin" > "/tmp/focus-live/${name}.file" 2>&1
+            python - "/tmp/focus-live/${name}.bin" > "/tmp/focus-live/${name}.pillow" 2>&1 <<'PY'
+          import sys
+          from PIL import Image
+          path = sys.argv[1]
+          with Image.open(path) as image:
+              image.verify()
+          with Image.open(path) as image:
+              print(f"OK {image.format} {image.size[0]}x{image.size[1]}")
+          PY
+            echo "$?" > "/tmp/focus-live/${name}.pillow_rc"
+          done
+
+          exit 0
+
+      - name: Post verification report
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          report=/tmp/focus-live-report.md
+          live_ok="$(cat /tmp/focus-live/live_ok)"
+          attempts="$(cat /tmp/focus-live/attempts)"
+          pages_rc="$(cat /tmp/pages.rc)"
+          build_rc="$(cat /tmp/build.rc)"
+
+          {
+            echo '## Live Focus guide verification'
+            echo
+            echo "- Repository commit: \`$(git rev-parse HEAD)\`"
+            echo "- Live HTML marker found: **${live_ok}**"
+            echo "- Poll attempts: **${attempts}**"
+            echo "- GitHub Pages configuration API exit: **${pages_rc}**"
+            echo "- GitHub Pages rebuild request exit: **${build_rc}**"
+            echo
+            echo '### Page response headers'
+            echo '```text'
+            sed -n '1,30p' /tmp/focus-live/page.headers || true
+            echo '```'
+            echo
+            echo '### Page marker check'
+            echo '```text'
+            grep -o 'data-focus-guide-build="[^"]*"' /tmp/focus-live/page.html || echo 'MARKER NOT FOUND'
+            echo '```'
+            echo
+            for name in menu setup running; do
+              echo "### Image: ${name}"
+              echo "- curl exit: **$(cat /tmp/focus-live/${name}.rc)**"
+              echo "- Pillow exit: **$(cat /tmp/focus-live/${name}.pillow_rc)**"
+              echo '```text'
+              sed -n '1,20p' "/tmp/focus-live/${name}.headers" || true
+              cat "/tmp/focus-live/${name}.file" || true
+              cat "/tmp/focus-live/${name}.pillow" || true
+              echo '```'
+              echo
+            done
+            echo '### Pages configuration'
+            echo '```json'
+            cat /tmp/pages.json 2>/dev/null || cat /tmp/pages.err 2>/dev/null || true
+            echo '```'
+            echo
+            echo '### Pages rebuild request'
+            echo '```text'
+            cat /tmp/build.json 2>/dev/null || cat /tmp/build.err 2>/dev/null || true
+            echo '```'
+          } > "$report"
+
+          gh issue comment "${{ github.event.issue.number }}" --body-file "$report"
+
+          if [[ "$live_ok" != '1' ]]; then
+            exit 1
+          fi
+          for name in menu setup running; do
+            [[ "$(cat /tmp/focus-live/${name}.rc)" == '0' ]]
+            [[ "$(cat /tmp/focus-live/${name}.pillow_rc)" == '0' ]]
+          done
+
+      - name: Remove one-time verifier
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -f .github/workflows/report-live-focus-status.yml deploy-20260804-focus-repair.txt
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A
+          if ! git diff --cached --quiet; then
+            git commit -m 'Remove one-time Focus guide verifier'
+            git pull --rebase origin main
+            git push origin main
+          fi
