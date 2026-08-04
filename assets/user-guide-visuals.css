@@ -1,0 +1,136 @@
+/* Visual screenshot layouts for the English Smart Planner guide. */
+.manual-shot {
+  margin: 20px 0 0;
+  padding: 10px;
+  border: 1px solid #dbe4ef;
+  border-radius: 20px;
+  background: #f8fafc;
+  box-shadow: 0 14px 36px rgba(15, 23, 42, .06);
+}
+
+.manual-shot img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid #e2e8f0;
+  border-radius: 13px;
+  background: #fff;
+}
+
+.manual-shot figcaption {
+  padding: 10px 4px 2px;
+  color: #64748b;
+  font-size: 13px;
+  line-height: 1.55;
+  text-align: center;
+}
+
+.manual-shot-single {
+  width: min(100%, 390px);
+  margin: 22px auto 0;
+}
+
+.manual-shot-grid {
+  display: grid;
+  gap: 18px;
+  align-items: start;
+  margin-top: 22px;
+}
+
+.manual-shot-grid .manual-shot {
+  width: 100%;
+  margin: 0;
+}
+
+.manual-shot-grid-two {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.manual-shot-grid-three {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.manual-mini-flow {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  margin: 0 0 22px;
+}
+
+.manual-mini-flow span {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  min-height: 48px;
+  padding: 10px 12px;
+  border: 1px solid #dbe4ef;
+  border-radius: 14px;
+  background: #fff;
+  color: #334155;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.manual-mini-flow b {
+  display: inline-grid;
+  place-items: center;
+  flex: 0 0 auto;
+  width: 30px;
+  height: 30px;
+  border-radius: 999px;
+  background: #2563eb;
+  color: #fff;
+  font-weight: 900;
+}
+
+.guide-section {
+  scroll-margin-top: 96px;
+}
+
+@media (max-width: 900px) {
+  .manual-shot-grid-three {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .manual-mini-flow {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 620px) {
+  .manual-shot-grid-two,
+  .manual-shot-grid-three {
+    grid-template-columns: 1fr;
+  }
+
+  .manual-shot-grid .manual-shot,
+  .manual-shot-single {
+    width: 60%;
+    max-width: 220px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 5px;
+    border-radius: 14px;
+  }
+
+  .manual-shot img {
+    border-radius: 10px;
+  }
+
+  .manual-shot figcaption {
+    padding: 8px 2px 2px;
+    font-size: 11px;
+    line-height: 1.45;
+  }
+
+  .manual-mini-flow {
+    display: none;
+  }
+}
+
+@media (max-width: 380px) {
+  .manual-shot-grid .manual-shot,
+  .manual-shot-single {
+    width: 68%;
+  }
+}
