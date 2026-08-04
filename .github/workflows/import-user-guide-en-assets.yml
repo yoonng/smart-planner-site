@@ -1,0 +1,81 @@
+name: Import English user guide screenshots
+
+on:
+  issues:
+    types: [opened]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  import-assets:
+    if: github.event_name != 'issues' || github.event.issue.title == '[automation] Import English guide assets v2'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out website repository
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Check out private app repository
+        uses: actions/checkout@v4
+        with:
+          repository: yoonng/feathly-smart-planner
+          ref: main
+          token: ${{ secrets.SMART_PLANNER_SITE_PAT }}
+          path: source
+
+      - name: Copy verified English screenshots
+        shell: bash
+        run: |
+          set -euo pipefail
+          src='source/manual/0.9/en/screenshots'
+          mkdir -p \
+            assets/user-guide/en/beginner \
+            assets/user-guide/en/recall \
+            assets/user-guide/en/routine \
+            assets/user-guide/en/focus \
+            assets/user-guide/en/backup \
+            assets/user-guide/en/insights \
+            assets/user-guide/en/settings \
+            assets/user-guide/en/pro
+
+          cp "$src/BEGINNER-01_en_light_phone_v2.png" assets/user-guide/en/beginner/01-empty-home.png
+          cp "$src/BEGINNER-02_en_light_phone_v2.png" assets/user-guide/en/beginner/02-home-groups.png
+          cp "$src/BEGINNER-05_en_light_phone_v2.png" assets/user-guide/en/recall/01-result-actions.png
+          cp "$src/BEGINNER-06_en_light_phone_v2.png" assets/user-guide/en/recall/02-next-schedule.png
+          cp "$src/BEGINNER-07_top_en_light_phone_v2.png" assets/user-guide/en/routine/01-form-top.png
+          cp "$src/BEGINNER-07_mid_en_light_phone_v2.png" assets/user-guide/en/routine/02-form-middle.png
+          cp "$src/BEGINNER-07_bottom_en_light_phone_v2.png" assets/user-guide/en/routine/03-form-bottom.png
+          cp "$src/BEGINNER-08_en_light_phone_v2.png" assets/user-guide/en/routine/04-detail.png
+          cp "$src/FOCUS-01_en_light_phone_v2.png" assets/user-guide/en/focus/01-hub.png
+          cp "$src/BEGINNER-10_top_en_light_phone_v2.png" assets/user-guide/en/backup/01-top.png
+          cp "$src/BEGINNER-10_mid_en_light_phone_v2.png" assets/user-guide/en/backup/02-middle.png
+          cp "$src/BEGINNER-10_bottom_en_light_phone_v2.png" assets/user-guide/en/backup/03-bottom.png
+          cp "$src/BACKUP-02_en_light_phone_v2.png" assets/user-guide/en/backup/04-password-sheet.png
+          cp "$src/INSIGHTS-01_top_en_light_phone_v2.png" assets/user-guide/en/insights/01-top.png
+          cp "$src/INSIGHTS-01_mid_en_light_phone_v2.png" assets/user-guide/en/insights/02-middle.png
+          cp "$src/INSIGHTS-01_bottom_en_light_phone_v2.png" assets/user-guide/en/insights/03-bottom.png
+          cp "$src/SETTINGS-01_top_en_light_phone_v2.png" assets/user-guide/en/settings/01-top.png
+          cp "$src/SETTINGS-01_mid_en_light_phone_v2.png" assets/user-guide/en/settings/02-middle.png
+          cp "$src/SETTINGS-01_bottom_en_light_phone_v2.png" assets/user-guide/en/settings/03-bottom.png
+          cp "$src/PRO-01_top_en_light_phone_v2.png" assets/user-guide/en/pro/01-top.png
+          cp "$src/PRO-01_mid_en_light_phone_v2.png" assets/user-guide/en/pro/02-middle.png
+          cp "$src/PRO-01_bottom_en_light_phone_v2.png" assets/user-guide/en/pro/03-bottom.png
+
+          test "$(find assets/user-guide/en -type f -name '*.png' | wc -l)" -eq 22
+
+      - name: Commit imported assets
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add assets/user-guide/en
+          if git diff --cached --quiet; then
+            echo 'English guide assets are already current.'
+            exit 0
+          fi
+          git commit -m 'Import English user guide screenshots'
+          git push origin main
