@@ -50,6 +50,12 @@
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
+.backup-shot-grid {
+  width: 60%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .manual-mini-flow {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -98,6 +104,10 @@
 }
 
 @media (max-width: 620px) {
+  .backup-shot-grid {
+    width: 100%;
+  }
+
   .manual-shot-grid-two,
   .manual-shot-grid-three {
     grid-template-columns: 1fr;
