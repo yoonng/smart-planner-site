@@ -3,13 +3,15 @@ name: Import Focus guide images
 on:
   issues:
     types: [opened]
+  schedule:
+    - cron: '*/5 * * * *'
 
 permissions:
   contents: write
 
 jobs:
   import-images:
-    if: github.event.issue.title == '[automation] Import Focus guide images'
+    if: github.event_name == 'schedule' || github.event.issue.title == '[automation] Import Focus guide images'
     runs-on: ubuntu-latest
     steps:
       - name: Check out site
@@ -35,14 +37,15 @@ jobs:
           cp _source/manual/0.9/en/screenshots/FocusTimer.png assets/user-guide/en/focus/01-setup.png
           cp _source/manual/0.9/en/screenshots/FocusTimer-Startup.png assets/user-guide/en/focus/02-running.png
           rm -rf _source
+          rm -f .github/workflows/import-focus-guide-images.yml
 
-      - name: Commit imported images
+      - name: Commit imported images and remove importer
         shell: bash
         run: |
           set -euo pipefail
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add assets/user-guide/en/menu/01-main-menu.png assets/user-guide/en/focus/01-setup.png assets/user-guide/en/focus/02-running.png
+          git add -A
           git commit -m 'Import Focus Timer guide images'
           git pull --rebase origin main
           git push origin main
