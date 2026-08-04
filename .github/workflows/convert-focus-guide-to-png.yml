@@ -1,0 +1,60 @@
+name: Convert Focus guide image to PNG
+
+on:
+  issues:
+    types: [opened]
+
+permissions:
+  contents: write
+
+jobs:
+  convert:
+    if: github.event.issue.title == '[automation] Convert Focus guide image to PNG'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out current main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Validate and convert image
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m pip install --quiet pillow
+          python - <<'PY'
+          from pathlib import Path
+          from PIL import Image
+
+          source = Path('assets/user-guide/en/focus/focus-timer-flow.webp')
+          target = Path('assets/user-guide/en/focus/focus-timer-flow.png')
+
+          with Image.open(source) as image:
+              image.verify()
+          with Image.open(source) as image:
+              image.convert('RGB').save(target, format='PNG', optimize=True)
+          with Image.open(target) as image:
+              image.verify()
+
+          html_path = Path('smart-planner/user-guide.html')
+          html = html_path.read_text(encoding='utf-8')
+          old = '/assets/user-guide/en/focus/focus-timer-flow.webp'
+          new = '/assets/user-guide/en/focus/focus-timer-flow.png'
+          if old not in html:
+              raise SystemExit('Expected WebP image link not found in HTML')
+          html_path.write_text(html.replace(old, new), encoding='utf-8')
+          source.unlink()
+          PY
+
+      - name: Commit PNG and remove workflow
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -f .github/workflows/convert-focus-guide-to-png.yml
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add -A
+          git commit -m 'Use verified PNG for Focus Timer guide image'
+          git pull --rebase origin main
+          git push origin main
