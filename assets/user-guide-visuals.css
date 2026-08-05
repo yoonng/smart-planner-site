@@ -354,6 +354,11 @@ body.guide-zoom-open {
   height: auto;
   border-radius: 18px;
 }
+.focus-ko-grid {
+  width: 95%;
+  margin-left: auto;
+  margin-right: auto;
+}
 .focus-flow-copy {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -398,6 +403,11 @@ body.guide-zoom-open {
 @media (max-width: 620px) {
   .focus-flow-shot { padding: 5px; border-radius: 14px; }
   .focus-flow-shot img { border-radius: 10px; }
+  .focus-ko-grid { width: 100%; }
+  .focus-ko-grid .manual-shot {
+    width: 95%;
+    max-width: 360px;
+  }
   .focus-flow-copy { grid-template-columns: 1fr; gap: 10px; }
   .focus-flow-copy article { padding: 13px; }
 }
