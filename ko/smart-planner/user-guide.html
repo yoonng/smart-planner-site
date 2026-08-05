@@ -4,14 +4,16 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>사용자 설명서 - Smart Planner</title>
-  <meta name="description" content="Spaced Loop, Routine Loop, Home, Recall, Snooze, Focus Timer와 백업을 설명하는 Smart Planner 한국어 사용자 설명서입니다.">
+  <meta name="description" content="Smart Planner의 Spaced Loop, Routine Loop, Recall, Focus Timer, 백업, Insights와 설정을 실제 화면으로 설명하는 초보자용 한국어 안내서입니다.">
   <link rel="canonical" href="https://feathly.com/ko/smart-planner/user-guide.html">
   <link rel="alternate" hreflang="en" href="https://feathly.com/smart-planner/user-guide.html">
   <link rel="alternate" hreflang="ko" href="https://feathly.com/ko/smart-planner/user-guide.html">
   <link rel="stylesheet" href="/assets/style.css">
   <link rel="stylesheet" href="/assets/landing.css">
   <link rel="stylesheet" href="/assets/user-guide.css">
+  <link rel="stylesheet" href="/assets/user-guide-visuals.css">
   <script defer src="/assets/app.js"></script>
+  <script defer src="/assets/user-guide-image-zoom.js"></script>
 </head>
 <body>
 <header class="site-header"><div class="wrap nav"><a class="brand" href="/ko/">Feathly</a><nav class="nav-links" aria-label="주요 메뉴"></nav></div></header>
@@ -20,13 +22,13 @@
     <div class="wrap">
       <div class="eyebrow">Smart Planner 사용자 설명서</div>
       <h1>간단한 Loop 하나부터 시작하세요.</h1>
-      <p>Spaced Loop와 Routine Loop의 차이를 이해하고, 첫 알림을 만든 뒤 Complete, Recall, Snooze가 어떤 동작을 하는지 확인합니다.</p>
+      <p>실제 앱 화면을 따라 Loop를 만들고, 알림을 처리하고, Smart Planner의 주요 기능을 익힐 수 있습니다.</p>
       <div class="guide-hero-actions">
-        <a href="#choose-loop">Loop 선택하기</a>
-        <a class="secondary" href="#spaced-loop">Spaced Loop 만들기</a>
+        <a href="#spaced-loop">Spaced Loop 만들기</a>
         <a class="secondary" href="#routine-loop">Routine Loop 만들기</a>
+        <a class="secondary" href="#backup">백업과 복원</a>
       </div>
-      <div class="guide-meta"><span>초보자 우선</span><span>모바일 최적화</span><span>Closed Test 준비</span></div>
+      <div class="guide-meta"><span>한국어 설명</span><span>영문 앱 화면</span><span>모바일 최적화</span></div>
     </div>
   </section>
 
@@ -35,14 +37,19 @@
       <aside class="guide-aside" aria-label="사용자 설명서 목차">
         <nav class="guide-nav-card">
           <div class="guide-nav-title">이 페이지의 내용</div>
+          <div class="guide-nav-group-title">먼저 시작하기</div>
           <a href="#overview">Smart Planner 소개</a>
-          <a href="#choose-loop">Spaced와 Routine 선택</a>
+          <a href="#choose-loop">Spaced 또는 Routine?</a>
           <a href="#home">홈 화면</a>
-          <a href="#spaced-loop">Spaced Loop</a>
-          <a href="#routine-loop">Routine Loop</a>
-          <a href="#actions">Complete, Snooze, Recall</a>
-          <a href="#focus-timer">Focus Timer</a>
-          <a href="#intermediate">중급 기능</a>
+          <a href="#spaced-loop">Spaced Loop 만들기</a>
+          <a href="#recall">Recall과 다음 복습</a>
+          <a href="#routine-loop">Routine Loop 만들기</a>
+          <div class="guide-nav-group-title">추가 기능</div>
+          <a href="#focus">Focus Timer</a>
+          <a href="#backup">백업과 복원</a>
+          <a href="#insights">Insights</a>
+          <a href="#settings">설정</a>
+          <a href="#pro">PRO</a>
           <a href="#help">도움말과 피드백</a>
         </nav>
       </aside>
@@ -51,97 +58,107 @@
         <details class="guide-mini-index">
           <summary>페이지 메뉴 열기</summary>
           <div class="guide-mini-index-links">
-            <a href="#overview">Smart Planner 소개</a>
-            <a href="#choose-loop">Spaced와 Routine 선택</a>
-            <a href="#home">홈 화면</a>
-            <a href="#spaced-loop">Spaced Loop</a>
-            <a href="#routine-loop">Routine Loop</a>
-            <a href="#actions">Complete, Snooze, Recall</a>
-            <a href="#focus-timer">Focus Timer</a>
-            <a href="#intermediate">중급 기능</a>
-            <a href="#help">도움말과 피드백</a>
+            <div class="guide-nav-group-title">먼저 시작하기</div>
+            <a href="#overview">Smart Planner 소개</a><a href="#choose-loop">Spaced 또는 Routine?</a><a href="#home">홈 화면</a><a href="#spaced-loop">Spaced Loop 만들기</a><a href="#recall">Recall과 다음 복습</a><a href="#routine-loop">Routine Loop 만들기</a>
+            <div class="guide-nav-group-title">추가 기능</div>
+            <a href="#focus">Focus Timer</a><a href="#backup">백업과 복원</a><a href="#insights">Insights</a><a href="#settings">설정</a><a href="#pro">PRO</a><a href="#help">도움말과 피드백</a>
           </div>
         </details>
 
+        <div class="guide-image-tip" role="note"><strong>화면을 자세히 보고 싶나요?</strong> 안내 이미지를 누르면 원본 크기로 확대됩니다.</div>
+
         <section class="guide-section" id="overview">
-          <div class="guide-section-head"><span>초보자 01</span><h2>Smart Planner가 하는 일</h2><p>기억하고 싶은 정보와 반복해야 하는 행동을 필요한 시점에 다시 보여줍니다.</p></div>
+          <div class="guide-section-head"><span>초보자 01</span><h2>Smart Planner가 하는 일</h2><p>기억하고 싶은 내용과 반복하고 싶은 행동을 필요한 시점에 다시 보여줍니다.</p></div>
           <div class="guide-card-grid">
-            <article class="guide-card guide-choice"><div class="guide-choice-label">기억과 학습</div><h3>Spaced Loop</h3><p>시간 간격을 두고 정보를 다시 확인할 때 사용합니다. 단어, 시험 내용, 업무 절차, 사람 이름처럼 잊고 싶지 않은 지식에 적합합니다.</p></article>
-            <article class="guide-card guide-choice routine"><div class="guide-choice-label">반복 행동</div><h3>Routine Loop</h3><p>정해진 주기에 따라 행동을 반복할 때 사용합니다. 약 복용, 운동, 재고 점검, 청소, 주간 보고 등에 적합합니다.</p></article>
+            <article class="guide-card guide-choice"><div class="guide-choice-label">기억과 학습</div><h3>Spaced Loop</h3><p>단어, 사실, 발표 내용, 업무 절차처럼 나중에 다시 떠올리고 싶은 내용을 등록합니다.</p></article>
+            <article class="guide-card guide-choice routine"><div class="guide-choice-label">반복 행동</div><h3>Routine Loop</h3><p>약 복용, 운동, 청소, 점검처럼 정해진 일정에 따라 반복하는 행동을 등록합니다.</p></article>
           </div>
-          <div class="guide-callout"><h3>간격을 둔 복습은 기억에 어떻게 도움이 되나요?</h3><p>처음 학습한 뒤 비교적 짧은 시간 안에 다시 확인하면 내용이 빠르게 사라지는 것을 줄이는 데 도움이 될 수 있습니다. 이후 복습 간격을 늘리면 며칠, 몇 주, 몇 달 뒤에도 다시 떠올릴 기회를 만들 수 있습니다.</p><p>Smart Planner가 기억을 자동으로 만들어 주거나 결과를 보장하는 것은 아닙니다. 먼저 스스로 떠올리고, 확인하고, 틀린 부분을 수정할 수 있도록 복습 시점을 관리합니다.</p></div>
+          <figure class="manual-shot manual-shot-single"><img src="/assets/user-guide/en/beginner/01-empty-home.png" alt="Spaced Loop와 Routine Loop 만들기 버튼이 있는 빈 홈 화면" loading="eager"><figcaption>홈의 두 만들기 버튼에서 필요한 Loop를 바로 시작할 수 있습니다.</figcaption></figure>
+          <div class="guide-callout"><h3>Smart Planner는 복습 시점을 관리합니다</h3><p>메모를 보기 전에 먼저 기억을 떠올린 다음 내용을 확인하고, 자신의 결과에 맞는 버튼을 선택하세요.</p></div>
         </section>
 
         <section class="guide-section" id="choose-loop">
-          <div class="guide-section-head"><span>초보자 02</span><h2>어떤 Loop를 선택해야 하나요?</h2><p>제목보다 그 항목의 목적을 기준으로 선택하세요.</p></div>
+          <div class="guide-section-head"><span>초보자 02</span><h2>어떤 Loop를 선택해야 하나요?</h2><p>항목의 이름보다 사용 목적을 기준으로 선택하세요.</p></div>
           <div class="guide-card-grid">
-            <article class="guide-card"><h3>Spaced Loop를 선택하세요</h3><ul><li>내용을 기억하고 싶을 때</li><li>현재 복습을 끝낸 뒤 다음 복습이 생성되어야 할 때</li><li>단계마다 복습 간격이 달라질 수 있을 때</li></ul></article>
-            <article class="guide-card"><h3>Routine Loop를 선택하세요</h3><ul><li>행동을 반복하고 싶을 때</li><li>매일, 요일, 정기 시간에 실행할 때</li><li>완료 후 다음 정기 일정이 준비되어야 할 때</li></ul></article>
+            <article class="guide-card"><h3>Spaced Loop를 선택하세요</h3><ul><li>내용을 기억하고 싶을 때</li><li>현재 복습을 끝낸 뒤 다음 복습을 예약할 때</li><li>단계마다 복습 간격이 달라질 수 있을 때</li></ul></article>
+            <article class="guide-card"><h3>Routine Loop를 선택하세요</h3><ul><li>행동을 반복하고 싶을 때</li><li>매일, 특정 요일 또는 정기 시간에 실행할 때</li><li>완료한 뒤 다음 Routine을 예약할 때</li></ul></article>
           </div>
-          <div class="guide-callout tip"><h3>하나의 목표에 두 종류를 함께 사용할 수 있습니다</h3><p>“매일 저녁 영어 공부하기”는 Routine Loop로 만들고, 그 시간에 배운 개별 단어나 표현은 Spaced Loop로 만들 수 있습니다.</p></div>
+          <div class="guide-callout tip"><h3>한 가지 목표에 두 Loop를 함께 사용할 수 있습니다</h3><p>‘매일 저녁 영어 공부하기’는 Routine Loop로 만들고, 새로 배운 단어는 각각 Spaced Loop로 만들 수 있습니다.</p></div>
         </section>
 
         <section class="guide-section" id="home">
-          <div class="guide-section-head"><span>초보자 03</span><h2>홈 화면 이해하기</h2><p>실제로 생성된 알림을 처리 시점에 따라 나누어 보여줍니다.</p></div>
-          <div class="guide-action-list"><div class="guide-action"><strong>NOW</strong><span>지금 처리할 수 있거나 이미 시간이 지난 항목입니다.</span></div><div class="guide-action"><strong>TODAY</strong><span>오늘의 운영일 안에서 나중에 예정된 항목입니다.</span></div><div class="guide-action"><strong>LATER</strong><span>오늘 이후에 예정된 항목입니다.</span></div></div>
-          <figure class="guide-shot" data-screen-id="BEGINNER-02"><div class="guide-shot-placeholder"><div><strong>BEGINNER-02 · 홈 화면</strong><span>검증된 한국어 스크린샷에는 상단 요약과 NOW / TODAY / LATER 그룹이 표시됩니다.</span></div></div><figcaption>Complete 또는 Snooze 후에는 카드 위치와 요약 정보가 새 상태에 맞게 갱신되어야 합니다.</figcaption></figure>
+          <div class="guide-section-head"><span>초보자 03</span><h2>홈 화면 이해하기</h2><p>홈은 알림을 처리해야 하는 시점에 따라 나누어 보여줍니다.</p></div>
+          <div class="guide-action-list"><div class="guide-action"><strong>NOW</strong><span>지금 복습하거나 완료할 수 있는 항목입니다.</span></div><div class="guide-action"><strong>TODAY</strong><span>오늘 나중에 예정된 항목입니다.</span></div><div class="guide-action"><strong>LATER</strong><span>오늘 이후에 예정된 항목입니다.</span></div></div>
+          <figure class="manual-shot manual-shot-single"><img src="/assets/user-guide/en/beginner/02-home-groups.png" alt="NOW, TODAY, LATER 그룹이 표시된 홈 화면" loading="lazy"><figcaption>복습, 미루기 또는 완료 후에는 홈의 카드와 상단 요약이 새 상태로 바뀝니다.</figcaption></figure>
         </section>
 
-        <section class="guide-section" id="spaced-loop">
-          <div class="guide-section-head"><span>초보자 04</span><h2>첫 Spaced Loop 만들기</h2><p>처음에는 한 가지 작은 정보로 시작하세요.</p></div>
-          <div class="guide-flow">
-            <article class="guide-step"><h3>Create에서 Spaced Loop 선택</h3><p>홈에서 Create를 열고 기억 또는 학습 목적의 Loop를 선택합니다.</p></article>
-            <article class="guide-step"><h3>짧은 제목 입력</h3><p>예: <strong>회복력</strong>. 짧은 제목은 홈과 알림에서 알아보기 쉽습니다.</p></article>
-            <article class="guide-step"><h3>설명 또는 정답 입력</h3><p>예: <strong>어려움을 이겨내고 다시 일어서는 힘</strong>. 메모를 보기 전에 먼저 뜻을 떠올려 보세요.</p></article>
-            <article class="guide-step"><h3>초보자용 패턴 선택</h3><p>현재 앱에 표시된 기본 학습 패턴 또는 오늘 중심 패턴을 선택합니다.</p></article>
-            <article class="guide-step"><h3>화면 아래까지 확인 후 저장</h3><p>폼의 하단으로 스크롤해 첫 알림 시간과 알림 설정을 확인한 뒤 저장합니다.</p></article>
+        <section class="guide-section spaced-beginner" id="spaced-loop">
+          <div class="guide-section-head"><span>초보자 04</span><h2>첫 Spaced Loop 만들기</h2><p>기억하고 싶은 단어, 사실, 아이디어 또는 메모를 등록해 보세요.</p></div>
+          <div class="spaced-quick-summary" aria-label="Spaced Loop 만들기 네 단계"><span><b>1</b> 시작</span><span><b>2</b> 내용 입력</span><span><b>3</b> 패턴 확인</span><span><b>4</b> 저장</span></div>
+          <div class="spaced-step-list">
+            <article class="spaced-step-card"><div class="spaced-step-copy"><span class="spaced-step-number">1</span><div><h3>+ Spaced Loop 누르기</h3><p>홈에서 파란색 <strong>+ Spaced Loop</strong> 버튼을 누릅니다.</p></div></div><figure class="spaced-step-shot"><div class="spaced-shot-label">여기를 누르세요</div><img src="/assets/user-guide/spaced/01-start.png" alt="Spaced Loop 버튼이 있는 홈 화면" loading="lazy"></figure></article>
+            <article class="spaced-step-card"><div class="spaced-step-copy"><span class="spaced-step-number">2</span><div><h3>제목과 메모 입력하기</h3><p>제목은 짧게 쓰고, 정답이나 설명은 메모에 입력합니다.</p></div></div><figure class="spaced-step-shot"><div class="spaced-shot-label">제목과 메모</div><img src="/assets/user-guide/spaced/02-content.png" alt="Spaced Loop 제목과 메모 입력란" loading="lazy"></figure></article>
+            <article class="spaced-step-card"><div class="spaced-step-copy"><span class="spaced-step-number">3</span><div><h3>추천 패턴 그대로 사용하기</h3><p>첫 Loop에서는 기본 복습 패턴을 변경하지 않아도 됩니다.</p></div></div><figure class="spaced-step-shot"><div class="spaced-shot-label">기본값으로 충분합니다</div><img src="/assets/user-guide/spaced/03-pattern.png" alt="Spaced Loop 복습 패턴" loading="lazy"></figure></article>
+            <article class="spaced-step-card"><div class="spaced-step-copy"><span class="spaced-step-number">4</span><div><h3>첫 알림 확인 후 저장하기</h3><p>첫 알림 시간을 확인하고 <strong>Save</strong>를 누릅니다.</p></div></div><figure class="spaced-step-shot"><div class="spaced-shot-label">확인하고 저장</div><img src="/assets/user-guide/spaced/04-save.png" alt="첫 알림 설정과 Save 버튼" loading="lazy"></figure></article>
           </div>
-          <figure class="guide-shot" data-screen-id="BEGINNER-04"><div class="guide-shot-placeholder"><div><strong>BEGINNER-04 · Spaced Loop 입력 화면</strong><span>휴대폰에서 읽기 쉽도록 상단과 하단 스크린샷을 나누어 배치합니다.</span></div></div><figcaption>긴 화면은 한 장으로 과도하게 축소하지 않고 연결된 상단·하단 이미지로 보여줍니다.</figcaption></figure>
-          <div class="guide-callout tip"><h3>복습 효과를 높이는 습관</h3><p>알림이 나타나면 바로 메모를 읽지 말고 먼저 기억을 떠올리세요. 그다음 메모를 열어 빠진 부분을 확인하고 현재 단계를 완료합니다.</p></div>
+          <div class="guide-callout tip spaced-finished"><h3>완료했습니다</h3><p>Loop가 홈에 나타납니다. 복습 시간이 되면 메모를 열기 전에 먼저 답을 떠올려 보세요.</p></div>
+        </section>
+
+        <section class="guide-section" id="recall">
+          <div class="guide-section-head"><span>초보자 05</span><h2>Recall 결과와 다음 복습</h2><p>Spaced Loop를 열고 자신이 얼마나 잘 기억했는지에 맞는 결과를 선택하세요.</p></div>
+          <div class="guide-action-list"><div class="guide-action"><strong>Again</strong><span>아직 잘 기억하지 못했습니다.</span></div><div class="guide-action"><strong>Hard</strong><span>어렵게 기억해 냈습니다.</span></div><div class="guide-action"><strong>Got it</strong><span>만족스럽게 기억했습니다.</span></div><div class="guide-action"><strong>Easy</strong><span>매우 쉽게 기억했습니다.</span></div><div class="guide-action"><strong>In 5 minutes</strong><span>지금 처리하기 어려울 때 잠시 미룹니다.</span></div></div>
+          <div class="manual-shot-grid manual-shot-grid-two"><figure class="manual-shot"><div class="manual-shot-label">결과 선택</div><img src="/assets/user-guide/en/recall/01-result-actions.png" alt="Again, Hard, Got it, Easy와 미루기 버튼이 있는 Recall 화면" loading="lazy"><figcaption>메모를 읽기 전에 먼저 답을 떠올려 보세요.</figcaption></figure><figure class="manual-shot"><div class="manual-shot-label">다음 일정 확인</div><img src="/assets/user-guide/en/recall/02-next-schedule.png" alt="Recall 결과를 선택한 뒤의 홈 화면" loading="lazy"><figcaption>결과를 선택하면 홈에 다음 복습 시간이 표시됩니다.</figcaption></figure></div>
         </section>
 
         <section class="guide-section" id="routine-loop">
-          <div class="guide-section-head"><span>초보자 05</span><h2>첫 Routine Loop 만들기</h2><p>명확한 반복 시간이 있는 실제 행동으로 시작하세요.</p></div>
-          <div class="guide-flow">
-            <article class="guide-step"><h3>Create에서 Routine Loop 선택</h3><p>지식을 복습하는 것이 아니라 행동을 반복하는 것이 목적일 때 선택합니다.</p></article>
-            <article class="guide-step"><h3>행동 입력</h3><p>예: <strong>주간 냉장고 점검</strong>. 메모에는 온도, 유통기한, 청소 상태 확인을 적을 수 있습니다.</p></article>
-            <article class="guide-step"><h3>반복 규칙 선택</h3><p>예: 매주 금요일 오후 5시. 화면에 표시된 요일과 시간 설정을 사용합니다.</p></article>
-            <article class="guide-step"><h3>화면 하단 확인 후 저장</h3><p>반복 규칙과 알림 설정을 마지막까지 확인한 뒤 저장합니다.</p></article>
-            <article class="guide-step"><h3>현재 항목 완료</h3><p>행동을 마친 뒤 Complete를 선택하면 Routine 규칙에 따라 다음 일정이 준비됩니다.</p></article>
+          <div class="guide-section-head"><span>초보자 06</span><h2>첫 Routine Loop 만들기</h2><p>정기적으로 반복하는 행동을 등록합니다. 파란색 영역을 따라 각 설정을 찾으세요.</p></div>
+          <div class="manual-step-list">
+            <article class="manual-step-card"><div class="manual-step-copy"><span class="manual-step-number">1</span><div><h3>제목과 메모 입력하기</h3><p>행동의 이름은 짧게 씁니다. 체크리스트나 추가 설명이 필요할 때만 메모를 입력하세요.</p></div></div><figure class="manual-shot manual-step-shot"><div class="routine-step-badge">제목과 메모</div><div class="manual-image-frame"><img src="/assets/user-guide/en/routine/01-form-top.png" alt="제목과 메모 입력란을 강조한 Routine Loop 화면" loading="lazy"><div class="routine-focus-box" style="--focus-top:14%;--focus-left:4%;--focus-width:92%;--focus-height:31%;"></div></div><figcaption>예: <strong>주간 냉장고 점검</strong>. 메모에는 온도, 유통기한, 청소 항목을 적을 수 있습니다.</figcaption></figure></article>
+            <article class="manual-step-card"><div class="manual-step-copy"><span class="manual-step-number">2</span><div><h3>반복 규칙 선택하기</h3><p>매일, 평일, 주말 또는 원하는 요일처럼 행동을 반복할 시점을 선택합니다.</p></div></div><figure class="manual-shot manual-step-shot"><div class="routine-step-badge">반복 규칙</div><div class="manual-image-frame"><img src="/assets/user-guide/en/routine/02-form-middle.png" alt="Repeat 선택 항목을 강조한 Routine Loop 화면" loading="lazy"><div class="routine-focus-box" style="--focus-top:25%;--focus-left:4%;--focus-width:92%;--focus-height:22%;"></div></div><figcaption>반복 규칙은 Routine이 다시 나타나는 시점을 정합니다. 알림 시간은 바로 아래에서 따로 선택합니다.</figcaption></figure></article>
+            <article class="manual-step-card"><div class="manual-step-copy"><span class="manual-step-number">3</span><div><h3>일정 설정 후 저장하기</h3><p>요일과 시간을 선택하고 알림 설정을 확인한 다음 <strong>Save</strong>를 누릅니다.</p></div></div><figure class="manual-shot manual-step-shot"><div class="routine-step-badge">일정과 저장</div><div class="manual-image-frame"><img src="/assets/user-guide/en/routine/03-form-bottom.png" alt="일정 설정과 Save 버튼을 강조한 Routine Loop 화면" loading="lazy"><div class="routine-focus-box" style="--focus-top:26%;--focus-left:4%;--focus-width:92%;--focus-height:44%;"></div><div class="routine-focus-box" style="--focus-top:5%;--focus-left:79%;--focus-width:17%;--focus-height:6%;"></div></div><figcaption>요일과 알림 시간을 선택한 뒤 화면 상단의 Save 버튼을 누릅니다.</figcaption></figure></article>
+            <article class="manual-step-card"><div class="manual-step-copy"><span class="manual-step-number">4</span><div><h3>저장된 Routine 확인하기</h3><p>저장 후 Routine을 열어 메모, 카테고리, 반복 설정을 확인합니다.</p></div></div><figure class="manual-shot manual-step-shot"><div class="routine-step-badge">저장된 설정</div><div class="manual-image-frame"><img src="/assets/user-guide/en/routine/04-detail.png" alt="메모, 카테고리와 반복 설정을 강조한 저장된 Routine 화면" loading="lazy"><div class="routine-focus-box" style="--focus-top:27%;--focus-left:4%;--focus-width:92%;--focus-height:17%;"></div><div class="routine-focus-box" style="--focus-top:45%;--focus-left:4%;--focus-width:64%;--focus-height:13%;"></div><div class="routine-focus-box" style="--focus-top:76%;--focus-left:4%;--focus-width:92%;--focus-height:24%;"></div></div><figcaption>저장된 메모, 카테고리와 Repeat 설정을 확인하세요.</figcaption></figure></article>
           </div>
-          <figure class="guide-shot" data-screen-id="BEGINNER-07"><div class="guide-shot-placeholder"><div><strong>BEGINNER-07 · Routine Loop 입력 화면</strong><span>검증된 이미지에는 반복 규칙, 요일, 시간과 마지막 저장 버튼이 포함됩니다.</span></div></div><figcaption>행동을 반복할 때는 Routine을, 내용을 다시 떠올릴 때는 Spaced를 사용하세요.</figcaption></figure>
+          <div class="guide-callout tip"><h3>Routine을 완료하는 방법</h3><p>Routine이 <strong>NOW</strong> 또는 <strong>TODAY</strong>에 나타나면 카드를 열고 행동을 마친 뒤 <strong>Complete</strong>를 누르세요. 그러면 다음 Routine이 자동으로 예약됩니다.</p></div>
         </section>
 
-        <section class="guide-section" id="actions">
-          <div class="guide-section-head"><span>초보자 06</span><h2>Complete, Snooze, Recall</h2><p>화면에 따라 완료 버튼의 정확한 이름은 달라질 수 있지만 각 동작의 목적은 같습니다.</p></div>
-          <div class="guide-action-list">
-            <div class="guide-action"><strong>Complete / Got it</strong><span>현재 알림을 처리한 뒤 사용합니다. 결과가 기록되고 다음 단계 또는 다음 반복 일정이 준비될 수 있습니다.</span></div>
-            <div class="guide-action"><strong>Snooze</strong><span>항목은 유효하지만 잠시 미루고 싶을 때 사용합니다. 선택한 시간만큼 현재 알림이 뒤로 이동합니다.</span></div>
-            <div class="guide-action"><strong>Recall now</strong><span>예정 시간 전이라도 지금 바로 해당 Loop를 Recall 가능한 상태로 가져오고 싶을 때 사용합니다.</span></div>
-          </div>
-          <figure class="guide-shot" data-screen-id="BEGINNER-05"><div class="guide-shot-placeholder"><div><strong>BEGINNER-05 · Recall 화면</strong><span>Closed Test용 한국어 스크린샷에서 실제 버튼 이름과 위치를 확인합니다.</span></div></div><figcaption>각 버튼이 현재 단계를 완료하는지, 미루는지, 즉시 Recall하는지 확인한 뒤 사용하세요.</figcaption></figure>
+        <section class="guide-section" id="focus">
+          <div class="guide-section-head"><span>기능 01</span><h2>Focus Timer</h2><p>Focus Timer는 선택한 반복 횟수만큼 집중 학습 시간과 짧은 휴식을 번갈아 진행합니다. 이 리듬은 꾸준히 집중하고 학습 내용을 기억하는 데 도움이 됩니다.<br><strong>다음 네 단계로 시작하세요.</strong></p></div>
+          <figure class="manual-shot focus-flow-shot"><img src="/assets/user-guide/en/focus/focus-4step.png?v=20260805" alt="Focus Timer 열기, 템플릿 선택, 시작과 실행의 네 단계" loading="lazy"><figcaption>왼쪽부터 1~4번 순서로 따라 하세요.</figcaption></figure>
+          <div class="focus-flow-copy"><article><span>1</span><div><h3>Focus Timer 열기</h3><p>홈에서 메인 메뉴를 열고 <strong>Focus Timer</strong>를 누릅니다.</p></div></article><article><span>2</span><div><h3>템플릿 선택하기</h3><p>원하는 타이머 템플릿의 파란색 재생 버튼을 누릅니다.</p></div></article><article><span>3</span><div><h3>타이머 시작하기</h3><p>반복 횟수와 연결할 Loop를 확인하고 <strong>Start Focus Timer</strong>를 누릅니다.</p></div></article><article><span>4</span><div><h3>집중 세션 진행하기</h3><p>시간이 끝날 때까지 집중하세요. 언제든 일시정지하거나 세션을 끝낼 수 있습니다.</p></div></article></div>
         </section>
 
-        <section class="guide-section" id="focus-timer">
-          <div class="guide-section-head"><span>초보자 07</span><h2>Focus Timer 사용하기</h2><p>공부나 작업을 시작하기 어렵다면 짧은 집중 시간부터 시작하세요.</p></div>
-          <div class="guide-flow"><article class="guide-step"><h3>Focus Timer 열기</h3><p>홈 또는 메뉴에서 Focus Timer로 이동합니다.</p></article><article class="guide-step"><h3>짧은 시간 선택</h3><p>처음에는 10~15분처럼 부담이 적은 시간을 사용해도 됩니다. 테스트 캡처에서는 2분 Focus와 1분 Break를 사용합니다.</p></article><article class="guide-step"><h3>시작·일시정지·재개</h3><p>진행 중에는 남은 시간과 ongoing notification을 확인할 수 있습니다.</p></article></div>
-          <figure class="guide-shot" data-screen-id="BEGINNER-09"><div class="guide-shot-placeholder"><div><strong>BEGINNER-09 · Focus Timer</strong><span>한국어 UI와 한국어 Loop 제목이 함께 표시된 검증 이미지를 사용합니다.</span></div></div><figcaption>Feathly의 공식 타이머 명칭은 Focus Timer입니다.</figcaption></figure>
+        <section class="guide-section" id="backup">
+          <div class="guide-section-head"><span>기능 02</span><h2>백업과 복원</h2><p>Sync / Backup 화면을 열고 안내를 읽은 뒤 백업 파일을 만들거나 복원하세요.</p></div>
+          <div class="backup-step-list" aria-label="백업과 복원 네 단계"><div><span>1</span><p><strong>Sync / Backup 열기</strong><br>메인 메뉴에서 선택합니다.</p></div><div><span>2</span><p><strong>백업 만들기</strong><br>백업 작업을 선택하고 파일을 안전하게 저장합니다.</p></div><div><span>3</span><p><strong>파일 보호하기</strong><br>비밀번호를 추가했다면 잃어버리지 않도록 보관합니다.</p></div><div><span>4</span><p><strong>신중하게 복원하기</strong><br>복원 전에 파일과 비밀번호를 확인합니다.</p></div></div>
+          <div class="guide-card-grid"><article class="guide-card"><h3>백업하기 전에</h3><p>백업에 포함되는 내용을 확인하고 비밀번호를 안전한 곳에 보관하세요.</p></article><article class="guide-card"><h3>복원하기 전에</h3><p>선택한 파일이 맞는지, 현재 데이터가 바뀌는지 먼저 확인하세요.</p></article></div>
+          <div class="manual-shot-grid backup-shot-grid"><figure class="manual-shot"><div class="manual-shot-label">백업과 복원</div><img src="/assets/user-guide/en/backup/01-top.png" alt="Backup and Restore 안내 화면" loading="lazy"><figcaption>먼저 백업과 복원 화면의 전체 안내를 읽으세요.</figcaption></figure></div>
+          <figure class="manual-shot manual-shot-single"><div class="manual-shot-label">비밀번호 보호</div><img src="/assets/user-guide/en/backup/04-password-sheet.png" alt="비밀번호로 보호된 백업 설정 화면" loading="lazy"><figcaption>비밀번호가 틀리면 보호된 백업을 복원할 수 없으므로 안전하게 보관하세요.</figcaption></figure>
         </section>
 
-        <section class="guide-section" id="intermediate">
-          <div class="guide-section-head"><span>중급</span><h2>다음에 알아볼 기능</h2><p>Spaced와 Routine의 기본 흐름에 익숙해진 뒤 확인하세요.</p></div>
-          <div class="guide-card-grid"><article class="guide-card"><h3>패턴과 일정 변경</h3><p>Spaced 패턴이나 Routine 규칙을 바꿀 때 앞으로 생성될 알림이 어떻게 달라지는지 확인합니다.</p></article><article class="guide-card"><h3>설정과 시간</h3><p>기상 시간, 취침 시간, Day boundary, 시간대, 알림과 배터리 제한을 확인합니다.</p></article><article class="guide-card"><h3>백업과 복원</h3><p>암호로 보호된 백업을 만들고, 비밀번호를 안전하게 보관하고, 복원 후 결과를 확인합니다.</p></article><article class="guide-card"><h3>Insights</h3><p>완료 기록과 생성된 occurrence를 기준으로 통계를 해석합니다.</p></article></div>
-          <div class="guide-callout warning"><h3>페이지 관리 원칙</h3><p>탐색, 로딩, 가독성이 편안한 동안에는 이 설명서를 한 페이지로 유지합니다. 특정 섹션이 지나치게 커지거나 모바일 사용성이 명확히 나빠질 때만 별도 페이지로 분리합니다.</p></div>
+        <section class="guide-section" id="insights">
+          <div class="guide-section-head"><span>기능 03</span><h2>Insights</h2><p><strong>Insights는 PRO에서만 사용할 수 있습니다.</strong> PRO를 활성화한 뒤 메인 메뉴에서 <strong>Insights</strong>를 열면 주간 학습과 활동 요약을 확인할 수 있습니다.</p></div>
+          <figure class="manual-shot manual-shot-single"><div class="manual-shot-label">Weekly Insights</div><img src="/assets/user-guide/en/insights/01-weekly-insights.jpg?v=20260805" alt="완료율, 카테고리 성과, 복습 시간, 주의 항목, 집중 기록과 복습 점수를 보여주는 PRO Weekly Insights 화면" loading="lazy"><figcaption>PRO는 주간 완료율, 카테고리 성과, 가장 좋은 복습 시간, 주의가 필요한 항목, Focus 기록과 복습 점수를 요약합니다.</figcaption></figure>
+          <div class="guide-callout tip"><h3>PRO 기능</h3><p>Weekly Insights는 PRO가 활성화된 뒤 사용할 수 있습니다. 숫자를 더 많은 일을 해야 한다는 압박이 아니라 학습 상태를 확인하는 참고 자료로 사용하세요.</p></div>
+        </section>
+
+        <section class="guide-section" id="settings">
+          <div class="guide-section-head"><span>기능 04</span><h2>설정</h2><p>왼쪽 위 메인 메뉴를 열고 <strong>Settings</strong>를 선택합니다.</p></div>
+          <div class="manual-shot-grid manual-shot-grid-three"><figure class="manual-shot"><div class="manual-shot-label">설정 위쪽</div><img src="/assets/user-guide/en/settings/01-top.png" alt="설정 화면 위쪽" loading="lazy"><figcaption>일반 설정과 화면 표시 옵션을 확인합니다.</figcaption></figure><figure class="manual-shot"><div class="manual-shot-label">설정 중간</div><img src="/assets/user-guide/en/settings/02-middle.png" alt="설정 화면 중간" loading="lazy"><figcaption>시간과 일정 설명을 읽은 뒤 변경하세요.</figcaption></figure><figure class="manual-shot"><div class="manual-shot-label">설정 아래쪽</div><img src="/assets/user-guide/en/settings/03-bottom.png" alt="설정 화면 아래쪽" loading="lazy"><figcaption>날짜 기준 시간을 크게 바꾸면 일정이 묶이는 방식도 달라질 수 있습니다.</figcaption></figure></div>
+        </section>
+
+        <section class="guide-section" id="pro">
+          <div class="guide-section-head"><span>기능 05</span><h2>PRO</h2><p>PRO 안내 화면에서 제공 기능과 구매·복원 정보를 확인할 수 있습니다.</p></div>
+          <figure class="manual-shot manual-shot-single"><div class="manual-shot-label">PRO 안내</div><img src="/assets/user-guide/en/pro/01-top.png" alt="Smart Planner PRO 안내 화면" loading="lazy"><figcaption>결제하기 전에 표시된 기능과 구매 정보를 확인하세요.</figcaption></figure>
         </section>
 
         <section class="guide-section" id="help">
-          <div class="guide-section-head"><span>지원</span><h2>도움이 필요하거나 문제를 발견했나요?</h2><p>먼저 FAQ를 확인하세요. 재현 가능한 문제를 보낼 때는 기기 모델, Android 버전, 앱 버전과 문제 발생 순서를 포함하면 좋습니다.</p></div>
-          <div class="guide-card-grid"><article class="guide-card"><h3>자주 묻는 질문</h3><p>알림, 백업, 결제, 데이터와 기본 사용법을 확인합니다.</p><p><a href="/ko/smart-planner/faq.html">FAQ 열기</a></p></article><article class="guide-card"><h3>비공개 지원 요청</h3><p>개인 정보나 구매 정보를 공개하지 않고 지원을 요청합니다.</p><p><a href="/ko/smart-planner/support.html">지원 안내 열기</a></p></article></div>
+          <div class="guide-section-head"><span>지원</span><h2>도움이 필요하거나 문제를 발견했나요?</h2><p>문제를 재현할 수 있다면 기기, Android 버전, 앱 버전, 화면, 실행 순서, 예상 결과와 실제 결과를 함께 알려주세요.</p></div>
+          <div class="guide-card-grid"><article class="guide-card"><h3>자주 묻는 질문</h3><p>알림, 백업, 결제, 데이터와 기본 사용법을 확인합니다.</p><p><a href="/ko/smart-planner/faq.html">FAQ 열기</a></p></article><article class="guide-card"><h3>비공개 지원 요청</h3><p>스크린샷에 개인 일정, 이메일 주소, 결제 정보, 구매 토큰 또는 백업 비밀번호를 포함하지 마세요.</p><p><a href="/ko/smart-planner/support.html">지원 안내 열기</a></p></article></div>
         </section>
       </div>
     </div>
   </section>
 </main>
-<footer><div class="wrap foot"><div>Smart Planner - Feathly</div><div></div></div></footer>
+<footer><div class="wrap foot"><div>Smart Planner - Feathly</div><div><a href="/ko/smart-planner/user-guide.html">사용자 설명서</a> · <a href="/ko/smart-planner/faq.html">FAQ</a> · <a href="/ko/smart-planner/support.html">지원</a></div></div></footer>
 </body>
 </html>

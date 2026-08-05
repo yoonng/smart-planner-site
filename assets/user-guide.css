@@ -115,6 +115,12 @@
   min-width: 0;
 }
 
+html[lang="ko"] .guide-content,
+html[lang="ko"] .guide-hero {
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+
 .guide-section {
   padding: 0;
   margin-bottom: 56px;
