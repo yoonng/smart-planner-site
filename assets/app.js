@@ -18,6 +18,7 @@ document.addEventListener('DOMContentLoaded', function () {
     '/smart-planner/privacy.html': '/ko/smart-planner/privacy.html',
     '/smart-planner/terms.html': '/ko/smart-planner/terms.html',
     '/smart-planner/refund.html': '/ko/smart-planner/refund.html',
+    '/community/': '/ko/community/',
   };
   const koreanToEnglish = Object.fromEntries(
     Object.entries(englishToKorean).map(([englishPath, koreanPath]) => [koreanPath, englishPath]),
@@ -133,7 +134,7 @@ document.addEventListener('DOMContentLoaded', function () {
         ['/ko/smart-planner/download.html', labels.download],
         ['/ko/smart-planner/build-history.html', labels.build],
         ['/ko/smart-planner/support.html', labels.support],
-        ['/community/', labels.community],
+        ['/ko/community/', labels.community],
       ]
     : [
         ['/', labels.home],
