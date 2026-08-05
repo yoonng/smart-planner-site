@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="../assets/user-guide.css">
   <link rel="stylesheet" href="../assets/user-guide-visuals.css">
   <script defer src="../assets/app.js"></script>
+  <script defer src="../assets/user-guide-image-zoom.js"></script>
 </head>
 <body>
 <header class="site-header">
@@ -43,12 +44,14 @@
       <aside class="guide-aside" aria-label="User guide sections">
         <nav class="guide-nav-card">
           <div class="guide-nav-title">On this page</div>
+          <div class="guide-nav-group-title">Start here</div>
           <a href="#overview">What Smart Planner does</a>
           <a href="#choose-loop">Spaced or Routine?</a>
           <a href="#home">Home screen</a>
           <a href="#spaced-loop">Create a Spaced Loop</a>
           <a href="#recall">Recall and next review</a>
           <a href="#routine-loop">Create a Routine Loop</a>
+          <div class="guide-nav-group-title">More features</div>
           <a href="#focus">Focus Timer</a>
           <a href="#backup">Backup and Restore</a>
           <a href="#insights">Insights</a>
@@ -62,12 +65,14 @@
         <details class="guide-mini-index">
           <summary>Open page menu</summary>
           <div class="guide-mini-index-links">
+            <div class="guide-nav-group-title">Start here</div>
             <a href="#overview">What Smart Planner does</a>
             <a href="#choose-loop">Spaced or Routine?</a>
             <a href="#home">Home screen</a>
             <a href="#spaced-loop">Create a Spaced Loop</a>
             <a href="#recall">Recall and next review</a>
             <a href="#routine-loop">Create a Routine Loop</a>
+            <div class="guide-nav-group-title">More features</div>
             <a href="#focus">Focus Timer</a>
             <a href="#backup">Backup and Restore</a>
             <a href="#insights">Insights</a>
@@ -76,6 +81,8 @@
             <a href="#help">Help and feedback</a>
           </div>
         </details>
+
+        <div class="guide-image-tip" role="note"><strong>Need a closer look?</strong> Tap or click any guide image to open a larger view.</div>
 
         <section class="guide-section" id="overview">
           <div class="guide-section-head">
@@ -130,7 +137,7 @@
               <ul>
                 <li>You want to repeat an action.</li>
                 <li>The action follows a day, weekday, or regular time.</li>
-                <li>Completing it should prepare the next occurrence.</li>
+                <li>After you complete it, the next routine is scheduled.</li>
               </ul>
             </article>
           </div>
@@ -145,7 +152,7 @@
           <div class="guide-section-head">
             <span>Beginner 03</span>
             <h2>Understand the Home screen</h2>
-            <p>Home groups generated reminders by when they need your attention.</p>
+            <p>Home groups reminders by when they need your attention.</p>
           </div>
 
           <div class="guide-action-list">
@@ -262,7 +269,7 @@
             <figure class="manual-shot">
               <div class="manual-shot-label">Check the next schedule</div>
             <img src="/assets/user-guide/en/recall/02-next-schedule.png" alt="Home screen after processing a recall result" loading="lazy">
-              <figcaption>After the result is recorded, Home shows the next schedule.</figcaption>
+              <figcaption>After you choose a result, Home shows the next review time.</figcaption>
             </figure>
           </div>
         </section>
@@ -307,7 +314,7 @@
                   <img src="/assets/user-guide/en/routine/02-form-middle.png" alt="Routine Loop form with only the Repeat options highlighted" loading="lazy">
                   <div class="routine-focus-box" style="--focus-top:25%;--focus-left:4%;--focus-width:92%;--focus-height:22%;"></div>
                 </div>
-                <figcaption>The repeat rule controls when the next occurrence is prepared. Notify time is configured separately below it.</figcaption>
+                <figcaption>The repeat rule decides when the routine comes back. Choose the notification time separately below it.</figcaption>
               </figure>
             </article>
 
@@ -335,7 +342,7 @@
                 <span class="manual-step-number">4</span>
                 <div>
                   <h3>Review the saved Routine</h3>
-                  <p>After saving, open the Routine and confirm its note, category, and repeat settings. Complete an occurrence later from the due item on Home.</p>
+                  <p>After saving, open the Routine and check its note, category, and repeat settings. When it appears on Home, open it and mark it complete.</p>
                 </div>
               </div>
               <figure class="manual-shot manual-step-shot">
@@ -346,9 +353,14 @@
                   <div class="routine-focus-box" style="--focus-top:45%;--focus-left:4%;--focus-width:64%;--focus-height:13%;"></div>
                   <div class="routine-focus-box" style="--focus-top:76%;--focus-left:4%;--focus-width:92%;--focus-height:24%;"></div>
                 </div>
-                <figcaption>Check the saved note, category, and Repeat settings. The completion control is not visible in this capture.</figcaption>
+                <figcaption>Check the saved note, category, and Repeat settings. Complete the routine later from its card on Home.</figcaption>
               </figure>
             </article>
+          </div>
+
+          <div class="guide-callout tip">
+            <h3>How to complete a Routine</h3>
+            <p>When the Routine appears in <strong>NOW</strong> or <strong>TODAY</strong>, open its card, finish the action, and tap <strong>Complete</strong>. Smart Planner will then schedule the next Routine.</p>
           </div>
         </section>
 
@@ -394,6 +406,13 @@
             <span>Feature 02</span>
             <h2>Backup and Restore</h2>
             <p>Open the Sync/Backup flow and read the instructions before creating or restoring a file.</p>
+          </div>
+
+          <div class="backup-step-list" aria-label="Four steps for backup and restore">
+            <div><span>1</span><p><strong>Open Sync / Backup</strong><br>Choose it from the main menu.</p></div>
+            <div><span>2</span><p><strong>Create a backup</strong><br>Select the backup action and save the file safely.</p></div>
+            <div><span>3</span><p><strong>Protect the file</strong><br>If you add a password, store it somewhere safe.</p></div>
+            <div><span>4</span><p><strong>Restore carefully</strong><br>Check the file and password before restoring.</p></div>
           </div>
 
           <div class="guide-card-grid">

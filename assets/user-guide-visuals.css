@@ -31,6 +31,40 @@
   margin: 22px auto 0;
 }
 
+.backup-step-list {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin: 0 0 20px;
+}
+
+.backup-step-list > div {
+  display: flex;
+  gap: 10px;
+  padding: 14px;
+  border: 1px solid #dbe5f1;
+  border-radius: 16px;
+  background: #fff;
+}
+
+.backup-step-list span {
+  display: inline-grid;
+  flex: 0 0 28px;
+  width: 28px;
+  height: 28px;
+  place-items: center;
+  border-radius: 50%;
+  background: #2563eb;
+  color: #fff;
+  font-weight: 900;
+}
+
+.backup-step-list p {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.55;
+}
+
 .manual-shot-grid {
   display: grid;
   gap: 18px;
@@ -102,6 +136,10 @@
   .manual-mini-flow {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
+
+  .backup-step-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 @media (max-width: 620px) {
@@ -130,20 +168,77 @@
 
   .manual-shot figcaption {
     padding: 8px 2px 2px;
-    font-size: 11px;
+    font-size: 13px;
     line-height: 1.45;
   }
 
   .manual-mini-flow {
     display: none;
   }
+
+  .backup-step-list {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width: 380px) {
   .manual-shot-grid .manual-shot,
   .manual-shot-single {
-    width: 68%;
+    width: 60%;
   }
+}
+
+.guide-content img.is-zoomable {
+  cursor: zoom-in;
+}
+
+.guide-content img.is-zoomable:focus-visible {
+  outline: 3px solid #2563eb;
+  outline-offset: 3px;
+}
+
+.guide-image-zoom {
+  position: fixed;
+  z-index: 1000;
+  inset: 0;
+  display: none;
+  place-items: center;
+  padding: 24px;
+  background: rgba(15, 23, 42, .88);
+}
+
+.guide-image-zoom.is-open {
+  display: grid;
+}
+
+.guide-image-zoom img {
+  display: block;
+  max-width: min(94vw, 1200px);
+  max-height: 88vh;
+  width: auto;
+  height: auto;
+  border-radius: 14px;
+  background: #fff;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, .4);
+}
+
+.guide-image-zoom button {
+  position: fixed;
+  top: 14px;
+  right: 14px;
+  width: 46px;
+  height: 46px;
+  border: 0;
+  border-radius: 50%;
+  background: #fff;
+  color: #111827;
+  font-size: 28px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+body.guide-zoom-open {
+  overflow: hidden;
 }
 
 /* Manual step cards and screen location labels */

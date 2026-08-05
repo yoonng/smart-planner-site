@@ -83,6 +83,19 @@
   font-weight: 900;
 }
 
+.guide-nav-group-title {
+  margin: 14px 0 5px;
+  color: #6d5dfc;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.guide-nav-title + .guide-nav-group-title {
+  margin-top: 0;
+}
+
 .guide-nav-card a {
   display: block;
   padding: 10px 0;
@@ -337,6 +350,25 @@
   border-top: 1px solid #f1f5f9;
   color: #475569;
   font-weight: 750;
+}
+
+.guide-mini-index-links .guide-nav-group-title {
+  margin-top: 16px;
+}
+
+.guide-image-tip {
+  margin: 0 0 28px;
+  padding: 13px 16px;
+  border: 1px solid #bfdbfe;
+  border-radius: 15px;
+  background: #eff6ff;
+  color: #475569;
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.guide-image-tip strong {
+  color: #1e3a8a;
 }
 
 .guide-meta {
