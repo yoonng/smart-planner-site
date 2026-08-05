@@ -78,10 +78,10 @@ document.addEventListener('DOMContentLoaded', function () {
     document.head.appendChild(shortcutIcon);
   }
 
-  if (!document.querySelector('link[href$="feathly-theme.css"]')) {
+  if (!document.querySelector('link[href*="/assets/feathly-theme.css"]')) {
     const theme = document.createElement('link');
     theme.rel = 'stylesheet';
-    theme.href = '/assets/feathly-theme.css';
+    theme.href = '/assets/feathly-theme.css?v=20260805-contrast1';
     document.head.appendChild(theme);
   }
   if (!document.querySelector('link[href$="navigation.css"]')) {
