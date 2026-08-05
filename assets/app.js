@@ -82,7 +82,7 @@ document.addEventListener('DOMContentLoaded', function () {
   if (!document.querySelector('link[href*="/assets/feathly-theme.css"]')) {
     const theme = document.createElement('link');
     theme.rel = 'stylesheet';
-    theme.href = '/assets/feathly-theme.css?v=20260805-contrast1';
+    theme.href = '/assets/feathly-theme.css?v=20260805-contrast2';
     document.head.appendChild(theme);
   }
   if (!document.querySelector('link[href$="navigation.css"]')) {
