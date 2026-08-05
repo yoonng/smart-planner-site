@@ -247,8 +247,8 @@
 
 /* Focus Timer four-step composite */
 .focus-flow-shot {
-  width: 60%;
-  max-width: 60% !important;
+  width: 95%;
+  max-width: 95% !important;
   margin: 20px auto 18px;
   padding: 10px;
   overflow: hidden;
