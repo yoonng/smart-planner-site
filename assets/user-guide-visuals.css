@@ -359,6 +359,20 @@ body.guide-zoom-open {
   margin-left: auto;
   margin-right: auto;
 }
+.focus-ko-grid .manual-shot {
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: none;
+}
+.focus-ko-grid .manual-shot img {
+  border: 0;
+  border-radius: 0;
+  transform: scale(1.1);
+  transform-origin: center;
+}
 .focus-flow-copy {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
