@@ -1,7 +1,7 @@
 import nodemailer from 'nodemailer';
 import { Ratelimit } from '@upstash/ratelimit';
 import { Redis } from '@upstash/redis';
-import { acknowledgement, internalHtml, internalText, makeTicket, subjectFor, validateSubmission } from '../lib/support.js';
+import { acknowledgement, internalHtml, internalText, makeTicket, subjectFor, validateSubmission } from '../../lib/support.js';
 
 const requiredEnv = [
   'ZOHO_SMTP_HOST', 'ZOHO_SMTP_PORT', 'ZOHO_SMTP_USER', 'ZOHO_SMTP_PASSWORD',
@@ -25,7 +25,7 @@ function corsHeaders(origin) {
 }
 
 function clientIp(request) {
-  return String(request.headers.get('x-forwarded-for') || 'unknown').split(',')[0].trim().slice(0, 64);
+  return String(request.headers.get('x-nf-client-connection-ip') || request.headers.get('x-forwarded-for') || 'unknown').split(',')[0].trim().slice(0, 64);
 }
 
 async function verifyTurnstile(token, ip) {
@@ -52,8 +52,7 @@ function mailTransport() {
   });
 }
 
-export default {
-  async fetch(request) {
+export default async function handler(request) {
     const origin = request.headers.get('origin') || '';
     const allowed = allowedOrigins();
     if (!origin || !allowed.has(origin)) return Response.json({ ok: false, code: 'ORIGIN_NOT_ALLOWED' }, { status: 403 });
@@ -120,5 +119,4 @@ export default {
     } finally {
       transport.close();
     }
-  }
-};
+}

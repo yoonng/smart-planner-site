@@ -1,9 +1,0 @@
-{
-  "$schema": "https://openapi.vercel.sh/vercel.json",
-  "functions": {
-    "api/support.js": {
-      "maxDuration": 15
-    }
-  },
-  "regions": ["syd1"]
-}
