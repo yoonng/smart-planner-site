@@ -20,6 +20,34 @@ document.addEventListener('DOMContentLoaded', function () {
   const attachments = Array.from(form.querySelectorAll('input[type="file"]'));
   const fileError = form.querySelector('[data-file-error]');
   const submitButton = form.querySelector('button[type="submit"]');
+  const isKorean = document.documentElement.lang.toLowerCase().startsWith('ko');
+  const messages = isKorean ? {
+    fileTypes: '첨부할 수 있는 파일은 PNG, JPG, JPEG, WebP, PDF, TXT입니다.',
+    fileSize: '첨부파일 하나의 크기는 5MB 이하여야 합니다.',
+    totalSize: '첨부파일 전체 크기는 10MB 이하여야 합니다.',
+    sending: '보내는 중…',
+    autoresponse: 'Feathly 지원 문의가 접수되었습니다. 문의 번호: {ticket}. 이후 답장할 때 이 번호를 제목에 유지해 주세요.'
+  } : {
+    fileTypes: 'Allowed attachments: PNG, JPG, JPEG, WebP, PDF, and TXT.',
+    fileSize: 'Each attachment must be 5 MB or smaller.',
+    totalSize: 'The combined attachment size must be 10 MB or smaller.',
+    sending: 'Sending…',
+    autoresponse: 'Your Feathly support request has been received. Reference: {ticket}. Please keep this reference in future replies.'
+  };
+
+  const koreanIssueLabels = {
+    PURCHASE_NOT_ACTIVE: 'PRO 구매가 활성화되지 않음', CHARGED_NO_ACCESS: '결제했지만 PRO 이용 불가',
+    PURCHASE_RESTORE: '구매 복원 문제', PURCHASE_ACCOUNT: 'Google Play 구매 계정 문제', OTHER_BILLING: '기타 결제 또는 PRO 문의',
+    REFUND_REQUEST: '환불 요청 안내', REFUND_STATUS: '환불 상태 문의', REFUND_PRO_ACTIVE: '환불 후에도 PRO가 활성 상태임', UNRECOGNIZED_PURCHASE: '알 수 없는 구매',
+    LOOP_SCHEDULE: 'Loop 또는 일정 문제', HOME_STATS: '홈 그룹 또는 통계 문제', ACTIONS: 'Recall, 완료 또는 미루기 문제', FOCUS_TIMER: 'Focus Timer 문제',
+    ALARM_NOT_DELIVERED: '알림이 울리지 않음', BACKGROUND_DELIVERY: '앱 종료 또는 백그라운드 상태에서 알림 실패', FORCE_STOP_RECOVERY: '앱을 다시 연 후 알림이 복구되지 않음', WRONG_TIME: '잘못된 시각에 알림이 도착함', DUPLICATE: '알림이 중복됨', PERMISSION: '알림 또는 알람 권한 문제',
+    BACKUP_EXPORT: '백업 또는 내보내기 문제', IMPORT_RESTORE: '가져오기 또는 복원 문제', DATA_LOSS: '데이터 손실 가능성', MIGRATION: '업데이트 또는 마이그레이션 문제',
+    CRASH: '앱 충돌 또는 멈춤', PERFORMANCE: '성능 또는 배터리 문제', LAYOUT: '화면, 레이아웃, 테마 또는 언어 문제', OTHER_TECHNICAL: '기타 기술 문제',
+    DATA_REQUEST: '개인정보 또는 개인 데이터 요청', DELETION_REQUEST: '지원 데이터 삭제 요청', POLICY_QUESTION: '개인정보 처리방침 문의',
+    SECURITY_REPORT: '보안 문제 신고', OTHER_SECURITY: '기타 보안 문의',
+    FEATURE_REQUEST: '기능 제안', USABILITY: '사용성 의견', TRANSLATION: '번역 제안', GENERAL_FEEDBACK: '일반 의견',
+    BUSINESS: '사업 또는 제휴 문의', OTHER_QUESTION: '기타 문의'
+  };
 
   const groups = {
     billing: { code: 'BILLING', priority: 'P2', purchase: true, issues: [['purchase_not_active', 'PURCHASE_NOT_ACTIVE', 'PRO purchase is not active'], ['charged_no_access', 'CHARGED_NO_ACCESS', 'Charged but PRO access is missing'], ['purchase_restore', 'PURCHASE_RESTORE', 'Restore Purchase problem'], ['purchase_account', 'PURCHASE_ACCOUNT', 'Google Play purchase account problem'], ['other_billing', 'OTHER_BILLING', 'Other billing or PRO question']] },
@@ -54,7 +82,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   function renderIssues(preferred) {
     const group = currentGroup();
-    issue.innerHTML = group.issues.map(([value, code, label]) => `<option value="${value}" data-code="${code}">${label}</option>`).join('');
+    issue.innerHTML = group.issues.map(([value, code, label]) => `<option value="${value}" data-code="${code}">${isKorean ? (koreanIssueLabels[code] || label) : label}</option>`).join('');
     if (preferred && group.issues.some((item) => item[0] === preferred)) issue.value = preferred;
     purchasePanel.hidden = !group.purchase;
     purchaseFields.forEach((field) => { field.disabled = !group.purchase; });
@@ -77,10 +105,10 @@ document.addEventListener('DOMContentLoaded', function () {
       if (!file) continue;
       total += file.size;
       const extension = file.name.split('.').pop().toLowerCase();
-      if (!allowed.includes(extension)) { fileError.textContent = 'Allowed attachments: PNG, JPG, JPEG, WebP, PDF, and TXT.'; return false; }
-      if (file.size > 5 * 1024 * 1024) { fileError.textContent = 'Each attachment must be 5 MB or smaller.'; return false; }
+      if (!allowed.includes(extension)) { fileError.textContent = messages.fileTypes; return false; }
+      if (file.size > 5 * 1024 * 1024) { fileError.textContent = messages.fileSize; return false; }
     }
-    if (total > 10 * 1024 * 1024) { fileError.textContent = 'The combined attachment size must be 10 MB or smaller.'; return false; }
+    if (total > 10 * 1024 * 1024) { fileError.textContent = messages.totalSize; return false; }
     fileError.textContent = '';
     return true;
   }
@@ -107,9 +135,9 @@ document.addEventListener('DOMContentLoaded', function () {
     priorityCode.value = priority;
     replyTo.value = email.value;
     subject.value = `[FEATHLY-SUPPORT][${group.code}][${selected[1]}][${priority}][${reference}] ${clean(title.value) || selected[2]}`;
-    autoresponse.value = `Your Feathly support request has been received. Reference: ${reference}. Please keep this reference in future replies.`;
+    autoresponse.value = messages.autoresponse.replace('{ticket}', reference);
     syncPurchaseEmail();
     submitButton.disabled = true;
-    submitButton.textContent = 'Sending…';
+    submitButton.textContent = messages.sending;
   });
 });
