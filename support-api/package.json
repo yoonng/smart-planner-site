@@ -1,0 +1,18 @@
+{
+  "name": "feathly-support-api",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "test": "node --test",
+    "check": "node --check api/support.js && node --check lib/support.js"
+  },
+  "dependencies": {
+    "@upstash/ratelimit": "^2.0.7",
+    "@upstash/redis": "^1.35.3",
+    "nodemailer": "^9.0.4"
+  }
+}

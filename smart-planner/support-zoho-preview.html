@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="feathly-turnstile-site-key" content="TURNSTILE_SITE_KEY_REQUIRED">
+  <title>Support API Test - Smart Planner</title>
+  <meta name="description" content="Test the Feathly-owned support mail API for Smart Planner.">
+  <link rel="stylesheet" href="/assets/style.css">
+  <script defer src="/assets/app.js"></script>
+  <script defer src="/assets/support-zoho-preview.js"></script>
+</head>
+<body>
+<header class="site-header"><div class="wrap nav"><a class="brand" href="../index.html">Feathly</a><nav class="nav-links"><a href="../index.html">Home</a><a href="index.html">Smart Planner</a><a href="download.html">Download</a><a href="build-history.html">Build History</a><a href="../community/">Community</a></nav></div></header>
+<section class="page-hero support-hero"><div class="wrap"><span class="eyebrow">Official support</span><h1>How can we help?</h1><p>Use this private form for billing, refunds, purchase restoration, reminder delivery, technical problems, privacy requests, and security reports. Community discussion belongs on Discord; personal and purchase information does not.</p><div class="actions"><a class="btn" href="#support-form">Open support form</a><a class="btn secondary" href="faq.html">Read FAQ</a></div></div></section>
+<section class="page-body support-page"><div class="wrap support-layout">
+  <aside class="support-aside">
+    <div class="support-card"><h2>Before submitting</h2><ul><li>Try <strong>Restore Purchase</strong> for missing PRO access.</li><li>Use the same Google Play account that made the purchase.</li><li>For refund requests, keep the Google Play order ID available.</li><li>For missed reminders, include the scheduled time, device model, Android version, and whether the app was backgrounded, rebooted, or force-stopped.</li></ul></div>
+    <div class="support-card support-warning"><h2>Android reminder notice</h2><p>Smart Planner normally schedules reminders through Android and does not need to stay open. However, Android permissions and device power policies can delay or block notification delivery.</p><p>Using <strong>Force stop</strong> in Android Settings may cancel or block scheduled alarms until you open Smart Planner again. After a force stop, device reboot, or app update, open Smart Planner once so it can check future reminders.</p><p>Check notification permission, Alarms &amp; reminders or exact alarm access when shown, and make sure battery use is not set to Restricted.</p><p><strong>Do not rely on Smart Planner for medical, safety, or emergency alarms.</strong> See the <a href="faq.html#notifications">notification guidance</a>.</p></div>
+    <div class="support-card support-warning"><h2>Keep your account safe</h2><p>Do not send your Google password, card number, card security code, recovery codes, or raw purchase token.</p></div>
+    <div class="support-card"><h2>Other channels</h2><p><a href="mailto:support@feathly.com">support@feathly.com</a> is the official support mailbox.</p><p><a href="../community/">Discord</a> is for public discussion, feedback, and announcements only.</p></div>
+  </aside>
+  <main class="support-main">
+    <form id="support-form" class="support-form" data-zoho-support-form data-api-endpoint="https://support-api.feathly.com/api/support">
+      <input class="support-honeypot" name="website" type="text" tabindex="-1" autocomplete="off">
+      <div class="form-heading"><span>Feathly Support</span><h2>Submit a private request</h2><p>Required fields are marked with an asterisk. A structured ticket reference is added automatically.</p></div>
+      <div class="form-grid two-columns"><div class="field"><label for="smtp-category">Category *</label><select id="smtp-category" name="category" required><option value="billing">Billing &amp; PRO</option><option value="refund">Refund</option><option value="planner">Planner</option><option value="notification">Notifications</option><option value="data">Backup &amp; data</option><option value="technical">Technical</option><option value="privacy">Privacy</option><option value="security">Security</option><option value="feedback">Feedback</option><option value="other">Other</option></select></div><div class="field"><label for="smtp-issue">Issue type *</label><select id="smtp-issue" name="issue_code" required></select></div></div>
+      <div class="field"><label for="smtp-title">Title *</label><input id="smtp-title" name="request_title" maxlength="120" required></div>
+      <div class="form-grid two-columns"><div class="field"><label for="smtp-name">Your name *</label><input id="smtp-name" name="name" maxlength="100" autocomplete="name" required></div><div class="field"><label for="smtp-email">Reply email *</label><input id="smtp-email" name="email" type="email" maxlength="160" autocomplete="email" required><small>We will send the response and ticket reference here.</small></div></div>
+      <fieldset class="purchase-panel" data-purchase-panel><legend>Google Play purchase information</legend><label class="check-row"><input name="same_purchase_email" type="checkbox" checked> Google Play purchase email is the same as my reply email.</label><div class="form-grid two-columns"><div class="field"><label for="smtp-purchase-email">Google Play purchase email</label><input id="smtp-purchase-email" name="purchase_email" type="email" maxlength="160"></div><div class="field"><label for="smtp-order-id">Google Play order ID</label><input id="smtp-order-id" name="order_id" maxlength="80" placeholder="GPA.1234-5678-9012-34567"></div><div class="field"><label for="smtp-purchase-date">Approximate purchase date</label><input id="smtp-purchase-date" name="purchase_date" type="date"></div><div class="field"><label for="smtp-purchase-country">Purchase country or region</label><input id="smtp-purchase-country" name="purchase_country" maxlength="80"></div></div></fieldset>
+      <div class="field"><label for="smtp-message">Details *</label><textarea id="smtp-message" name="message" minlength="10" maxlength="6000" required></textarea></div>
+      <details class="diagnostic-details"><summary>Optional app and device details</summary><div class="form-grid two-columns"><div class="field"><label for="smtp-app-version">App version</label><input id="smtp-app-version" name="app_version" maxlength="40"></div><div class="field"><label for="smtp-build">Build</label><input id="smtp-build" name="build_number" maxlength="40"></div><div class="field"><label for="smtp-device">Device</label><input id="smtp-device" name="device_model" maxlength="100"></div><div class="field"><label for="smtp-os">OS version</label><input id="smtp-os" name="os_version" maxlength="60"></div></div></details>
+      <fieldset class="attachments-panel" disabled><legend>Attachments</legend><p class="field-help">Attachments are temporarily disabled on the SMTP test URL. They will be enabled after private object storage and malware scanning are connected.</p><div class="attachment-grid"><div class="field"><label>Attachment 1</label><input type="file"></div><div class="field"><label>Attachment 2</label><input type="file"></div><div class="field"><label>Attachment 3</label><input type="file"></div></div></fieldset>
+      <label class="check-row consent-row"><input type="checkbox" name="privacy_consent" value="accepted" required> I agree to the processing of this request under the <a href="privacy.html" target="_blank">Privacy Policy</a>. *</label>
+      <div data-turnstile-container></div>
+      <div class="submit-row"><button class="btn form-submit" type="submit">Send support request</button><p data-submit-result aria-live="polite"></p></div>
+    </form>
+  </main>
+</div></section>
+<footer><div class="wrap foot"><div>Smart Planner - Feathly</div><div><a href="faq.html">FAQ</a> · <a href="privacy.html">Privacy</a> · <a href="terms.html">Terms</a> · <a href="refund.html">Refund</a> · <a href="support.html">Support</a></div></div></footer>
+</body>
+</html>
