@@ -113,6 +113,11 @@ document.addEventListener('DOMContentLoaded', function () {
     return true;
   }
 
+  function updateFileLabel(input) {
+    const name = input.closest('.custom-file-control')?.querySelector('.custom-file-name');
+    if (name) name.textContent = input.files && input.files[0] ? input.files[0].name : 'No file chosen';
+  }
+
   const params = new URLSearchParams(window.location.search);
   if (groups[params.get('category')]) category.value = params.get('category');
   renderIssues(params.get('issue'));
@@ -121,7 +126,10 @@ document.addEventListener('DOMContentLoaded', function () {
   category.addEventListener('change', function () { renderIssues(); });
   samePurchaseEmail.addEventListener('change', syncPurchaseEmail);
   email.addEventListener('input', syncPurchaseEmail);
-  attachments.forEach((input) => input.addEventListener('change', validateFiles));
+  attachments.forEach((input) => input.addEventListener('change', function () {
+    updateFileLabel(input);
+    validateFiles();
+  }));
 
   form.addEventListener('submit', function (event) {
     if (!validateFiles()) { event.preventDefault(); return; }
