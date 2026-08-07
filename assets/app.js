@@ -14,6 +14,8 @@ document.addEventListener('DOMContentLoaded', function () {
     '/smart-planner/download.html': '/ko/smart-planner/download.html',
     '/smart-planner/faq.html': '/ko/smart-planner/faq.html',
     '/smart-planner/support.html': '/ko/smart-planner/support.html',
+    '/smart-planner/support-zoho-preview.html': '/ko/smart-planner/support-zoho-preview.html',
+    '/smart-planner/support-thanks.html': '/ko/smart-planner/support-thanks.html',
     '/smart-planner/build-history.html': '/ko/smart-planner/build-history.html',
     '/smart-planner/privacy.html': '/ko/smart-planner/privacy.html',
     '/smart-planner/terms.html': '/ko/smart-planner/terms.html',
