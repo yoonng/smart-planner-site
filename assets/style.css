@@ -134,6 +134,7 @@ footer { background: #0b1020; color: #94a3b8; padding: 34px 0; }
 .support-form .form-submit:hover { background: #245f5c; color: #ffffff; }
 .form-submit:disabled { cursor: wait; opacity: .7; }
 .submit-row p { margin: 0; color: #64748b; line-height: 1.55; flex: 1 1 280px; }
+.submit-row .submission-note { flex-basis: 100%; color: #475569; }
 .support-honeypot { position: absolute !important; left: -9999px !important; width: 1px !important; height: 1px !important; opacity: 0 !important; }
 .support-success { background: white; border: 1px solid #e2e8f0; border-radius: 28px; padding: 42px; text-align: center; box-shadow: 0 22px 60px rgba(15,23,42,0.09); }
 .success-mark { width: 64px; height: 64px; border-radius: 999px; margin: 0 auto 18px; display: grid; place-items: center; background: #dcfce7; color: #15803d; font-size: 30px; font-weight: 900; }
