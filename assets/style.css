@@ -120,7 +120,8 @@ footer { background: #0b1020; color: #94a3b8; padding: 34px 0; }
 .check-row input { margin-top: 4px; flex: 0 0 auto; }
 .check-row > span { display: block; min-width: 0; }
 .check-row a { color: #4f46e5; font-weight: 800; text-decoration: underline; text-underline-offset: 3px; }
-.consent-row { margin: 22px 0; }
+.consent-row { display: grid; grid-template-columns: 18px minmax(0, 1fr); align-items: start; margin: 22px 0; }
+.consent-row input { justify-self: start; }
 .diagnostic-details { margin: 0 0 22px; border: 1px solid #e2e8f0; border-radius: 18px; padding: 0 18px; }
 .diagnostic-details summary { cursor: pointer; padding: 16px 0; font-weight: 850; }
 .diagnostic-details[open] { padding-bottom: 4px; }
@@ -140,7 +141,9 @@ footer { background: #0b1020; color: #94a3b8; padding: 34px 0; }
 .support-form .form-submit:hover { background: #245f5c; color: #ffffff; }
 .form-submit:disabled { cursor: wait; opacity: .7; }
 .submit-row p { margin: 0; color: #64748b; line-height: 1.55; flex: 1 1 280px; }
-.submit-row .submission-note { flex-basis: 100%; margin-left: 30px; color: #475569; }
+.stacked-submit { display: block; }
+.submit-row .submission-note { margin-left: 28px; color: #475569; }
+.stacked-submit .form-submit { margin-top: 18px; margin-left: 28px; }
 .support-honeypot { position: absolute !important; left: -9999px !important; width: 1px !important; height: 1px !important; opacity: 0 !important; }
 .support-success { background: white; border: 1px solid #e2e8f0; border-radius: 28px; padding: 42px; text-align: center; box-shadow: 0 22px 60px rgba(15,23,42,0.09); }
 .success-mark { width: 64px; height: 64px; border-radius: 999px; margin: 0 auto 18px; display: grid; place-items: center; background: #dcfce7; color: #15803d; font-size: 30px; font-weight: 900; }
