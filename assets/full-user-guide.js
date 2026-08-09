@@ -3,6 +3,21 @@ document.addEventListener('DOMContentLoaded', function () {
   const topics = Array.from(document.querySelectorAll('.full-guide-topic[id]'));
   if (!topicButtons.length || !topics.length) return;
 
+  const languageSelect = document.querySelector('.language-switcher select');
+  if (languageSelect) {
+    const cleanSelect = languageSelect.cloneNode(true);
+    languageSelect.replaceWith(cleanSelect);
+    cleanSelect.value = document.documentElement.lang === 'ko' ? 'ko' : 'en';
+    cleanSelect.addEventListener('change', () => {
+      const locale = cleanSelect.value;
+      window.localStorage.setItem('feathly-language', locale);
+      const targetPath = locale === 'ko'
+        ? '/ko/smart-planner/full-user-guide.html'
+        : '/smart-planner/full-user-guide.html';
+      window.location.assign(`${targetPath}${window.location.search}${window.location.hash}`);
+    });
+  }
+
   const topicIds = new Set(topics.map((topic) => topic.id));
   const defaultTopic = topicIds.has('welcome') ? 'welcome' : topics[0].id;
 
