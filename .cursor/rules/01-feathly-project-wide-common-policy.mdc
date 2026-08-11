@@ -9,6 +9,16 @@ This repository inherits the canonical Feathly development policy in Notion:
 `Feathly 개발 규칙 SSOT — ChatGPT · Cursor · Codex`
 https://app.notion.com/p/3b75f2129a3f816eaeb6f7a3eb5fca54?pvs=204
 
+## Git workflow simplification — no worktrees
+
+Feathly does not use Git `worktree`.
+
+- Do not create or use isolated/temporary worktrees to bypass dirty or outdated local state.
+- Do not create temporary branches merely to avoid inspecting the existing checkout.
+- Use the existing local `main` as the normal working base.
+- If `main` is dirty or behind `origin/main`, inspect/classify the existing changes first.
+- Never reset, clean, stash, discard, or overwrite user changes without explicit review/approval.
+
 For every Feathly implementation, test, verification, release-preparation, or operational development task:
 
 1. Before ChatGPT gives Cursor/Codex/another agent an execution instruction, create a task-specific Notion `질문/결과` page.
