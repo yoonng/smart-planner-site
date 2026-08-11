@@ -14,6 +14,7 @@ FORBIDDEN = (
     "POMODORO",
     "포모도로",
     "집중 타이머",
+    "Feathly - Smart Planner",
 )
 REQUIRED_FILES = {
     ROOT / "smart-planner" / "pro.html": (
@@ -27,7 +28,7 @@ REQUIRED_FILES = {
         "소액 요금",
     ),
     ROOT / "smart-planner" / "index.html": (
-        "Feathly - Smart Planner",
+        "Feathly: Smart Planner",
         "Focus Timer",
         "Feathly Pro Lifetime",
     ),
