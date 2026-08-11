@@ -1,0 +1,24 @@
+---
+description: Feathly project-wide mandatory work traceability and result publication policy
+alwaysApply: true
+---
+
+# Feathly Project-Wide Traceability Policy
+
+This repository inherits the canonical Feathly development policy in Notion:
+`Feathly 개발 규칙 SSOT — ChatGPT · Cursor · Codex`
+https://app.notion.com/p/3b75f2129a3f816eaeb6f7a3eb5fca54?pvs=204
+
+For every Feathly implementation, test, verification, release-preparation, or operational development task:
+
+1. Before ChatGPT gives Cursor/Codex/another agent an execution instruction, create a task-specific Notion `질문/결과` page.
+2. Record the user request, related Jira key, repo/path, start SHA, scope, prohibitions, expected result, and evidence path.
+3. Record questions, decisions, BLOCKED, first FAIL, RETEST, and final result in that same Notion page.
+4. Publish code/test/document/evidence results to GitHub. Local-only results are not completion.
+5. If there is no Product/test/harness change, publish reviewable evidence as an evidence-only commit to `main` when evidence is required.
+6. Update the related Jira issue with PASS/FAIL/BLOCKED, Product-defect status, GitHub commit/evidence path, Notion result page, and remaining external/manual work.
+7. ChatGPT independently reviews Jira/Notion/GitHub evidence before final PASS/DONE.
+8. Do not require the user to create a ZIP manually as the normal evidence path.
+9. Never publish secrets, credentials, access tokens, purchase tokens, or personal/sensitive transaction data.
+
+Canonical governance task: `FSPA-115`.
