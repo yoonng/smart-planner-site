@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
+  const groupUrl = 'https://groups.google.com/d/forum/feathly-closed-testers';
   const popup = document.querySelector('[data-closed-test-popup]');
   if (popup) {
     const locale = document.documentElement.lang.toLowerCase().startsWith('ko') ? 'ko' : 'en';
@@ -11,14 +12,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const panel = popup.querySelector('.closed-test-popup-panel');
     const actions = popup.querySelector('.closed-test-popup-actions');
     const closeButtons = popup.querySelectorAll('[data-closed-test-popup-close]');
-
-    const style = document.createElement('style');
-    style.textContent = `
-      .closed-test-popup-day-hide { display:flex; align-items:center; gap:10px; margin:20px 0 0; padding:14px 16px; border:1px solid #e2e8f0; border-radius:16px; background:#f8fafc; color:#475569; font-size:14px; font-weight:700; cursor:pointer; }
-      .closed-test-popup-day-hide input { width:18px; height:18px; margin:0; accent-color:#6d5dfc; }
-      .closed-test-popup-window-label { margin:0 0 4px; color:#94a3b8; font-size:12px; font-weight:800; letter-spacing:.06em; text-transform:uppercase; }
-    `;
-    document.head.appendChild(style);
 
     let hideTodayCheckbox = popup.querySelector('[data-closed-test-hide-today]');
     if (!hideTodayCheckbox && panel && actions) {
@@ -64,11 +57,17 @@ document.addEventListener('DOMContentLoaded', function () {
   if (form) {
     const email = form.querySelector('input[name="email"]');
     const replyTo = form.querySelector('input[name="_replyto"]');
+    const autoresponse = form.querySelector('input[name="_autoresponse"]');
     const submitButton = form.querySelector('button[type="submit"]');
     const isKorean = document.documentElement.lang.toLowerCase().startsWith('ko');
 
     form.addEventListener('submit', function () {
       if (email && replyTo) replyTo.value = email.value;
+      if (autoresponse) {
+        autoresponse.value = isKorean
+          ? `Feathly: Smart Planner Closed Test 신청이 접수되었습니다. 다음 단계로, 테스트에 사용할 동일한 Google 계정으로 Feathly Closed Testers Google Group에 가입해 주세요: ${groupUrl} . Google Group 가입만으로 14일 테스트가 시작되는 것은 아닙니다. Google Play Closed Test opt-in 안내를 받은 뒤 opt-in해야 합니다.`
+          : `Your Feathly: Smart Planner Closed Test application has been received. Next, join the Feathly Closed Testers Google Group using the same Google account you will use for testing: ${groupUrl} . Joining the Google Group does not start the 14-day test period. The period starts after you opt in to the Google Play Closed Test.`;
+      }
       if (submitButton) {
         submitButton.disabled = true;
         submitButton.textContent = isKorean ? '신청 중…' : 'Submitting…';
@@ -80,7 +79,23 @@ document.addEventListener('DOMContentLoaded', function () {
   if (params.get('submitted') === '1') {
     const success = document.querySelector('[data-closed-test-success]');
     if (success) {
+      const isKorean = document.documentElement.lang.toLowerCase().startsWith('ko');
       success.hidden = false;
+      if (!success.querySelector('[data-closed-test-group-link]')) {
+        const nextStep = document.createElement('p');
+        nextStep.setAttribute('data-closed-test-group-link', '');
+        nextStep.style.margin = '10px 0 0';
+        const link = document.createElement('a');
+        link.href = groupUrl;
+        link.target = '_blank';
+        link.rel = 'noopener';
+        link.style.fontWeight = '800';
+        link.style.textDecoration = 'underline';
+        link.textContent = isKorean ? 'Feathly Closed Testers Google Group 가입' : 'Join the Feathly Closed Testers Google Group';
+        nextStep.appendChild(document.createTextNode(isKorean ? '다음 단계: ' : 'Next step: '));
+        nextStep.appendChild(link);
+        success.appendChild(nextStep);
+      }
       success.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
   }
