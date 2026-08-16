@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import {
   acknowledgement,
   internalSubject,
+  internalText,
   makeApplicationId,
   validateClosedTestApplication
 } from '../lib/closed-test.js';
@@ -30,22 +31,25 @@ test('rejects missing consent, invalid email, and honeypot content', () => {
   assert.throws(() => validateClosedTestApplication({ ...valid, website: 'spam' }), /SPAM/);
 });
 
-test('creates Closed Test application references and safe subjects', () => {
+test('creates Closed Test application references and group-registration subjects', () => {
   const submission = validateClosedTestApplication(valid);
   const applicationId = makeApplicationId(new Date('2026-08-16T00:00:00Z'));
   assert.match(applicationId, /^CT-20260816-[A-F0-9]{6}$/);
   assert.equal(
     internalSubject(applicationId, submission),
-    `[FEATHLY-CLOSED-TEST][EN][${applicationId}] New tester application`
+    `[FEATHLY-CLOSED-TEST][EN][${applicationId}] Add tester to Google Group`
   );
+  assert.match(internalText(applicationId, submission), /Add tester@example\.com directly/);
 });
 
-test('acknowledgement includes the group, opt-in, install, and feedback steps', () => {
+test('applicant acknowledgement does not ask the tester to join Google Group manually', () => {
   const en = acknowledgement('CT-1', 'en').text;
   const ko = acknowledgement('CT-1', 'ko').text;
-  assert.match(en, /groups\.google\.com/);
+  assert.doesNotMatch(en, /groups\.google\.com/);
+  assert.doesNotMatch(ko, /groups\.google\.com/);
+  assert.match(en, /do not need to join the Google Group yourself/i);
   assert.match(en, /play\.google\.com\/apps\/testing\/com\.feathly\.planner/);
   assert.match(en, /forms\.gle\/phouKRfRpPJs2F9D9/);
-  assert.match(ko, /신청이 접수/);
+  assert.match(ko, /직접 가입하실 필요는 없습니다/);
   assert.match(ko, /14일/);
 });
