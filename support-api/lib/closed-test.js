@@ -36,7 +36,7 @@ export function validateClosedTestApplication(input) {
 }
 
 export function internalSubject(applicationId, submission) {
-  return `[FEATHLY-CLOSED-TEST][${submission.locale.toUpperCase()}][${applicationId}] New tester application`;
+  return `[FEATHLY-CLOSED-TEST][${submission.locale.toUpperCase()}][${applicationId}] Add tester to Google Group`;
 }
 
 export function internalText(applicationId, submission) {
@@ -48,9 +48,13 @@ export function internalText(applicationId, submission) {
     `Device model: ${submission.deviceModel || '-'}`,
     `14-day/test contact consent: accepted`,
     '',
-    'Next-step links sent to applicant:',
+    'ACTION REQUIRED:',
+    `Add ${submission.email} directly to the Feathly Closed Testers Google Group as a MEMBER.`,
+    'The applicant should not be asked to join the Google Group manually.',
     `Google Group: ${LINKS.group}`,
-    `Google Play opt-in: ${LINKS.optIn}`,
+    '',
+    'Applicant next-step links:',
+    `Google Play opt-in (use after group access is active): ${LINKS.optIn}`,
     `Android store: ${LINKS.android}`,
     `Feedback form: ${LINKS.feedback}`
   ].join('\n');
@@ -66,7 +70,7 @@ export function internalHtml(applicationId, submission) {
     ['14-day/test contact consent', 'accepted']
   ].map(([label, value]) => `<tr><th align="left">${escapeHtml(label)}</th><td>${escapeHtml(value)}</td></tr>`).join('');
 
-  return `<h2>Feathly Closed Test application</h2><table cellpadding="6" cellspacing="0" border="1">${rows}</table><p>Google Group: <a href="${LINKS.group}">${LINKS.group}</a></p><p>Google Play opt-in: <a href="${LINKS.optIn}">${LINKS.optIn}</a></p><p>Android store: <a href="${LINKS.android}">${LINKS.android}</a></p><p>Feedback form: <a href="${LINKS.feedback}">${LINKS.feedback}</a></p>`;
+  return `<h2>Feathly Closed Test application</h2><table cellpadding="6" cellspacing="0" border="1">${rows}</table><h3>Action required</h3><p>Add <strong>${escapeHtml(submission.email)}</strong> directly to the Feathly Closed Testers Google Group as a MEMBER. The applicant should not be asked to join the group manually.</p><p>Google Group: <a href="${LINKS.group}">${LINKS.group}</a></p><p>Google Play opt-in after group access is active: <a href="${LINKS.optIn}">${LINKS.optIn}</a></p><p>Android store: <a href="${LINKS.android}">${LINKS.android}</a></p><p>Feedback form: <a href="${LINKS.feedback}">${LINKS.feedback}</a></p>`;
 }
 
 export function acknowledgement(applicationId, locale) {
@@ -78,13 +82,15 @@ export function acknowledgement(applicationId, locale) {
         '',
         `신청 번호: ${applicationId}`,
         '',
+        'Feathly에서 신청하신 Google 계정을 Closed Test 테스터 그룹에 등록합니다. Google Group에 직접 가입하실 필요는 없습니다.',
+        '',
         '다음 순서로 진행해 주세요.',
-        `1. 테스트에 사용할 동일한 Google 계정으로 Feathly Closed Testers Google Group에 가입: ${LINKS.group}`,
-        `2. Google Play Closed Test 참여(Opt-in): ${LINKS.optIn}`,
+        `1. Feathly의 테스터 그룹 등록이 완료될 때까지 기다려 주세요. 별도의 Google Group 가입 작업은 필요하지 않습니다.`,
+        `2. 그룹 등록 완료 후 Google Play Closed Test 참여(Opt-in): ${LINKS.optIn}`,
         `3. Android에서 앱 설치/업데이트: ${LINKS.android}`,
         `4. 테스트 중 의견/문제 접수: ${LINKS.feedback}`,
         '',
-        'Google Group 가입만으로 14일 테스트가 시작되지는 않습니다. Google Play 테스트 페이지에서 테스터 참여(Opt-in)를 완료한 뒤 참여 상태를 약 14일 동안 유지해 주세요.',
+        '테스터 그룹 등록만으로 14일 테스트가 시작되지는 않습니다. Google Play 테스트 페이지에서 테스터 참여(Opt-in)를 완료한 시점부터 연속 참여 기간이 계산됩니다. Opt-in 후 약 14일 동안 참여 상태를 유지해 주세요.',
         '',
         'Feathly는 Google 비밀번호, 카드 번호 또는 보안 코드를 요청하지 않습니다.',
         '',
@@ -101,13 +107,15 @@ export function acknowledgement(applicationId, locale) {
       '',
       `Application reference: ${applicationId}`,
       '',
+      'Feathly will register the Google account you submitted in the Closed Test tester group. You do not need to join the Google Group yourself.',
+      '',
       'Next steps:',
-      `1. Join the Feathly Closed Testers Google Group with the same Google account you will use for testing: ${LINKS.group}`,
-      `2. Opt in to the Google Play Closed Test: ${LINKS.optIn}`,
+      `1. Wait for Feathly to activate your tester-group access. No separate Google Group join action is required.`,
+      `2. After group access is active, opt in to the Google Play Closed Test: ${LINKS.optIn}`,
       `3. Install or update the app on Android: ${LINKS.android}`,
       `4. Send test feedback or issue reports here: ${LINKS.feedback}`,
       '',
-      'Joining the Google Group alone does not start the 14-day test period. Complete Google Play test opt-in and remain opted in for about 14 days.',
+      'Tester-group registration alone does not start the 14-day test period. The continuous participation period starts after you complete Google Play test opt-in. Please remain opted in for about 14 days.',
       '',
       'Feathly will never ask for your Google password, full card number, or card security code.',
       '',
