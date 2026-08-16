@@ -13,7 +13,7 @@
   <link rel="stylesheet" href="/assets/landing.css">
   <link rel="stylesheet" href="/assets/closed-test.css?v=20260816-1">
   <script defer src="/assets/app.js?v=20260816-closedtest2"></script>
-  <script defer src="/assets/closed-test.js?v=20260816-4"></script>
+  <script defer src="/assets/closed-test.js?v=20260816-5"></script>
 </head>
 <body>
 <header class="site-header"><div class="wrap nav"><a class="brand" href="/">Feathly</a><nav class="nav-links" aria-label="Primary navigation"><a href="/">Home</a><a href="/smart-planner/">Smart Planner</a><a href="/smart-planner/download.html">Download</a><a href="/smart-planner/support.html">Support</a><a href="/community/">Community</a></nav></div></header>
@@ -28,7 +28,7 @@
 
       <article class="closed-test-card"><h2>Android devices</h2><p>Feathly can be installed on Android 7.0 or later. Android 10 or later is recommended.</p><ul><li><strong>Android 12–17 users are especially welcome.</strong></li><li>Older Android 7–9 devices are also useful for compatibility checks.</li><li>Samsung Galaxy, Google Pixel, Xiaomi/Redmi, OPPO/OnePlus, and other Android devices are welcome.</li></ul></article>
 
-      <article class="closed-test-card"><h2>What happens after you apply?</h2><p>Your application is sent to Feathly support and you receive an automatic confirmation email. The confirmation includes the Feathly Closed Testers Google Group, Google Play opt-in, Android install, and feedback links. Join the group using the same Google account you will use for the Play Store test.</p><p>Joining the Google Group does not start the 14-day period. The test period starts after you use the Google Play Closed Test opt-in link and become a tester.</p></article>
+      <article class="closed-test-card"><h2>What happens after you apply?</h2><p>Your application is sent to Feathly support and you receive an automatic confirmation email. Feathly then registers the Google account you submitted in the Closed Test tester group. <strong>You do not need to join the Google Group yourself.</strong></p><p>After tester-group access is active, use the Google Play Closed Test opt-in link. The 14-day continuous participation period starts only after you complete Google Play test opt-in.</p></article>
     </div>
 
     <form id="apply" class="closed-test-form" data-closed-test-form data-api-endpoint="https://feathly-support-api.netlify.app/api/closed-test">
@@ -37,7 +37,7 @@
       <div class="form-heading"><span>Tester application</span><h2>Join the Closed Test</h2><p>Only your Google Play email is required. Device details are optional and help us test a wider range of Android versions.</p></div>
       <div class="closed-test-success" data-closed-test-success hidden>Thank you. Your tester application was submitted. Check your email for the next step.</div>
 
-      <div class="field"><label for="tester-email">Google Play email *</label><input id="tester-email" name="email" type="email" maxlength="160" autocomplete="email" required><small>Use the Google account you will use to join the Play Store Closed Test.</small></div>
+      <div class="field"><label for="tester-email">Google Play email *</label><input id="tester-email" name="email" type="email" maxlength="160" autocomplete="email" required><small>Use the Google account you will use for the Play Store Closed Test. Feathly will register this account in the tester group.</small></div>
       <div class="field"><label for="android-version">Android version <span aria-hidden="true">(optional)</span></label><select id="android-version" name="android_version"><option value="">Select if known</option><option>Android 17</option><option>Android 16</option><option>Android 15</option><option>Android 14</option><option>Android 13</option><option>Android 12</option><option>Android 11</option><option>Android 10</option><option>Android 9 or earlier</option></select></div>
       <div class="field"><label for="device-model">Device model <span aria-hidden="true">(optional)</span></label><input id="device-model" name="device_model" type="text" maxlength="100" placeholder="e.g. Galaxy S24, Pixel 9"></div>
 
