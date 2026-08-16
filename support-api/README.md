@@ -1,38 +1,72 @@
-# Feathly Support API preview
+# Feathly Support API
 
-Deployment-ready Netlify Function for sending Smart Planner support requests through Zoho SMTP. It is not connected to the public support navigation yet.
+Netlify Functions for sending Feathly website mail through the existing Zoho SMTP configuration. SMTP credentials stay in the Netlify environment and are never exposed to browser JavaScript or GitHub Pages.
 
-Static test pages:
+## Public endpoints
+
+- Support preview/testing: `POST /api/support`
+- Closed Test applications: `POST /api/closed-test`
+
+Current Netlify host used by the website:
+
+- `https://feathly-support-api.netlify.app/api/support`
+- `https://feathly-support-api.netlify.app/api/closed-test`
+
+Support SMTP preview pages:
 
 - `https://feathly.com/smart-planner/support-zoho-preview.html`
 - `https://feathly.com/ko/smart-planner/support-zoho-preview.html`
 
-They intentionally use the same content sections and form fields as the current support pages. Attachments remain visible but disabled until private object storage and malware scanning are ready.
+Closed Test application pages use the same Zoho SMTP, Turnstile, Upstash rate-limit, origin allowlist, and acknowledgement-mail infrastructure as the tested Support API.
 
 ## Deployment
 
-1. Create a Netlify project from `yoonng/smart-planner-site` with **Base directory** set to `support-api`.
-2. Add every value from `.env.example` in Netlify **Project configuration → Environment variables**.
-3. Use the exact SMTP hostname shown in Zoho Mail **Server Configuration Details** for the Feathly Australia data center.
-4. Generate a Zoho App Password named `Feathly Support API`; never use or commit the normal account password.
-5. Create a Cloudflare Turnstile site for `feathly.com` and set its secret in the API project.
-6. Create an Upstash Redis database and set its REST URL/token for rate limiting.
-7. Deploy and map the project to `support-api.feathly.com`. The public endpoint remains `/api/support`.
-8. Set the public Turnstile site key in both preview HTML pages.
-9. Test English and Korean delivery, Reply-To, acknowledgement, spam rejection, and rate limiting before replacing FormSubmit.
+The Netlify project is connected to `yoonng/smart-planner-site` with **Base directory** set to `support-api`.
 
-## Cutover
+Required environment values are documented in `.env.example`. Production values must remain in Netlify **Project configuration → Environment variables**.
 
-After the test URLs pass, copy the SMTP form attributes and `support-zoho-preview.js` connection into the existing English and Korean `support.html` files. Keep the current public URLs unchanged. Remove the preview pages only after the production URLs pass a final delivery test.
+Important configuration rules:
 
-## Current scope
+1. Use the exact SMTP hostname shown in Zoho Mail **Server Configuration Details** for the Feathly Australia data center.
+2. Use a Zoho App Password for `support@feathly.com`; never use or commit the normal account password.
+3. Keep the Cloudflare Turnstile secret only in Netlify. The public site key may be present in website HTML.
+4. Keep the Upstash Redis REST URL/token only in Netlify.
+5. Keep `SUPPORT_ALLOWED_ORIGINS` restricted to Feathly website origins and approved local development origins.
 
-- JSON requests only; no attachments.
-- Maximum message length: 6,000 characters.
-- Five submissions per IP per ten minutes.
-- Exact-origin CORS allowlist.
-- Cloudflare Turnstile verification.
-- Internal support email plus localized acknowledgement.
-- Server-generated ticket and priority.
+## Support flow
 
-Attachments are intentionally deferred. Production attachments should upload directly to private object storage with short-lived signed URLs and malware scanning rather than pass through this function.
+`/api/support` accepts structured JSON support requests, verifies origin, Turnstile, rate limits and server-side fields, then sends:
+
+- an internal structured request to `support@feathly.com`
+- a localized acknowledgement to the requester
+
+Attachments are intentionally not handled by this API yet. The current public Support form may continue using its existing delivery path until private object storage and malware scanning are ready for a full cutover.
+
+## Closed Test flow
+
+`/api/closed-test` accepts only the minimal tester application data:
+
+- Google Play email
+- optional Android version
+- optional device model
+- language
+- 14-day/test-contact consent
+
+After validation it sends:
+
+- an internal application email to `support@feathly.com`
+- a localized applicant confirmation email containing the Google Group, Google Play opt-in, Android install, and Feedback Form links
+
+The applicant is not automatically added to Google Groups by this endpoint. Google Group membership and Google Play Closed Test opt-in remain separate Google-managed steps.
+
+## Security baseline
+
+- JSON requests only
+- Exact-origin CORS allowlist
+- Cloudflare Turnstile verification
+- Upstash per-IP rate limiting
+- Honeypot spam field
+- Server-side validation and length limits
+- Zoho SMTP credentials only on the server
+- `disableFileAccess` / `disableUrlAccess` on Nodemailer messages
+- No passwords, card data, purchase tokens, or planner database files requested through Closed Test applications
