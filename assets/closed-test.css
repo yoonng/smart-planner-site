@@ -91,6 +91,12 @@
   color: #64748b;
   line-height: 1.55;
 }
+.closed-test-form .submission-note a {
+  color: #4f46e5;
+  font-weight: 800;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
 .closed-test-form .check-row {
   margin: 20px 0;
 }
