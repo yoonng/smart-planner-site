@@ -9,3 +9,9 @@
   to = "/.netlify/functions/support"
   status = 200
   force = true
+
+[[redirects]]
+  from = "/api/closed-test"
+  to = "/.netlify/functions/closed-test"
+  status = 200
+  force = true
