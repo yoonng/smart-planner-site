@@ -20,6 +20,7 @@ document.addEventListener('DOMContentLoaded', function () {
     '/smart-planner/privacy.html': '/ko/smart-planner/privacy.html',
     '/smart-planner/terms.html': '/ko/smart-planner/terms.html',
     '/smart-planner/refund.html': '/ko/smart-planner/refund.html',
+    '/smart-planner/closed-test.html': '/ko/smart-planner/closed-test.html',
     '/community/': '/ko/community/',
   };
   const koreanToEnglish = Object.fromEntries(
@@ -90,7 +91,7 @@ document.addEventListener('DOMContentLoaded', function () {
   if (!document.querySelector('link[href$="navigation.css"]')) {
     const navigation = document.createElement('link');
     navigation.rel = 'stylesheet';
-    navigation.href = '/assets/navigation.css';
+    navigation.href = '/assets/navigation.css?v=20260816-closedtest1';
     document.head.appendChild(navigation);
   }
 
@@ -108,6 +109,7 @@ document.addEventListener('DOMContentLoaded', function () {
         build: '빌드 기록',
         support: '지원',
         community: '커뮤니티',
+        closedTest: 'Closed Test',
         menu: '메뉴',
         openMenu: '사이트 메뉴 열기',
         primary: '주요 메뉴',
@@ -122,6 +124,7 @@ document.addEventListener('DOMContentLoaded', function () {
         build: 'Build History',
         support: 'Support',
         community: 'Community',
+        closedTest: 'Closed Test',
         menu: 'Menu',
         openMenu: 'Open site menu',
         primary: 'Primary navigation',
@@ -146,6 +149,9 @@ document.addEventListener('DOMContentLoaded', function () {
         ['/smart-planner/support.html', labels.support],
         ['/community/', labels.community],
       ];
+  const closedTestHref = currentLocale === 'ko'
+    ? '/ko/smart-planner/closed-test.html'
+    : '/smart-planner/closed-test.html';
 
   const navLinks = document.querySelector('.nav-links');
   const linksMarkup = links.map(([href, label]) => `<a href="${href}">${label}</a>`).join('');
@@ -155,6 +161,15 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   const headerNav = document.querySelector('.site-header .nav');
+  if (headerNav && !headerNav.querySelector('.closed-test-nav-cta')) {
+    const closedTestCta = document.createElement('a');
+    closedTestCta.className = 'closed-test-nav-cta';
+    closedTestCta.href = closedTestHref;
+    closedTestCta.textContent = labels.closedTest;
+    if (path === closedTestHref) closedTestCta.setAttribute('aria-current', 'page');
+    headerNav.appendChild(closedTestCta);
+  }
+
   if (headerNav && !headerNav.querySelector('.language-switcher')) {
     const languageSwitcher = document.createElement('label');
     languageSwitcher.className = 'language-switcher';
@@ -172,7 +187,7 @@ document.addEventListener('DOMContentLoaded', function () {
   if (headerNav && !headerNav.querySelector('.mobile-nav')) {
     const mobileNav = document.createElement('details');
     mobileNav.className = 'mobile-nav';
-    mobileNav.innerHTML = `<summary aria-label="${labels.openMenu}">${labels.menu}</summary><nav class="mobile-nav-panel" aria-label="${labels.mobile}">${linksMarkup}</nav>`;
+    mobileNav.innerHTML = `<summary aria-label="${labels.openMenu}">${labels.menu}</summary><nav class="mobile-nav-panel" aria-label="${labels.mobile}"><a class="mobile-closed-test-link" href="${closedTestHref}">${labels.closedTest}</a>${linksMarkup}</nav>`;
     headerNav.appendChild(mobileNav);
     mobileNav.querySelectorAll('a').forEach((link) => {
       link.addEventListener('click', () => mobileNav.removeAttribute('open'));
