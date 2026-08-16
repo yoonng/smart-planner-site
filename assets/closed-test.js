@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
   const links = {
-    group: 'https://groups.google.com/d/forum/feathly-closed-testers',
     optIn: 'https://play.google.com/apps/testing/com.feathly.planner',
     android: 'https://play.google.com/store/apps/details?id=com.feathly.planner',
     feedback: 'https://forms.gle/phouKRfRpPJs2F9D9'
@@ -114,17 +113,16 @@ document.addEventListener('DOMContentLoaded', function () {
     strong.textContent = copy.success(applicationId);
     success.appendChild(strong);
 
-    const steps = document.createElement('p');
-    steps.style.margin = '10px 0 0';
-    steps.appendChild(document.createTextNode(isKorean ? '다음 단계: ' : 'Next step: '));
+    const registration = document.createElement('p');
+    registration.style.margin = '10px 0 0';
+    registration.textContent = isKorean
+      ? 'Feathly에서 입력하신 Google 계정을 Closed Test 테스터 그룹에 등록합니다. Google Group에 직접 가입하실 필요는 없습니다.'
+      : 'Feathly will register the Google account you submitted in the Closed Test tester group. You do not need to join the Google Group yourself.';
+    success.appendChild(registration);
 
-    const groupLink = document.createElement('a');
-    groupLink.href = links.group;
-    groupLink.target = '_blank';
-    groupLink.rel = 'noopener';
-    groupLink.textContent = isKorean ? 'Google Group 가입' : 'Join Google Group';
-    steps.appendChild(groupLink);
-    steps.appendChild(document.createTextNode(' → '));
+    const steps = document.createElement('p');
+    steps.style.margin = '8px 0 0';
+    steps.appendChild(document.createTextNode(isKorean ? '그룹 등록 완료 후: ' : 'After tester-group access is active: '));
 
     const optInLink = document.createElement('a');
     optInLink.href = links.optIn;
@@ -137,8 +135,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const emailNote = document.createElement('p');
     emailNote.style.margin = '8px 0 0';
     emailNote.textContent = isKorean
-      ? '입력한 이메일로 동일한 단계가 포함된 확인메일도 발송됩니다.'
-      : 'A confirmation email with the same next steps is also sent to your application email.';
+      ? '입력한 이메일로 접수 확인과 이후 진행 방법이 포함된 확인메일도 발송됩니다.'
+      : 'A confirmation email with the registration status and next-step instructions is also sent to your application email.';
     success.appendChild(emailNote);
     success.scrollIntoView({ behavior: 'smooth', block: 'center' });
   }
