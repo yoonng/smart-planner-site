@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="feathly-turnstile-site-key" content="0x4AAAAAAEJIGRxnk4M9IQMH">
   <title>Closed Test - Feathly: Smart Planner</title>
   <meta name="description" content="Join the Android Google Play Closed Test for Feathly: Smart Planner.">
   <link rel="canonical" href="https://feathly.com/smart-planner/closed-test.html">
@@ -12,7 +13,7 @@
   <link rel="stylesheet" href="/assets/landing.css">
   <link rel="stylesheet" href="/assets/closed-test.css?v=20260816-1">
   <script defer src="/assets/app.js?v=20260816-closedtest2"></script>
-  <script defer src="/assets/closed-test.js?v=20260816-3"></script>
+  <script defer src="/assets/closed-test.js?v=20260816-4"></script>
 </head>
 <body>
 <header class="site-header"><div class="wrap nav"><a class="brand" href="/">Feathly</a><nav class="nav-links" aria-label="Primary navigation"><a href="/">Home</a><a href="/smart-planner/">Smart Planner</a><a href="/smart-planner/download.html">Download</a><a href="/smart-planner/support.html">Support</a><a href="/community/">Community</a></nav></div></header>
@@ -27,19 +28,11 @@
 
       <article class="closed-test-card"><h2>Android devices</h2><p>Feathly can be installed on Android 7.0 or later. Android 10 or later is recommended.</p><ul><li><strong>Android 12–17 users are especially welcome.</strong></li><li>Older Android 7–9 devices are also useful for compatibility checks.</li><li>Samsung Galaxy, Google Pixel, Xiaomi/Redmi, OPPO/OnePlus, and other Android devices are welcome.</li></ul></article>
 
-      <article class="closed-test-card"><h2>What happens after you apply?</h2><p>Your application is sent to Feathly support and you receive an automatic confirmation email. The confirmation includes the Feathly Closed Testers Google Group link. Join the group using the same Google account you will use for the Play Store test.</p><p>Joining the Google Group does not start the 14-day period. The test period starts after you use the Google Play Closed Test opt-in link and become a tester.</p></article>
+      <article class="closed-test-card"><h2>What happens after you apply?</h2><p>Your application is sent to Feathly support and you receive an automatic confirmation email. The confirmation includes the Feathly Closed Testers Google Group, Google Play opt-in, Android install, and feedback links. Join the group using the same Google account you will use for the Play Store test.</p><p>Joining the Google Group does not start the 14-day period. The test period starts after you use the Google Play Closed Test opt-in link and become a tester.</p></article>
     </div>
 
-    <form id="apply" class="closed-test-form" data-closed-test-form action="https://formsubmit.co/support@feathly.com" method="POST">
-      <input type="hidden" name="_subject" value="[FEATHLY-CLOSED-TEST][EN] New tester application">
-      <input type="hidden" name="_replyto" value="">
-      <input type="hidden" name="_next" value="https://feathly.com/smart-planner/closed-test.html?submitted=1">
-      <input type="hidden" name="_template" value="table">
-      <input type="hidden" name="_autoresponse" value="Your Feathly: Smart Planner Closed Test application has been received. Please follow the next-step instructions in this email.">
-      <input type="hidden" name="_blacklist" value="casino,crypto giveaway,guest post,link exchange,SEO service">
-      <input type="hidden" name="form_version" value="closed-test-v1">
-      <input type="hidden" name="language" value="en">
-      <input type="text" name="_honey" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px" aria-hidden="true">
+    <form id="apply" class="closed-test-form" data-closed-test-form data-api-endpoint="https://feathly-support-api.netlify.app/api/closed-test">
+      <input type="text" name="website" tabindex="-1" autocomplete="off" style="position:absolute;left:-9999px" aria-hidden="true">
 
       <div class="form-heading"><span>Tester application</span><h2>Join the Closed Test</h2><p>Only your Google Play email is required. Device details are optional and help us test a wider range of Android versions.</p></div>
       <div class="closed-test-success" data-closed-test-success hidden>Thank you. Your tester application was submitted. Check your email for the next step.</div>
@@ -51,8 +44,9 @@
       <label class="check-row consent-row"><input type="checkbox" name="tester_consent" value="accepted" required><span>I can remain opted in for about 14 days. I agree that Feathly may use this email to manage the Closed Test and contact me about testing. I have read the <a href="/smart-planner/privacy.html" target="_blank" rel="noopener">Privacy Policy</a>. *</span></label>
 
       <p class="submission-note">We will never ask for your Google password or payment card information.</p>
-      <p class="submission-note">Applications are delivered to Feathly support through a form-delivery provider and managed in Google Workspace. Test feedback may later be collected through Google Forms/Sheets. See the <a href="/smart-planner/privacy.html" target="_blank" rel="noopener">Privacy Policy</a>.</p>
-      <button class="btn form-submit" type="submit">Apply as a tester</button>
+      <p class="submission-note">Applications are sent over encrypted HTTPS to Feathly's support API and delivered to <strong>support@feathly.com</strong> through Zoho Mail. Test feedback may later be collected through Google Forms/Sheets. See the <a href="/smart-planner/privacy.html" target="_blank" rel="noopener">Privacy Policy</a>.</p>
+      <div data-turnstile-container></div>
+      <div class="submit-row"><button class="btn form-submit" type="submit">Apply as a tester</button><p data-closed-test-result aria-live="polite"></p></div>
     </form>
   </div></section>
 </main>
