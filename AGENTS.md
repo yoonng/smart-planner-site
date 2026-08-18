@@ -127,6 +127,16 @@ Guidelines:
 - Keep image `alt` text accurate.
 - Use responsive markup and avoid shrinking screenshots until text becomes unreadable.
 
+### Visual contrast rule
+
+Feathly's current public theme uses a light hero background. Do not reuse pale text colors that were designed for the old dark hero.
+
+- Compact hero metadata, chips, pills, secondary labels, helper text, and captions must remain clearly readable on the actual rendered light background.
+- Do not use low-contrast light gray/white text such as `#e2e8f0` on the current light hero surfaces.
+- Prefer dark slate/teal text with a visible light chip background and border for hero metadata.
+- When adding or modifying a page, inspect all small text—not only headings and primary body copy—for contrast after `feathly-theme.css` overrides are applied.
+- If a shared component is affected, fix the shared style so the same low-contrast mistake does not recur on another page.
+
 ## 8. Local Verification
 
 Before commit:
@@ -145,6 +155,7 @@ Then verify through HTTP, not only by opening files directly:
 - Downloaded image can be decoded.
 - Required headings and text appear in the rendered source.
 - Desktop and narrow/mobile layouts remain readable.
+- Small metadata, chips, captions, helper text, and secondary labels have clear contrast against the final themed background.
 
 ## 9. Commit and Publication
 
