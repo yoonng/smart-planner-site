@@ -25,12 +25,13 @@
   align-items: center;
   min-height: 30px;
   padding: 0 11px;
-  border: 1px solid rgba(255,255,255,.18);
+  border: 1px solid rgba(50,124,120,.30);
   border-radius: 999px;
-  background: rgba(255,255,255,.09);
-  color: #e2e8f0;
+  background: rgba(255,255,255,.82);
+  color: #24485b;
+  box-shadow: 0 5px 14px rgba(74,85,104,.07);
   font-size: 13px;
-  font-weight: 800;
+  font-weight: 850;
 }
 
 .full-guide-page {
