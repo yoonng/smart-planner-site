@@ -16,7 +16,7 @@
 <section class="page-hero"><div class="wrap"><h1>개인정보 처리방침</h1><p>이 방침은 Feathly: Smart Planner가 사용자의 데이터를 어떻게 처리하는지 설명합니다.</p></div></section>
 <section class="page-body"><div class="wrap content">
 <p class="notice"><strong>중요한 언어 안내:</strong> 이 문서는 영어 원문의 비공식 한국어 번역본으로, 이해를 돕기 위한 참고용입니다. 영어 원문과 이 번역문 사이에 차이 또는 불일치가 있는 경우 <strong>영어 원문이 우선합니다.</strong> <a href="/smart-planner/privacy.html?lang=en">공식 영어 원문 보기</a></p>
-<p class="notice"><strong>로컬 우선 설계:</strong> Feathly: Smart Planner는 일반적인 Planner 사용 중 Loop 및 Planner 콘텐츠를 사용자의 기기에 저장합니다. 향후 선택형 Cloud/Server 기능이 도입되어 사용자가 직접 사용을 선택하거나, 사용자가 지원 또는 Closed Test 피드백 채널을 통해 정보를 직접 제출하는 경우를 제외하면 Planner 콘텐츠는 Feathly 서버로 업로드되지 않습니다.</p>
+<p class="notice"><strong>로컬 우선 설계:</strong> Feathly: Smart Planner는 일반적인 Planner 사용 중 Loop 및 Planner 콘텐츠를 사용자의 기기에 저장합니다. 향후 선택형 Cloud/Server 기능이 도입되어 사용자가 직접 사용을 선택하거나, 사용자가 지원 또는 Closed Test 피드백 채널을 통해 정보를 직접 제출하는 경우를 제외하면 Planner 콘텐츠는 Feathly 서버로 업로드되지 않습니다. 앱 버전에 선택형 <strong>사용 통계</strong> 기능이 포함되어 있고 사용자가 이를 직접 켠 경우에는 제한된 앱 이용 및 기술 정보가 Google Analytics for Firebase로 전송될 수 있지만, Loop 제목, 메모, 첨부 파일 및 사용자가 직접 입력한 Planner 내용은 Feathly의 사용자 정의 Analytics 이벤트에 포함하지 않습니다.</p>
 
 <h2>1. 로컬 우선 데이터 저장</h2>
 <p>Feathly: Smart Planner는 핵심 Planner 데이터를 사용자의 기기에 로컬로 저장합니다. 여기에는 Loop 제목, 메모, 카테고리, 템플릿, 일정 설정, 생성된 알림 occurrence, 알림 시간, 복습 기록, 완료 이력, 앱 환경설정, 언어, 테마, 기상 및 취침 시간, 알림 허용 시간대, 시간대 설정, 그리고 유료 기능을 활성화하는 데 사용되는 로컬 entitlement 정보가 포함될 수 있습니다.</p>
@@ -53,6 +53,12 @@
 <p>현재 버전의 Feathly: Smart Planner는 전면 광고, 앱 실행 광고, 보상형 광고, 네이티브 광고 또는 팝업 광고를 사용하지 않습니다. Feathly Pro Lifetime은 앱에서 광고를 제거합니다.</p>
 <p>Google 서비스가 적용된 앱과 사이트의 정보를 Google이 사용하는 방식은 <a href="https://policies.google.com/technologies/partner-sites">Google 파트너 사이트 정책</a>에서 확인할 수 있습니다.</p>
 
+<h2>6A. 선택형 사용 통계</h2>
+<p>사용 중인 Feathly 버전에 선택형 <strong>사용 통계</strong> 설정이 포함된 경우, 사용자가 명시적으로 켜기 전까지 Analytics 수집은 꺼져 있습니다. 사용 통계를 거부해도 Feathly의 핵심 기능을 사용할 수 있으며, 이후 <strong>설정 &gt; 개인정보</strong>에서 언제든 끌 수 있습니다.</p>
+<p>사용 통계를 켜면 Feathly는 Google이 제공하는 <strong>Google Analytics for Firebase</strong>를 사용해 앱의 사용 방식을 이해하고, 통계 분석, 사용성 및 안정성 개선, 온보딩 개선, 앱 개발 우선순위 결정에 활용합니다. Google Analytics for Firebase SDK의 동작과 설정에 따라 Google은 앱 상호작용 및 이벤트, 앱 수명주기 또는 세션 정보, 앱 인스턴스 또는 기기 식별자, 진단 정보, 그리고 마스킹된 IP 주소처럼 대략적인 위치가 추정될 수 있는 네트워크 정보를 처리할 수 있습니다.</p>
+<p>Feathly는 사용자 정의 Analytics 이벤트에 Loop 제목, 메모, 첨부 파일, 사용자가 만든 카테고리나 태그 이름, 검색어, 알림 내용, 연락처 정보, 원본 구매 토큰, 데이터베이스 또는 Loop UUID, 기타 사용자가 직접 입력한 Planner 내용을 의도적으로 포함하지 않습니다. Feathly는 Google Analytics의 사용자 정의 User ID를 설정하지 않습니다. 앱 설정에서 Analytics의 광고 ID 수집과 광고 개인화 신호를 끄며, 이 제품 사용 통계 데이터를 Google Ads 또는 AdMob의 리마케팅 목적으로 연결하지 않습니다.</p>
+<p>사용 통계를 켠 동안에는 Google Analytics for Firebase가 자동 이벤트나 기술 메타데이터를 처리할 수 있습니다. 사용 통계를 끄면 해당 설치에서 이후 Analytics 수집이 중단되지만, 이미 Google Analytics에서 처리된 과거 데이터가 자동으로 삭제되는 것은 아닙니다. Analytics 데이터의 보관 및 삭제는 Feathly의 Analytics 설정과 Google의 관련 정책 및 제어 기능의 적용을 받습니다.</p>
+
 <h2>7. 알림</h2>
 <p>Feathly: Smart Planner는 사용자가 설정한 Loop 및 Focus Timer 알림을 보내기 위해 알림 권한을 요청할 수 있습니다. 기기 설정에서 알림 권한을 변경할 수 있습니다.</p>
 
@@ -65,20 +71,22 @@
   <li><strong>Planner 콘텐츠:</strong> 핵심 Loop 및 Planner 콘텐츠는 로컬에 저장되며 일반적인 Planner 사용 중 Feathly로 전송되지 않습니다.</li>
   <li><strong>Billing:</strong> 구매 검증 데이터는 구매 검증, 복원, entitlement 유지, 환불/회수 처리, 보안 및 사기 방지를 위해 Feathly Billing Server로 전송될 수 있습니다.</li>
   <li><strong>광고:</strong> Google AdMob은 Google SDK 동작과 사용자의 개인정보 선택에 따라 광고 관련 기기 식별자, 앱 상호작용, 진단 정보, IP 기반 네트워크 정보 및 관련 데이터를 수집하거나 공유할 수 있습니다.</li>
+  <li><strong>선택형 사용 통계:</strong> Google Analytics for Firebase가 포함된 버전에서 사용자가 이를 켠 경우, 제한된 앱 상호작용, 앱 인스턴스/기기 식별자, 진단 정보, 앱 수명주기/세션 정보 및 마스킹된 IP에서 파생될 수 있는 대략적인 위치 정보가 통계와 제품·앱 개발 개선 목적으로 처리될 수 있습니다. 사용 통계를 꺼도 핵심 기능은 계속 사용할 수 있습니다.</li>
   <li><strong>지원:</strong> Feathly는 사용자가 지원 채널을 통해 직접 제출하기로 선택한 정보만 받습니다.</li>
   <li><strong>Closed Test:</strong> 테스터 신청과 피드백은 Feathly 웹사이트, 이메일, Google Groups 또는 Google Forms를 통해 사용자가 직접 제출하는 정보이며, 로컬 Planner 데이터에서 자동으로 업로드되는 정보가 아닙니다.</li>
-  <li><strong>전송 보안:</strong> Feathly 서버 요청과 Google 광고 SDK 트래픽은 각 서비스가 지원하는 범위에서 암호화된 네트워크 전송을 사용합니다.</li>
+  <li><strong>전송 보안:</strong> Feathly 서버 요청과 Google SDK 트래픽은 각 서비스가 지원하는 범위에서 암호화된 네트워크 전송을 사용합니다.</li>
 </ul>
 <p>Google Play Data Safety 양식은 현재 상태를 신고하는 항목입니다. 향후 Cloud 또는 AI 기능은 실제 출시되어 사용되기 전까지 현재의 데이터 수집으로 간주하지 않습니다.</p>
 
 <h2>10. 데이터 공유 및 서비스 제공업체</h2>
 <p>Feathly는 사용자의 개인정보를 판매하지 않으며 핵심 Planner 콘텐츠를 광고주와 공유하지 않습니다.</p>
-<p>Google Play는 구매 및 결제 관련 정보를 처리합니다. Feathly Billing Server와 호스팅/네트워크 제공업체는 위에서 설명한 제한된 결제 및 네트워크 보안 정보를 처리합니다. Google AdMob은 광고 관련 정보를 처리합니다. 현재 공개 Support 양식은 외부 양식 전송 서비스를 사용할 수 있습니다. Closed Test 신청은 Feathly의 Netlify 기반 지원 API, Cloudflare Turnstile, Upstash rate limiting 및 Zoho Mail을 통해 신청과 확인 메일 전달에 필요한 정보를 처리합니다. Google Groups는 테스터 그룹 멤버십을 처리하며, Google Forms/Sheets는 테스터 피드백과 응답 기록을 처리할 수 있습니다.</p>
+<p>Google Play는 구매 및 결제 관련 정보를 처리합니다. Feathly Billing Server와 호스팅/네트워크 제공업체는 위에서 설명한 제한된 결제 및 네트워크 보안 정보를 처리합니다. Google AdMob은 광고 관련 정보를 처리합니다. 선택형 사용 통계를 켠 경우 Google Analytics for Firebase는 제품 통계와 개선을 위해 위에서 설명한 Analytics 데이터를 Feathly를 대신하여 처리합니다. 현재 공개 Support 양식은 외부 양식 전송 서비스를 사용할 수 있습니다. Closed Test 신청은 Feathly의 Netlify 기반 지원 API, Cloudflare Turnstile, Upstash rate limiting 및 Zoho Mail을 통해 신청과 확인 메일 전달에 필요한 정보를 처리합니다. Google Groups는 테스터 그룹 멤버십을 처리하며, Google Forms/Sheets는 테스터 피드백과 응답 기록을 처리할 수 있습니다.</p>
 <p>서비스 제공업체는 각 서비스 기능을 수행하기 위해 사용되며 자체 개인정보 보호 약관 및 법적 의무의 적용을 받을 수 있습니다.</p>
 
 <h2>11. 데이터 삭제 및 보관</h2>
 <p>핵심 Planner 데이터는 로컬에 저장되므로 앱 안에서 Loop를 삭제하거나, 앱 데이터를 지우거나, 앱을 제거하여 로컬 앱 데이터를 삭제할 수 있습니다. 내보내기 또는 백업 없이 앱을 제거하면 로컬 Feathly 데이터가 손실될 수 있습니다.</p>
 <p>현재 버전은 Feathly Cloud 계정을 제공하지 않으므로 Feathly 계정 삭제 절차가 없습니다. Feathly가 관리하는 지원 서신, Closed Test 신청/피드백 기록 또는 기타 서버 측 데이터의 삭제를 요청하려면 <a href="/ko/smart-planner/support.html">지원 문의</a>를 제출하거나 <a href="mailto:support@feathly.com">support@feathly.com</a>으로 이메일을 보내십시오. Google 또는 다른 서비스 제공업체가 보유한 일부 데이터는 해당 제공업체의 계정 및 삭제 기능이 별도로 적용될 수 있습니다.</p>
+<p>사용 통계를 켠 경우 이를 끄면 해당 설치에서 이후 Analytics 수집이 중단됩니다. 이미 Google에서 처리한 과거 Analytics 데이터는 관련 Analytics 보관 및 삭제 제어의 적용을 받습니다. Feathly는 사용자 정의 Analytics User ID를 설정하지 않으므로, 일반적으로 이메일 주소나 지원 요청만으로 특정 개인의 가명 처리된 Analytics 기록을 식별할 수 없습니다.</p>
 <p>결제, 환불, 보안, 사기 방지, 회계 또는 분쟁 관련 기록은 entitlement 유지, 서비스 보호, 분쟁 해결, 회계 의무 또는 법적 요구를 위해 합리적으로 필요한 기간 동안 보관될 수 있습니다. 해당 목적에 더 이상 필요하지 않은 데이터는 합리적으로 가능한 범위에서 삭제하거나 비식별화합니다.</p>
 
 <h2>12. 보안</h2>
@@ -93,11 +101,11 @@
 <p><strong>이러한 항목은 향후 가능한 기능을 설명하기 위해 기재한 것이며, 로컬 우선 Planner의 현재 데이터 수집 방식이라는 의미가 아닙니다.</strong> 해당 기능을 출시하기 전에 Feathly는 정확한 데이터 필드, 처리 목적, 보관 규칙, 삭제 제어, 서비스 제공업체, 보안 조치 및 필요한 동의를 정의하고, 사용자가 기능을 사용하도록 요청받기 전에 이 개인정보 처리방침과 Google Play Data Safety 공개 내용을 업데이트합니다.</p>
 
 <h2>15. 이 방침의 변경</h2>
-<p>Feathly: Smart Planner가 변경됨에 따라 이 개인정보 처리방침을 업데이트할 수 있습니다. 특히 광고, 구매, 지원 데이터, Closed Test 데이터, Cloud Sync, 계정, AI 기능 또는 서버 기반 데이터 처리와 관련된 중요한 변경사항은 명확하게 안내하고 관련 Store 공개 내용에도 반영합니다.</p>
+<p>Feathly: Smart Planner가 변경됨에 따라 이 개인정보 처리방침을 업데이트할 수 있습니다. 특히 사용 통계, 광고, 구매, 지원 데이터, Closed Test 데이터, Cloud Sync, 계정, AI 기능 또는 서버 기반 데이터 처리와 관련된 중요한 변경사항은 명확하게 안내하고 관련 Store 공개 내용에도 반영합니다.</p>
 
 <h2>16. 문의</h2>
 <p>이 개인정보 처리방침에 관한 질문이 있거나 Feathly가 관리하는 데이터의 열람, 정정 또는 삭제를 요청하려면 <a href="/ko/smart-planner/support.html">지원 페이지</a>를 사용하거나 <a href="mailto:support@feathly.com">support@feathly.com</a>으로 문의하십시오.</p>
-<p><small>최종 업데이트: 2026-08-16.</small></p>
+<p><small>최종 업데이트: 2026-08-23.</small></p>
 </div></section>
 <footer><div class="wrap foot"><div>Feathly: Smart Planner</div><div></div></div></footer>
 </body></html>
