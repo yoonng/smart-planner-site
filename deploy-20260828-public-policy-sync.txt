@@ -1,0 +1,4 @@
+Public policy deployment sync
+Date: 2026-08-28
+Android source reviewed: 4365327f309a0fe01e08508505cce035f08ea0ed
+Deploy canonical EN/KO Smart Planner privacy policy and current public-site content from main.
