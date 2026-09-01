@@ -21,21 +21,61 @@ jobs:
         run: |
           set -euo pipefail
 
-          if [[ -z "${UPSTASH_REDIS_REST_URL:-}" ]]; then
+          normalize_secret() {
+            local value="$1"
+            value="${value//$'\r'/}"
+            value="${value//$'\n'/}"
+            value="$(printf '%s' "$value" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')"
+
+            # Tolerate copying a full ENV assignment from the Upstash console.
+            if [[ "$value" == UPSTASH_*=* ]]; then
+              value="${value#*=}"
+            fi
+
+            # Remove one pair of surrounding quotes if present.
+            if [[ ${#value} -ge 2 ]]; then
+              if [[ "${value:0:1}" == '"' && "${value: -1}" == '"' ]]; then
+                value="${value:1:${#value}-2}"
+              elif [[ "${value:0:1}" == "'" && "${value: -1}" == "'" ]]; then
+                value="${value:1:${#value}-2}"
+              fi
+            fi
+
+            printf '%s' "$value"
+          }
+
+          raw_url="${UPSTASH_REDIS_REST_URL:-}"
+          raw_token="${UPSTASH_REDIS_REST_READ_ONLY_TOKEN:-}"
+
+          if [[ -z "$raw_url" ]]; then
             echo "::error::Missing GitHub secret: UPSTASH_REDIS_REST_URL"
             exit 1
           fi
 
-          if [[ -z "${UPSTASH_REDIS_REST_READ_ONLY_TOKEN:-}" ]]; then
+          if [[ -z "$raw_token" ]]; then
             echo "::error::Missing GitHub secret: UPSTASH_REDIS_REST_READ_ONLY_TOKEN"
             exit 1
           fi
 
-          endpoint="${UPSTASH_REDIS_REST_URL%/}/get/feathly:keepalive"
-          response="$(curl --fail-with-body --silent --show-error \
+          url="$(normalize_secret "$raw_url")"
+          token="$(normalize_secret "$raw_token")"
+          token="${token#Bearer }"
+
+          if [[ ! "$url" =~ ^https://[^[:space:]]+$ ]]; then
+            echo "::error::UPSTASH_REDIS_REST_URL is not a plain https URL. Paste only the Upstash REST URL value."
+            exit 1
+          fi
+
+          if [[ -z "$token" || "$token" == *[[:space:]]* ]]; then
+            echo "::error::UPSTASH_REDIS_REST_READ_ONLY_TOKEN contains invalid whitespace or is empty. Paste only the Read Only Token value."
+            exit 1
+          fi
+
+          endpoint="${url%/}/get/feathly-keepalive"
+          response="$(curl --http1.1 --fail-with-body --silent --show-error \
             --connect-timeout 10 \
             --max-time 20 \
-            -H "Authorization: Bearer ${UPSTASH_REDIS_REST_READ_ONLY_TOKEN}" \
+            -H "Authorization: Bearer ${token}" \
             "$endpoint")"
 
           if ! jq -e 'has("result")' <<<"$response" >/dev/null; then
