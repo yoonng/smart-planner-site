@@ -16,7 +16,7 @@ jobs:
       - name: Send read-only Redis request
         env:
           UPSTASH_REDIS_REST_URL: ${{ secrets.UPSTASH_REDIS_REST_URL }}
-          UPSTASH_REDIS_REST_READ_ONLY_TOKEN: ${{ secrets.UPSTASH_REDIS_REST_READ_ONLY_TOKEN }}
+          UPSTASH_REDIS_REST_TOKEN: ${{ secrets.UPSTASH_REDIS_REST_TOKEN }}
         shell: bash
         run: |
           set -euo pipefail
@@ -27,12 +27,10 @@ jobs:
             value="${value//$'\n'/}"
             value="$(printf '%s' "$value" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')"
 
-            # Tolerate copying a full ENV assignment from the Upstash console.
             if [[ "$value" == UPSTASH_*=* ]]; then
               value="${value#*=}"
             fi
 
-            # Remove one pair of surrounding quotes if present.
             if [[ ${#value} -ge 2 ]]; then
               if [[ "${value:0:1}" == '"' && "${value: -1}" == '"' ]]; then
                 value="${value:1:${#value}-2}"
@@ -45,7 +43,7 @@ jobs:
           }
 
           raw_url="${UPSTASH_REDIS_REST_URL:-}"
-          raw_token="${UPSTASH_REDIS_REST_READ_ONLY_TOKEN:-}"
+          raw_token="${UPSTASH_REDIS_REST_TOKEN:-}"
 
           if [[ -z "$raw_url" ]]; then
             echo "::error::Missing GitHub secret: UPSTASH_REDIS_REST_URL"
@@ -53,7 +51,7 @@ jobs:
           fi
 
           if [[ -z "$raw_token" ]]; then
-            echo "::error::Missing GitHub secret: UPSTASH_REDIS_REST_READ_ONLY_TOKEN"
+            echo "::error::Missing GitHub secret: UPSTASH_REDIS_REST_TOKEN"
             exit 1
           fi
 
@@ -67,7 +65,7 @@ jobs:
           fi
 
           if [[ -z "$token" || "$token" == *[[:space:]]* ]]; then
-            echo "::error::UPSTASH_REDIS_REST_READ_ONLY_TOKEN contains invalid whitespace or is empty. Paste only the Read Only Token value."
+            echo "::error::UPSTASH_REDIS_REST_TOKEN contains invalid whitespace or is empty. Paste only the REST Token value shown by Upstash."
             exit 1
           fi
 
