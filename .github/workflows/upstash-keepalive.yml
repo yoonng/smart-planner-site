@@ -2,6 +2,11 @@ name: Upstash keep-alive
 
 on:
   workflow_dispatch:
+  schedule:
+    # GitHub cron uses UTC. Auckland is UTC+12 in NZST and UTC+13 in NZDT,
+    # so trigger both candidate UTC hours and run only when Auckland local hour is 00.
+    - cron: '0 11 * * *'
+    - cron: '0 12 * * *'
 
 permissions:
   contents: read
@@ -17,6 +22,16 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+
+          # Manual runs always execute. Scheduled runs execute only during
+          # Auckland's local midnight hour, which keeps DST changes automatic.
+          if [[ "${GITHUB_EVENT_NAME}" == "schedule" ]]; then
+            auckland_hour="$(TZ=Pacific/Auckland date +%H)"
+            if [[ "$auckland_hour" != "00" ]]; then
+              echo "Skipping this UTC trigger; Auckland local hour is ${auckland_hour}."
+              exit 0
+            fi
+          fi
 
           api_url="https://feathly-support-api.netlify.app/api/support"
           body_file="$(mktemp)"
