@@ -13,73 +13,43 @@ jobs:
     timeout-minutes: 2
 
     steps:
-      - name: Send read-only Redis request
-        env:
-          UPSTASH_REDIS_REST_URL: ${{ secrets.UPSTASH_REDIS_REST_URL }}
-          UPSTASH_REDIS_REST_TOKEN: ${{ secrets.UPSTASH_REDIS_REST_TOKEN }}
-          UPSTASH_REDIS_REST_READ_ONLY_TOKEN: ${{ secrets.UPSTASH_REDIS_REST_READ_ONLY_TOKEN }}
+      - name: Exercise production support rate limiter
         shell: bash
         run: |
           set -euo pipefail
 
-          normalize_secret() {
-            local value="$1"
-            value="${value//$'\r'/}"
-            value="${value//$'\n'/}"
-            value="$(printf '%s' "$value" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')"
+          api_url="https://feathly-support-api.netlify.app/api/support"
+          body_file="$(mktemp)"
+          trap 'rm -f "$body_file"' EXIT
 
-            if [[ "$value" == UPSTASH_*=* ]]; then
-              value="${value#*=}"
-            fi
-
-            if [[ ${#value} -ge 2 ]]; then
-              if [[ "${value:0:1}" == '"' && "${value: -1}" == '"' ]]; then
-                value="${value:1:${#value}-2}"
-              elif [[ "${value:0:1}" == "'" && "${value: -1}" == "'" ]]; then
-                value="${value:1:${#value}-2}"
-              fi
-            fi
-
-            printf '%s' "$value"
-          }
-
-          raw_url="${UPSTASH_REDIS_REST_URL:-}"
-          raw_token="${UPSTASH_REDIS_REST_TOKEN:-${UPSTASH_REDIS_REST_READ_ONLY_TOKEN:-}}"
-
-          if [[ -z "$raw_url" ]]; then
-            echo "::error::Missing GitHub secret: UPSTASH_REDIS_REST_URL"
-            exit 1
-          fi
-
-          if [[ -z "$raw_token" ]]; then
-            echo "::error::Missing GitHub secret: UPSTASH_REDIS_REST_TOKEN or UPSTASH_REDIS_REST_READ_ONLY_TOKEN"
-            exit 1
-          fi
-
-          url="$(normalize_secret "$raw_url")"
-          token="$(normalize_secret "$raw_token")"
-          token="${token#Bearer }"
-
-          if [[ ! "$url" =~ ^https://[^[:space:]]+$ ]]; then
-            echo "::error::UPSTASH_REDIS_REST_URL is not a plain https URL. Paste only the Upstash REST URL value."
-            exit 1
-          fi
-
-          if [[ -z "$token" || "$token" == *[[:space:]]* ]]; then
-            echo "::error::Upstash REST token contains invalid whitespace or is empty."
-            exit 1
-          fi
-
-          endpoint="${url%/}/get/feathly-keepalive"
-          response="$(curl --http1.1 --fail-with-body --silent --show-error \
+          # The Support API checks Upstash rate limiting before parsing JSON.
+          # Send intentionally malformed JSON so the request exercises Redis,
+          # then stops before Turnstile verification or email delivery.
+          http_code="$(curl --http1.1 --silent --show-error \
             --connect-timeout 10 \
             --max-time 20 \
-            -H "Authorization: Bearer ${token}" \
-            "$endpoint")"
+            -o "$body_file" \
+            -w '%{http_code}' \
+            -X POST \
+            -H 'Origin: https://feathly.com' \
+            -H 'Content-Type: application/json' \
+            --data-binary '{' \
+            "$api_url")"
 
-          if ! jq -e 'has("result")' <<<"$response" >/dev/null; then
-            echo "::error::Upstash response did not contain a result field"
-            exit 1
+          response="$(cat "$body_file")"
+
+          if [[ "$http_code" == "400" ]] && jq -e '.code == "INVALID_JSON"' <<<"$response" >/dev/null; then
+            echo "Upstash keep-alive succeeded through the production support rate limiter."
+            echo "No support email was sent and no planner/user data was modified."
+            exit 0
           fi
 
-          echo "Upstash keep-alive GET succeeded. No Redis data was modified."
+          # A 429 also proves that the Upstash-backed limiter was reached.
+          if [[ "$http_code" == "429" ]] && jq -e '.code == "RATE_LIMITED"' <<<"$response" >/dev/null; then
+            echo "Upstash keep-alive succeeded; the production support rate limiter returned 429."
+            exit 0
+          fi
+
+          echo "::error::Unexpected Support API response (HTTP ${http_code})."
+          echo "$response"
+          exit 1
