@@ -1,0 +1,46 @@
+name: Upstash keep-alive
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  keep-alive:
+    name: Keep support rate-limit DB active
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+
+    steps:
+      - name: Send read-only Redis request
+        env:
+          UPSTASH_REDIS_REST_URL: ${{ secrets.UPSTASH_REDIS_REST_URL }}
+          UPSTASH_REDIS_REST_READ_ONLY_TOKEN: ${{ secrets.UPSTASH_REDIS_REST_READ_ONLY_TOKEN }}
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          if [[ -z "${UPSTASH_REDIS_REST_URL:-}" ]]; then
+            echo "::error::Missing GitHub secret: UPSTASH_REDIS_REST_URL"
+            exit 1
+          fi
+
+          if [[ -z "${UPSTASH_REDIS_REST_READ_ONLY_TOKEN:-}" ]]; then
+            echo "::error::Missing GitHub secret: UPSTASH_REDIS_REST_READ_ONLY_TOKEN"
+            exit 1
+          fi
+
+          endpoint="${UPSTASH_REDIS_REST_URL%/}/get/feathly:keepalive"
+          response="$(curl --fail-with-body --silent --show-error \
+            --connect-timeout 10 \
+            --max-time 20 \
+            -H "Authorization: Bearer ${UPSTASH_REDIS_REST_READ_ONLY_TOKEN}" \
+            "$endpoint")"
+
+          if ! jq -e 'has("result")' <<<"$response" >/dev/null; then
+            echo "::error::Upstash response did not contain a result field"
+            exit 1
+          fi
+
+          echo "Upstash keep-alive GET succeeded. No Redis data was modified."
