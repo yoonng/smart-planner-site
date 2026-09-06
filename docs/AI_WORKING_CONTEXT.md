@@ -7,9 +7,10 @@ This compatibility document points coding agents to the current repository instr
 Read these files before editing:
 
 1. `AGENTS.md`
-2. `docs/CODEX_PROJECT_CONTEXT.md`
-3. `docs/CODEX_SITE_ROLE.md`
-4. `docs/CODEX_APP_ROLE.md` when app behavior or screenshots are involved
+2. `docs/WEBSITE_REPOSITORY_SSOT.md`
+3. `docs/CODEX_PROJECT_CONTEXT.md`
+4. `docs/CODEX_SITE_ROLE.md`
+5. `docs/CODEX_APP_ROLE.md` when app behavior or screenshots are involved
 
 ## Fixed repository context
 
@@ -23,6 +24,14 @@ Read these files before editing:
 - Public manual assets: `assets/user-guide/`
 - App source repository: `yoonng/feathly-smart-planner`
 - Main Flutter app path: `apps/feathly_mobile/`
+
+## Hard repository boundary
+
+`yoonng/smart-planner-site` is the only active source repository for the public `feathly.com` website.
+
+Do **not** use `yoonng/feathly-docs` for `feathly.com` public website, Smart Planner Privacy Policy, Terms, FAQ, Support pages, Closed Test pages, user guide, or live policy/copy updates.
+
+If an instruction asks for website or public policy changes and the current repository is not `yoonng/smart-planner-site`, stop before editing and switch to the correct repository.
 
 ## Current operating policy
 
