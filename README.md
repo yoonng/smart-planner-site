@@ -2,6 +2,14 @@
 
 Static website for Feathly and its first product, Smart Planner.
 
+## Canonical website repository
+
+This repository, `yoonng/smart-planner-site`, is the source of truth for the public `feathly.com` website.
+
+Do **not** use `yoonng/feathly-docs` for `feathly.com`, Smart Planner Privacy Policy, Terms, FAQ, Support pages, Closed Test pages, user guide, or other live website copy.
+
+See `docs/WEBSITE_REPOSITORY_SSOT.md` before editing website or policy copy.
+
 ## Structure
 
 - `/` Feathly brand home
