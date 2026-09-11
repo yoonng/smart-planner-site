@@ -1,9 +1,9 @@
 # r/Feathly Community Operations Baseline
 
-Status: `SETUP COMPLETE — CONTENT PUBLICATION PENDING`  
-Jira: `FSPA-228`  
-Canonical community URL: `https://www.reddit.com/r/Feathly/`  
-Policy impact: `MARKETING OPERATIONS / CONTENT GOVERNANCE ONLY`  
+Status: `SETUP COMPLETE — CONTENT PUBLICATION PENDING`
+Jira: `FSPA-228`
+Canonical community URL: `https://www.reddit.com/r/Feathly/`
+Policy impact: `MARKETING/COMMUNITY ROUTING ONLY`
 Product policy impact: `NONE`
 
 ## 1. Authority and operating boundary
@@ -145,8 +145,8 @@ Cloud, AI, and Account services are in development / coming soon. They are not c
 
 Use this community for public questions, study tips, feedback, feature ideas, release discussion, and non-sensitive bug reports. For billing, refunds, privacy requests, private screenshots, backup files, data-loss evidence, or security reports, use private Support: https://feathly.com/smart-planner/support.html
 
-Website: https://feathly.com/smart-planner/  
-User Guide: https://feathly.com/smart-planner/user-guide.html  
+Website: https://feathly.com/smart-planner/
+User Guide: https://feathly.com/smart-planner/user-guide.html
 Private Support: https://feathly.com/smart-planner/support.html
 
 Please read the community rules and choose the closest flair before posting.
@@ -179,7 +179,7 @@ Use private Feathly Support for:
 - possible data loss, missed-alarm evidence with private details, or sensitive screenshots;
 - security reports or vulnerabilities.
 
-Private Support: https://feathly.com/smart-planner/support.html  
+Private Support: https://feathly.com/smart-planner/support.html
 Support email: support@feathly.com
 
 Before posting a public bug report, include the app version, device/OS version, steps to reproduce, expected result, and actual result. Remove names, emails, Loop titles, notes, screenshots, IDs, and other personal data. If safe redaction is difficult, use private Support instead.
@@ -188,9 +188,9 @@ Public feedback is welcome, but a reply or upvote is not a roadmap commitment. O
 
 ## 7. Weekly Discussion recurring post draft
 
-**Schedule baseline:** Weekly, Monday 09:00 Pacific/Auckland. Review timing after four weeks.  
-**Post as:** AutoModerator scheduled post after Owner approval.  
-**Title:** `Weekly Discussion — {{date %B %d, %Y}}`  
+**Schedule baseline:** Weekly, Monday 09:00 Pacific/Auckland. Review timing after four weeks.
+**Post as:** AutoModerator scheduled post after Owner approval.
+**Title:** `Weekly Discussion — {{date %B %d, %Y}}`
 **Flair:** `Feedback`
 
 **Body:**
@@ -210,8 +210,8 @@ What would make your next week of learning feel calmer?
 
 ## 8. Release announcement template
 
-**Title:** `[Release] Feathly: Smart Planner {version} — {short outcome}`  
-**Flair:** `Announcement`  
+**Title:** `[Release] Feathly: Smart Planner {version} — {short outcome}`
+**Flair:** `Announcement`
 **Approval:** Owner-approved release notes and links required before publishing.
 
 **Body:**
