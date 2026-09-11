@@ -4,9 +4,9 @@
 
 - Private support form: `https://feathly.com/smart-planner/support.html`
 - Support mailbox: `support@feathly.com` hosted by Zoho Mail
-- Public community: Feathly Discord
+- Public community: `https://www.reddit.com/r/Feathly/`
 
-Discord is not an official channel for billing, refunds, purchase records, missed-alarm evidence, privacy requests, private files, or security reports.
+Reddit is not an official channel for billing, refunds, purchase records, missed-alarm evidence, privacy requests, private files, or security reports. Discord is no longer an official Feathly Community channel.
 
 ## Structured email subject
 
@@ -84,7 +84,7 @@ Create subject-based filters:
 [FEATHLY-SUPPORT][OTHER]                        -> Support/Other
 ```
 
-P1 messages should remain visible in the main Inbox, be marked important, and optionally generate an approved internal alert. Do not auto-forward personal or purchase data into Discord or Jira.
+P1 messages should remain visible in the main Inbox, be marked important, and optionally generate an approved internal alert. Do not auto-forward personal or purchase data into Reddit, Discord, or Jira.
 
 ## Android reminder reports
 

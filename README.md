@@ -25,7 +25,7 @@ See `docs/WEBSITE_REPOSITORY_SSOT.md` before editing website or policy copy.
 - `/smart-planner/support-thanks.html` Support submission confirmation
 - `/smart-planner/faq.html` FAQ
 - `/smart-planner/app-config.json` App-facing URL configuration, including the embedded User Guide URL
-- `/community/` Public Feathly Discord community guidance
+- `/community/` Public Feathly Reddit community guidance and redirect
 - `/docs/SUPPORT_OPERATIONS.md` Support mailbox routing, Gmail filters, activation, and escalation rules
 
 ## User guide
