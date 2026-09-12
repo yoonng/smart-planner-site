@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
+  const closedTestPromotionEnabled = false;
   const normalizePath = (rawPath) => {
     let value = rawPath || '/';
     value = value.replace(/\/{2,}/g, '/');
@@ -161,7 +162,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   const headerNav = document.querySelector('.site-header .nav');
-  if (headerNav && !headerNav.querySelector('.closed-test-nav-cta')) {
+  if (closedTestPromotionEnabled && headerNav && !headerNav.querySelector('.closed-test-nav-cta')) {
     const closedTestCta = document.createElement('a');
     closedTestCta.className = 'closed-test-nav-cta';
     closedTestCta.href = closedTestHref;
@@ -187,7 +188,10 @@ document.addEventListener('DOMContentLoaded', function () {
   if (headerNav && !headerNav.querySelector('.mobile-nav')) {
     const mobileNav = document.createElement('details');
     mobileNav.className = 'mobile-nav';
-    mobileNav.innerHTML = `<summary aria-label="${labels.openMenu}">${labels.menu}</summary><nav class="mobile-nav-panel" aria-label="${labels.mobile}"><a class="mobile-closed-test-link" href="${closedTestHref}">${labels.closedTest}</a>${linksMarkup}</nav>`;
+    const closedTestMobileLink = closedTestPromotionEnabled
+      ? `<a class="mobile-closed-test-link" href="${closedTestHref}">${labels.closedTest}</a>`
+      : '';
+    mobileNav.innerHTML = `<summary aria-label="${labels.openMenu}">${labels.menu}</summary><nav class="mobile-nav-panel" aria-label="${labels.mobile}">${closedTestMobileLink}${linksMarkup}</nav>`;
     headerNav.appendChild(mobileNav);
     mobileNav.querySelectorAll('a').forEach((link) => {
       link.addEventListener('click', () => mobileNav.removeAttribute('open'));
